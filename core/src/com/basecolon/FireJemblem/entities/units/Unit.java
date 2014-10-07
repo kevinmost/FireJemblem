@@ -5,6 +5,7 @@ import com.basecolon.FireJemblem.constants.classes.ClassTypes;
 import com.basecolon.FireJemblem.constants.weapons.WeaponProficiencyLevels;
 import com.basecolon.FireJemblem.constants.weapons.WeaponTypes;
 import com.basecolon.FireJemblem.entities.units.containers.inventory.Inventory;
+import com.basecolon.FireJemblem.entities.units.containers.stats.UnitStats;
 import com.basecolon.FireJemblem.entities.units.containers.weapons.WeaponProficiency;
 import com.basecolon.FireJemblem.entities.weapons.Weapon;
 
@@ -22,6 +23,8 @@ public class Unit {
     private int level;
     private int experience;
     private ClassTypes classType;
+
+    private UnitStats stats;
 
     private Inventory inventory = new Inventory();
     private WeaponProficiency proficiency = new WeaponProficiency();
