@@ -9,7 +9,7 @@ import com.basecolon.FireJemblem.constants.weapons.WeaponTypes;
 public class AllowedWeapons {
     private WeaponTypes[] usableWeaponTypes;
 
-    public AllowedWeapons(WeaponTypes... usableWeaponTypes) {
+    AllowedWeapons(WeaponTypes... usableWeaponTypes) {
         this.usableWeaponTypes = usableWeaponTypes;
     }
 

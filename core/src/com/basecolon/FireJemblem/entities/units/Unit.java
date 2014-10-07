@@ -20,14 +20,6 @@ public abstract class Unit {
     private Inventory inventory = new Inventory();
     private WeaponProficiency proficiency = new WeaponProficiency();
 
-    protected Unit(Texture characterPortrait, int level, int experience, ClassTypes classType, Inventory inventory, WeaponProficiency proficiency) {
-        this.characterPortrait = characterPortrait;
-        this.level = level;
-        this.experience = experience;
-        this.classType = classType;
-        this.inventory = inventory;
-        this.proficiency = proficiency;
-    }
 
     public void gainExperience(int experience) {
         this.experience += experience;

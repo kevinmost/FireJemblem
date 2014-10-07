@@ -14,7 +14,7 @@ public class MaxStats {
     private int def;
     private int res;
 
-    public MaxStats(int hp, int str, int mag, int skl, int spd, int lck, int def, int res) {
+    MaxStats(int hp, int str, int mag, int skl, int spd, int lck, int def, int res) {
         this.hp = hp;
         this.str = str;
         this.mag = mag;

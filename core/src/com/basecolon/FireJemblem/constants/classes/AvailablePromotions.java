@@ -7,7 +7,7 @@ package com.basecolon.FireJemblem.constants.classes;
 public class AvailablePromotions {
     private final ClassTypes[] availableClasses;
 
-    public AvailablePromotions(ClassTypes... availableClasses) {
+    AvailablePromotions(ClassTypes... availableClasses) {
         this.availableClasses = availableClasses;
     }
 
