@@ -2,8 +2,13 @@ package com.basecolon.FireJemblem.entities.units;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.basecolon.FireJemblem.constants.classes.ClassTypes;
+import com.basecolon.FireJemblem.constants.weapons.WeaponProficiencyLevels;
+import com.basecolon.FireJemblem.constants.weapons.WeaponTypes;
 import com.basecolon.FireJemblem.entities.units.containers.inventory.Inventory;
 import com.basecolon.FireJemblem.entities.units.containers.weapons.WeaponProficiency;
+import com.basecolon.FireJemblem.entities.weapons.Weapon;
+
+import java.util.List;
 
 /**
  * @author kevinmost
@@ -49,7 +54,7 @@ public class Unit {
         experience -= 100;
     }
 
-    public Inventory inventory() {
+    public Inventory getInventory() {
         return inventory;
     }
     public String getName() {
@@ -60,5 +65,33 @@ public class Unit {
     }
     public WeaponProficiency getProficiency() {
         return proficiency;
+    }
+
+    /**
+     * Checks if this Unit can use a given Weapon
+     * @param weapon The weapon to check
+     * @return true if character can use weapon, false if not
+     */
+    public boolean canIUse(Weapon weapon) {
+
+        // Get the rank of this weapon we are checking
+        WeaponProficiencyLevels weaponsRequiredRank = weapon.getRank();
+
+        // If the weapon is a "Prf" weapon, we have to do special checking
+        if (weapon.getRank() == WeaponProficiencyLevels.PRF) {
+            // Simply check if the character's list of preferred weapons contains this weapon, and return true if it does
+            List<Class<? extends Weapon>> charactersPreferredWeapons = this.getProficiency().getPreferredWeapons();
+            return charactersPreferredWeapons.contains(weapon.getClass());
+        }
+        else {
+            // Get the type of this weapon (ex: Sword, lance, ...)
+            WeaponTypes weaponsType = weapon.getType();
+
+            // Get this character's proficiency with that weapon
+            WeaponProficiencyLevels characterProficiencyInWeaponType = this.getProficiency().getWeapons().get(weaponsType);
+
+            // Return true if this character's skill is good enough to use this weapon
+            return characterProficiencyInWeaponType.getNumericRank() >= weaponsRequiredRank.getNumericRank();
+        }
     }
 }

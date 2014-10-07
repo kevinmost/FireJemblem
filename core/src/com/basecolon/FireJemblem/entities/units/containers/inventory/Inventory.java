@@ -18,8 +18,9 @@ public class Inventory {
         return items[slot.value()];
     }
 
-    public void setItem(InventorySlots slot, Weapon item) throws IndexOutOfBoundsException {
+    public Inventory setItem(InventorySlots slot, Weapon item) throws IndexOutOfBoundsException {
         items[slot.value()] = item;
+        return this;
     }
 
 }
