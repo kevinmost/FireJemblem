@@ -11,7 +11,8 @@ public enum WeaponProficiencyLevels {
     B,
     A,
     S,
-    NO
+    NO,
+    PRF
     ;
 
 

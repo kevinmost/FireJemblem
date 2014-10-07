@@ -9,9 +9,10 @@ import com.basecolon.FireJemblem.entities.units.containers.weapons.WeaponProfici
  * @author kevinmost
  * @date 10/7/14
  */
-public abstract class Unit {
+public class Unit {
 
     private Texture characterPortrait;
+    private String name;
 
     private int level;
     private int experience;
@@ -20,6 +21,17 @@ public abstract class Unit {
     private Inventory inventory = new Inventory();
     private WeaponProficiency proficiency = new WeaponProficiency();
 
+    public Unit(Texture characterPortrait, String name, int level, int experience, ClassTypes classType, Inventory inventory, WeaponProficiency proficiency) {
+        this.characterPortrait = characterPortrait;
+        this.name = name;
+        this.level = level;
+        this.experience = experience;
+        this.classType = classType;
+        this.inventory = inventory;
+        this.proficiency = proficiency;
+
+
+    }
 
     public void gainExperience(int experience) {
         this.experience += experience;
@@ -39,5 +51,14 @@ public abstract class Unit {
 
     public Inventory inventory() {
         return inventory;
+    }
+    public String getName() {
+        return name;
+    }
+    public ClassTypes getClassType() {
+        return classType;
+    }
+    public WeaponProficiency getProficiency() {
+        return proficiency;
     }
 }

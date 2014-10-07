@@ -7,26 +7,26 @@ import com.basecolon.FireJemblem.constants.weapons.WeaponProficiencyLevels;
  * @author kevinmost
  * @date 10/7/14
  */
-public class IronSword extends Sword {
+public class ManiKatti extends Sword {
 
     @Override
     public int getMight() {
-        return 5;
+        return 8;
     }
 
     @Override
     public int getCrit() {
-        return 0;
+        return 20;
     }
 
     @Override
     public int getHit() {
-        return 90;
+        return 80;
     }
 
     @Override
     public int getWeight() {
-        return 5;
+        return 3;
     }
 
     @Override
@@ -39,20 +39,19 @@ public class IronSword extends Sword {
         return 1;
     }
 
-
     @Override
     public int getMaxDurability() {
-        return 46;
+        return 45;
     }
 
     @Override
     public String getName() {
-        return "Iron Sword";
+        return "Mani Katti";
     }
 
     @Override
     public WeaponProficiencyLevels getRank() {
-        return WeaponProficiencyLevels.E;
+        return WeaponProficiencyLevels.PRF;
     }
 
     @Override
