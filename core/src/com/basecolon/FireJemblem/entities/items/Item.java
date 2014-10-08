@@ -35,6 +35,8 @@ public abstract class Item {
 
     public abstract int getMaxDurability();
 
+    public abstract int getWorth();
+
     public abstract String getName();
 
     public abstract Texture getGraphic();

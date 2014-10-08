@@ -37,6 +37,9 @@ public class WeaponProficiency {
     }
 
     public WeaponProficiency setWeaponProficiencyLevel(WeaponTypes weapon, WeaponProficiencyLevels level) {
+        if (level == WeaponProficiencyLevels.PRF) {
+            throw new PrfNotAllowedException("You cannot set a Unit's weapon proficiency to \"Prf\". \"Prf\" is a reserved weapon rank for weapons that can only be used by specific characters");
+        }
         weapons.put(weapon, level);
         return this;
     }

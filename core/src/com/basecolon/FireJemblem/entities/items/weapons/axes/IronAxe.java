@@ -1,4 +1,4 @@
-package com.basecolon.FireJemblem.entities.items.weapons.swords;
+package com.basecolon.FireJemblem.entities.items.weapons.axes;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.basecolon.FireJemblem.constants.weapons.WeaponProficiencyLevels;
@@ -7,8 +7,7 @@ import com.basecolon.FireJemblem.constants.weapons.WeaponProficiencyLevels;
  * @author kevinmost
  * @date 10/7/14
  */
-public class ManiKatti extends Sword {
-
+public class IronAxe extends Axe {
     @Override
     public int getMight() {
         return 8;
@@ -16,17 +15,17 @@ public class ManiKatti extends Sword {
 
     @Override
     public int getCrit() {
-        return 20;
+        return 0;
     }
 
     @Override
     public int getHit() {
-        return 80;
+        return 75;
     }
 
     @Override
     public int getWeight() {
-        return 3;
+        return 10;
     }
 
     @Override
@@ -40,23 +39,18 @@ public class ManiKatti extends Sword {
     }
 
     @Override
+    public WeaponProficiencyLevels getRank() {
+        return WeaponProficiencyLevels.E;
+    }
+
+    @Override
     public int getMaxDurability() {
         return 45;
     }
 
     @Override
-    public int getWorth() {
-        return -1; // MY SWORD IS PRICELESS
-    }
-
-    @Override
     public String getName() {
-        return "Mani Katti";
-    }
-
-    @Override
-    public WeaponProficiencyLevels getRank() {
-        return WeaponProficiencyLevels.PRF;
+        return "Iron Axe";
     }
 
     @Override

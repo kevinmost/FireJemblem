@@ -46,6 +46,11 @@ public class IronSword extends Sword {
     }
 
     @Override
+    public int getWorth() {
+        return 460;
+    }
+
+    @Override
     public String getName() {
         return "Iron Sword";
     }

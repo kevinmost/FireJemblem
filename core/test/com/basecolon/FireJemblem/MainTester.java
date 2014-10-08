@@ -9,6 +9,7 @@ import com.basecolon.FireJemblem.entities.items.ItemCastException;
 import com.basecolon.FireJemblem.entities.items.usables.Usable;
 import com.basecolon.FireJemblem.entities.items.usables.healing.Vulnerary;
 import com.basecolon.FireJemblem.entities.items.weapons.Weapon;
+import com.basecolon.FireJemblem.entities.items.weapons.axes.IronAxe;
 import com.basecolon.FireJemblem.entities.items.weapons.swords.IronSword;
 import com.basecolon.FireJemblem.entities.items.weapons.swords.KillingEdge;
 import com.basecolon.FireJemblem.entities.items.weapons.swords.ManiKatti;
@@ -99,20 +100,13 @@ public class MainTester {
                 0, // Lyn's current XP
                 ClassTypes.MERCENARY, // Lyn's class
                 new UnitStats(16, 4, -1, 7, 9, 5, 2, 0), // Lyn's stats
-                new Inventory() // Lyn's Inventory
-                        .setItem(
-                                InventorySlots.SLOT_1,
-                                ItemFactory.create(ManiKatti.class)) // Give Lyn a Mani Katti (this is a special weapon only she can use)
-                        .setItem(
-                                InventorySlots.SLOT_2,
-                                ItemFactory.create(KillingEdge.class)) // Give Lyn a Killing Edge (she can't use it though, she only has a D in swords)
-                        .setItem(
-                                InventorySlots.SLOT_3,
-                                ItemFactory.create(IronSword.class)) // Give Lyn an Iron Sword
-                        .setItem(
-                                InventorySlots.SLOT_4,
-                                ItemFactory.create(Vulnerary.class)) // Give Lyn a Vulnerary too
-                ,
+                new Inventory().setItem(
+                        ItemFactory.create(ManiKatti.class), // Give Lyn her preferred weapon
+                        ItemFactory.create(KillingEdge.class), // Give Lyn a regular sword that she isn't skilled enough to use  yet
+                        ItemFactory.create(IronSword.class), // Give Lyn a regular sword she can use
+                        ItemFactory.create(Vulnerary.class), // Give Lyn a healing Usable
+                        ItemFactory.create(IronAxe.class) // Give Lyn an item she can't use until she promotes
+                        ),
                 new WeaponProficiency() // Lyn's weapon proficiencies
                         .setWeaponProficiencyLevel(WeaponTypes.SWORD, WeaponProficiencyLevels.D) // Lyn can use swords
                         .setPreferredWeapon(ManiKatti.class) // Lyn can also use the Mani Katti specifically

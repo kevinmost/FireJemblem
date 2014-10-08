@@ -44,6 +44,11 @@ public class KillingEdge extends Sword {
     }
 
     @Override
+    public int getWorth() {
+        return 1300;
+    }
+
+    @Override
     public String getName() {
         return "Killing Edge";
     }
