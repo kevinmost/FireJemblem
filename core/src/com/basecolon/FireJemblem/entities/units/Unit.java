@@ -4,10 +4,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.basecolon.FireJemblem.constants.classes.ClassTypes;
 import com.basecolon.FireJemblem.constants.weapons.WeaponProficiencyLevels;
 import com.basecolon.FireJemblem.constants.weapons.WeaponTypes;
+import com.basecolon.FireJemblem.entities.items.usables.Usable;
+import com.basecolon.FireJemblem.entities.items.weapons.Weapon;
 import com.basecolon.FireJemblem.entities.units.containers.inventory.Inventory;
 import com.basecolon.FireJemblem.entities.units.containers.stats.UnitStats;
 import com.basecolon.FireJemblem.entities.units.containers.weapons.WeaponProficiency;
-import com.basecolon.FireJemblem.entities.weapons.Weapon;
 
 import java.util.List;
 
@@ -29,16 +30,18 @@ public class Unit {
     private Inventory inventory = new Inventory();
     private WeaponProficiency proficiency = new WeaponProficiency();
 
-    public Unit(Texture characterPortrait, String name, int level, int experience, ClassTypes classType, Inventory inventory, WeaponProficiency proficiency) {
+    public Unit(Texture characterPortrait, String name, int level, int experience, ClassTypes classType, UnitStats stats, Inventory inventory, WeaponProficiency proficiency) {
         this.characterPortrait = characterPortrait;
         this.name = name;
+
         this.level = level;
         this.experience = experience;
         this.classType = classType;
+
+        this.stats = stats;
+
         this.inventory = inventory;
         this.proficiency = proficiency;
-
-
     }
 
     public void gainExperience(int experience) {
@@ -69,13 +72,16 @@ public class Unit {
     public WeaponProficiency getProficiency() {
         return proficiency;
     }
+    public UnitStats getStats() {
+        return stats;
+    }
 
     /**
      * Checks if this Unit can use a given Weapon
      * @param weapon The weapon to check
      * @return true if character can use weapon, false if not
      */
-    public boolean canIUse(Weapon weapon) {
+    public boolean canIWield(Weapon weapon) {
 
         // Get the rank of this weapon we are checking
         WeaponProficiencyLevels weaponsRequiredRank = weapon.getRank();
@@ -96,5 +102,14 @@ public class Unit {
             // Return true if this character's skill is good enough to use this weapon
             return characterProficiencyInWeaponType.getNumericRank() >= weaponsRequiredRank.getNumericRank();
         }
+    }
+
+    /**
+     * Uses an item and performs its effects
+     * @param usable
+     */
+    public void use(Usable usable) {
+        usable.use(this);
+        usable.lowerDurability();
     }
 }

@@ -1,33 +1,45 @@
 package com.basecolon.FireJemblem.entities.units.containers.stats;
 
+import com.basecolon.FireJemblem.constants.stats.UnitStatLabels;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author kevinmost
  * @date 10/7/14
  */
 public class UnitStats {
     private int currentHP;
-
-    private int hp;
-    private int str;
-    private int mag;
-    private int skl;
-    private int spd;
-    private int lck;
-    private int def;
-    private int res;
-
-    public UnitStats(int hp, int str, int mag, int skl, int spd, int lck, int def, int res) {
-        this.hp = hp;
-        this.str = str;
-        this.mag = mag;
-        this.skl = skl;
-        this.spd = spd;
-        this.lck = lck;
-        this.def = def;
-        this.res = res;
-
-        currentHP = this.hp;
+    public int getCurrentHP() {
+        return currentHP;
+    }
+    public void setCurrentHP(int currentHP) {
+        this.currentHP = currentHP;
+    }
+    public void increaseCurrentHPBy(int by) {
+        setCurrentHP(currentHP + by);
+    }
+    public void decreaseCurrentHPBy(int by) {
+        setCurrentHP(currentHP - by);
     }
 
+    private Map<UnitStatLabels, Integer> stats = new HashMap<>();
+    public Map<UnitStatLabels, Integer> getStats() {
+        return stats;
+    }
+
+    public UnitStats(int hp, int str, int mag, int skl, int spd, int lck, int def, int res) {
+        stats.put(UnitStatLabels.HP, hp);
+        stats.put(UnitStatLabels.STR, str);
+        stats.put(UnitStatLabels.MAG, mag);
+        stats.put(UnitStatLabels.SKL, skl);
+        stats.put(UnitStatLabels.SPD, spd);
+        stats.put(UnitStatLabels.LCK, lck);
+        stats.put(UnitStatLabels.DEF, def);
+        stats.put(UnitStatLabels.RES, res);
+
+        currentHP = hp;
+    }
 
 }

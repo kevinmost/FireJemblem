@@ -1,7 +1,7 @@
-package com.basecolon.FireJemblem.entities.weapons.swords;
+package com.basecolon.FireJemblem.entities.items.weapons.swords;
 
 import com.basecolon.FireJemblem.constants.weapons.WeaponTypes;
-import com.basecolon.FireJemblem.entities.weapons.Weapon;
+import com.basecolon.FireJemblem.entities.items.weapons.Weapon;
 
 /**
  * @author kevinmost

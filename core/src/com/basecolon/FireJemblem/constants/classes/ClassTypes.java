@@ -6,20 +6,22 @@ package com.basecolon.FireJemblem.constants.classes;
  */
 public enum ClassTypes {
     MERCENARY(
-            "Mercenary", // Name
-            new MaxStats(60, 26, 20, 28, 26, 30, 25, 23), // The max stats for any unit of this class
-            new AvailablePromotions() // The available promotions for this class
-    )
-    ;
+            "Mercenary",
+            new MaxStats(60, 20, 20, 20, 30, 20, 20, 20)
+    ),
+    HERO(
+            "Hero",
+            new MaxStats(60, 25, 30, 26, 30, 25, 22, 20)
+    );
 
-    ClassTypes(String className, MaxStats maxStats, AvailablePromotions availablePromotions) {
+    ClassTypes(String className, MaxStats maxStats) {
         this.className = className;
         this.maxStats = maxStats;
-        this.availablePromotions = availablePromotions;
+
     }
     private final String className;
     private final MaxStats maxStats;
-    private final AvailablePromotions availablePromotions;
+
 
     public String getClassName() {
         return className;
@@ -27,7 +29,5 @@ public enum ClassTypes {
     public MaxStats getMaxStats() {
         return maxStats;
     }
-    public AvailablePromotions getAvailablePromotions() {
-        return availablePromotions;
-    }
+
 }

@@ -1,4 +1,4 @@
-package com.basecolon.FireJemblem.entities.weapons.swords;
+package com.basecolon.FireJemblem.entities.items.weapons.swords;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.basecolon.FireJemblem.constants.weapons.WeaponProficiencyLevels;
@@ -7,25 +7,26 @@ import com.basecolon.FireJemblem.constants.weapons.WeaponProficiencyLevels;
  * @author kevinmost
  * @date 10/7/14
  */
-public class KillingEdge extends Sword {
+public class ManiKatti extends Sword {
+
     @Override
     public int getMight() {
-        return 9;
+        return 8;
     }
 
     @Override
     public int getCrit() {
-        return 30;
+        return 20;
     }
 
     @Override
     public int getHit() {
-        return 75;
+        return 80;
     }
 
     @Override
     public int getWeight() {
-        return 7;
+        return 3;
     }
 
     @Override
@@ -40,21 +41,21 @@ public class KillingEdge extends Sword {
 
     @Override
     public int getMaxDurability() {
-        return 20;
+        return 45;
     }
 
     @Override
     public String getName() {
-        return "Killing Edge";
+        return "Mani Katti";
     }
 
     @Override
     public WeaponProficiencyLevels getRank() {
-        return WeaponProficiencyLevels.C;
+        return WeaponProficiencyLevels.PRF;
     }
 
     @Override
-    public Texture getWeaponGraphic() {
+    public Texture getGraphic() {
         return null;
     }
 }

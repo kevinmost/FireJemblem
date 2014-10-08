@@ -2,7 +2,7 @@ package com.basecolon.FireJemblem.entities.units.containers.weapons;
 
 import com.basecolon.FireJemblem.constants.weapons.WeaponProficiencyLevels;
 import com.basecolon.FireJemblem.constants.weapons.WeaponTypes;
-import com.basecolon.FireJemblem.entities.weapons.Weapon;
+import com.basecolon.FireJemblem.entities.items.weapons.Weapon;
 
 import java.util.ArrayList;
 import java.util.HashMap;

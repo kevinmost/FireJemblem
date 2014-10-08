@@ -1,4 +1,4 @@
-package com.basecolon.FireJemblem.entities.weapons.swords;
+package com.basecolon.FireJemblem.entities.items.weapons.swords;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.basecolon.FireJemblem.constants.weapons.WeaponProficiencyLevels;
@@ -56,7 +56,7 @@ public class IronSword extends Sword {
     }
 
     @Override
-    public Texture getWeaponGraphic() {
+    public Texture getGraphic() {
         return null;
     }
 }
