@@ -51,7 +51,7 @@ public class Inventory {
         }
     }
 
-    public Weapon getItemAsWeapon(InventorySlots slot) throws ItemCastException {
+    public Weapon getItemAsWeapon(InventorySlots slot) {
         Item item = getItem(slot);
         if (item instanceof Weapon) {
             return (Weapon) item;
@@ -69,32 +69,6 @@ public class Inventory {
      */
     public Inventory setItem(InventorySlots slot, Item item) {
         items[slot.value()] = item;
-        return this;
-    }
-
-    // Convenience methods to set the first 1, 2, 3, 4, or 5 items at once
-    public Inventory setItem(Item item1) {
-        items[0] = item1;
-        return this;
-    }
-    public Inventory setItem(Item item1, Item item2) {
-        setItem(item1);
-        items[1] = item2;
-        return this;
-    }
-    public Inventory setItem(Item item1, Item item2, Item item3) {
-        setItem(item1, item2);
-        items[2] = item3;
-        return this;
-    }
-    public Inventory setItem(Item item1, Item item2, Item item3, Item item4) {
-        setItem(item1, item2, item3);
-        items[3] = item4;
-        return this;
-    }
-    public Inventory setItem(Item item1, Item item2, Item item3, Item item4, Item item5) {
-        setItem(item1, item2, item3, item4);
-        items[4] = item5;
         return this;
     }
 

@@ -49,6 +49,11 @@ public class IronAxe extends Axe {
     }
 
     @Override
+    public int getWorth() {
+        return 270;
+    }
+
+    @Override
     public String getName() {
         return "Iron Axe";
     }

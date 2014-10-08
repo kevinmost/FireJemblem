@@ -13,6 +13,11 @@ public class BlankItem extends Item {
     }
 
     @Override
+    public int getWorth() {
+        return 0;
+    }
+
+    @Override
     public String getName() {
         return "";
     }

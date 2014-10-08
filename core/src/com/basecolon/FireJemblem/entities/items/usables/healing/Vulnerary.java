@@ -15,6 +15,11 @@ public class Vulnerary extends Usable {
     }
 
     @Override
+    public int getWorth() {
+        return 300;
+    }
+
+    @Override
     public String getName() {
         return "Vulnerary";
     }
@@ -27,6 +32,5 @@ public class Vulnerary extends Usable {
     @Override
     public void useOn(Unit usingUnit) {
         usingUnit.getStats().increaseCurrentHPBy(10);
-        this.lowerDurability();
     }
 }
