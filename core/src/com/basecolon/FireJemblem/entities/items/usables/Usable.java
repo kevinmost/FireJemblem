@@ -8,5 +8,5 @@ import com.basecolon.FireJemblem.entities.units.Unit;
  * @date 10/7/14
  */
 public abstract class Usable extends Item {
-    public abstract void use(Unit usingUnit);
+    public abstract void useOn(Unit usingUnit);
 }

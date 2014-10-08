@@ -43,7 +43,7 @@ public class MainTester {
         System.out.println("Fortunately, " + lyn.getName() + " has a " + vulnerary.getName() + " with " + vulnerary.getDurability() + " uses left on it");
 
         // Lyn uses her vulnerary
-        lyn.use(vulnerary);
+        vulnerary.useOn(lyn);
 
         System.out.println(lyn.getName() + " used her vulnerary! Current HP: " + lynsStats.getCurrentHP() + "/" + lynsStats.getStats().get(UnitStatLabels.HP));
         System.out.println(lyn.getName() + "'s vulnerary now has " + vulnerary.getDurability() + "/" + vulnerary.getMaxDurability() + " uses left");

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.basecolon.FireJemblem.constants.classes.ClassTypes;
 import com.basecolon.FireJemblem.constants.weapons.WeaponProficiencyLevels;
 import com.basecolon.FireJemblem.constants.weapons.WeaponTypes;
-import com.basecolon.FireJemblem.entities.items.usables.Usable;
 import com.basecolon.FireJemblem.entities.items.weapons.Weapon;
 import com.basecolon.FireJemblem.entities.units.containers.inventory.Inventory;
 import com.basecolon.FireJemblem.entities.units.containers.stats.UnitStats;
@@ -102,14 +101,5 @@ public class Unit {
             // Return true if this character's skill is good enough to use this weapon
             return characterProficiencyInWeaponType.getNumericRank() >= weaponsRequiredRank.getNumericRank();
         }
-    }
-
-    /**
-     * Uses an item and performs its effects
-     * @param usable
-     */
-    public void use(Usable usable) {
-        usable.use(this);
-        usable.lowerDurability();
     }
 }

@@ -25,7 +25,8 @@ public class Vulnerary extends Usable {
     }
 
     @Override
-    public void use(Unit usingUnit) {
+    public void useOn(Unit usingUnit) {
         usingUnit.getStats().increaseCurrentHPBy(10);
+        this.lowerDurability();
     }
 }
