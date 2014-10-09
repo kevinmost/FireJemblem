@@ -1,23 +1,23 @@
 package com.basecolon.FireJemblem;
 
-import com.basecolon.FireJemblem.constants.classes.ClassTypes;
-import com.basecolon.FireJemblem.constants.stats.UnitStatLabels;
-import com.basecolon.FireJemblem.constants.weapons.WeaponProficiencyLevels;
-import com.basecolon.FireJemblem.constants.weapons.WeaponTypes;
-import com.basecolon.FireJemblem.entities.items.Item;
-import com.basecolon.FireJemblem.entities.items.ItemFactory;
-import com.basecolon.FireJemblem.entities.items.usables.Usable;
-import com.basecolon.FireJemblem.entities.items.usables.healing.Vulnerary;
-import com.basecolon.FireJemblem.entities.items.weapons.Weapon;
-import com.basecolon.FireJemblem.entities.items.weapons.axes.IronAxe;
-import com.basecolon.FireJemblem.entities.items.weapons.swords.IronSword;
-import com.basecolon.FireJemblem.entities.items.weapons.swords.KillingEdge;
-import com.basecolon.FireJemblem.entities.items.weapons.swords.ManiKatti;
-import com.basecolon.FireJemblem.entities.units.Unit;
-import com.basecolon.FireJemblem.entities.units.containers.inventory.Inventory;
-import com.basecolon.FireJemblem.entities.units.containers.inventory.InventorySlots;
-import com.basecolon.FireJemblem.entities.units.containers.stats.UnitStats;
-import com.basecolon.FireJemblem.entities.units.containers.weapons.WeaponProficiency;
+import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
+import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
+import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
+import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
+import com.basecolon.FireJemblem.deprecated.items.Item;
+import com.basecolon.FireJemblem.deprecated.items.ItemFactory;
+import com.basecolon.FireJemblem.deprecated.items.usables.Usable;
+import com.basecolon.FireJemblem.deprecated.items.usables.healing.Vulnerary;
+import com.basecolon.FireJemblem.deprecated.items.weapons.Weapon;
+import com.basecolon.FireJemblem.deprecated.items.weapons.axes.IronAxe;
+import com.basecolon.FireJemblem.deprecated.items.weapons.swords.IronSword;
+import com.basecolon.FireJemblem.deprecated.items.weapons.swords.KillingEdge;
+import com.basecolon.FireJemblem.deprecated.items.weapons.swords.ManiKatti;
+import com.basecolon.FireJemblem.deprecated.units.Unit;
+import com.basecolon.FireJemblem.deprecated.units.containers.inventory.Inventory;
+import com.basecolon.FireJemblem.deprecated.units.containers.inventory.InventorySlots;
+import com.basecolon.FireJemblem.deprecated.units.containers.stats.UnitStats;
+import com.basecolon.FireJemblem.deprecated.units.containers.weapons.WeaponProficiency;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -30,24 +30,33 @@ import java.util.Map;
 public class MainTester {
 
     @Test
+    public void testSkirmish() {
+        Unit lyn = initializeLyn();
+        Unit enemyLyn = initializeLyn();
+
+        lyn.attack(enemyLyn).with(InventorySlots.SLOT_1);
+    }
+
+    @Test
     public void testUsableItem() {
         Unit lyn = initializeLyn();
         Inventory lynsInventory = lyn.getInventory();
 
         // Pull out Lyn's vulnerary
-        Usable vulnerary = lynsInventory.getItemAsUsable(InventorySlots.SLOT_4);
+        Usable vulnerary = lynsInventory.getItem(InventorySlots.SLOT_4, Usable.class);
 
         // Store Lyn's stats
         UnitStats lynsStats = lyn.getStats();
 
         // Lyn was injured!
-        lynsStats.setCurrentHP(1);
+        // TODO pls implement
+//        lynsStats.setCurrentHP(1);
 
         System.out.println(lyn.getName() + " was injured! Current HP: " + lynsStats.getCurrentHP() + "/" + lynsStats.getStats().get(UnitStatLabels.HP));
         System.out.println("Fortunately, " + lyn.getName() + " has a " + vulnerary.getName() + " with " + vulnerary.getDurability() + " uses left on it");
 
         // Lyn uses her vulnerary
-        vulnerary.useOn(lyn);
+        lyn.use(vulnerary);
 
         System.out.println(lyn.getName() + " used her vulnerary! Current HP: " + lynsStats.getCurrentHP() + "/" + lynsStats.getStats().get(UnitStatLabels.HP));
         System.out.println(lyn.getName() + "'s vulnerary now has " + vulnerary.getDurability() + "/" + vulnerary.getMaxDurability() + " uses left");
@@ -58,10 +67,10 @@ public class MainTester {
         Unit lyn = initializeLyn();
         Inventory lynsInventory = lyn.getInventory();
 
-        Weapon maniKatti = lynsInventory.getItemAsWeapon(InventorySlots.SLOT_1);
-        Weapon killingEdge = lynsInventory.getItemAsWeapon(InventorySlots.SLOT_2);
-        Weapon ironSword = lynsInventory.getItemAsWeapon(InventorySlots.SLOT_3);
-        Weapon ironAxe = lynsInventory.getItemAsWeapon(InventorySlots.SLOT_5);
+        Weapon maniKatti = lynsInventory.getItem(InventorySlots.SLOT_1, Weapon.class);
+        Weapon killingEdge = lynsInventory.getItem(InventorySlots.SLOT_2, Weapon.class);
+        Weapon ironSword = lynsInventory.getItem(InventorySlots.SLOT_3, Weapon.class);
+        Weapon ironAxe = lynsInventory.getItem(InventorySlots.SLOT_5, Weapon.class);
 
         // Lyn should be able to use her Mani Katti considering it is her special weapon
         System.out.println(lyn.getName() + (lyn.canIWield(maniKatti) ? " can " : " cannot ") + "use the " + maniKatti.getName());
@@ -82,7 +91,7 @@ public class MainTester {
         Inventory lynsInventory = lyn.getInventory();
 
         // Get Lyn's slot 1 item
-        Weapon maniKatti = lynsInventory.getItemAsWeapon(InventorySlots.SLOT_1);
+        Weapon maniKatti = lynsInventory.getItem(InventorySlots.SLOT_1, Weapon.class);
 
         // Print some info about her sword
         System.out.println(lyn.getName() + "'s first item is " + maniKatti.getName() + "");
@@ -113,7 +122,9 @@ public class MainTester {
                 1, // Lyn's level
                 0, // Lyn's current XP
                 ClassTypes.MERCENARY, // Lyn's class
-                new UnitStats(16, 4, -1, 7, 9, 5, 2, 0), // Lyn's stats
+                new UnitStats(
+                        // 16, 4, -1, 7, 9, 5, 2, 0
+                        ), // Lyn's stats
                 new Inventory() {{
                     // Give Lyn all of the items we defined above
                     for (Map.Entry<InventorySlots, Class<? extends Item>> itemToGiveLyn : itemsToGiveLyn.entrySet()) {
