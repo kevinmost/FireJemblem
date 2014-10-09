@@ -7,5 +7,5 @@ import com.badlogic.ashley.core.Component;
  * @date 10/8/14
  */
 public class ItemStats extends Component {
-
+// TODO pls
 }
