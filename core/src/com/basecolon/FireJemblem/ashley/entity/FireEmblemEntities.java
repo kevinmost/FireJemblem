@@ -27,7 +27,7 @@ public enum FireEmblemEntities {
 
     FireEmblemEntities(List<Class<? extends Component>> components) {
         //noinspection unchecked
-        this.components = components.toArray(new Class[5]);
+        this.components = components.toArray(new Class[components.size()]);
     }
     private Class<? extends Component>[] components;
 
