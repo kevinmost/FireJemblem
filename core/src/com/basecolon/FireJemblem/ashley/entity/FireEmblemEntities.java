@@ -3,9 +3,12 @@ package com.basecolon.FireJemblem.ashley.entity;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
+import com.basecolon.FireJemblem.ashley.component.item.ItemIdentity;
+import com.basecolon.FireJemblem.ashley.component.item.ItemStats;
 import com.basecolon.FireJemblem.ashley.component.unit.Inventory;
 import com.basecolon.FireJemblem.ashley.component.unit.UnitIdentity;
 import com.basecolon.FireJemblem.ashley.component.unit.UnitStats;
+import com.basecolon.FireJemblem.ashley.component.world.Transform;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,12 +20,20 @@ import java.util.List;
  * @date 10/9/14
  */
 public enum FireEmblemEntities {
+    TILE(Arrays.asList(
+            ItemIdentity.class,
+            Transform.class
+    )),
     UNIT(Arrays.asList(
             UnitStats.class,
             UnitIdentity.class,
-            Inventory.class
+            Inventory.class,
+            Transform.class
     )),
-
+    ITEM(Arrays.asList(
+            ItemIdentity.class,
+            ItemStats.class
+    ))
     ;
 
     FireEmblemEntities(List<Class<? extends Component>> components) {

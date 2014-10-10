@@ -8,6 +8,4 @@ import com.badlogic.ashley.core.Component;
  */
 public abstract class Identity extends Component {
     public String name;
-
-
 }
