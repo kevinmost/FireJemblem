@@ -8,7 +8,8 @@ import com.basecolon.FireJemblem.ashley.component.item.ItemStats;
 import com.basecolon.FireJemblem.ashley.component.unit.Inventory;
 import com.basecolon.FireJemblem.ashley.component.unit.UnitIdentity;
 import com.basecolon.FireJemblem.ashley.component.unit.UnitStats;
-import com.basecolon.FireJemblem.ashley.component.world.Controlled;
+import com.basecolon.FireJemblem.ashley.component.world.Networked;
+import com.basecolon.FireJemblem.ashley.component.world.Selectable;
 import com.basecolon.FireJemblem.ashley.component.world.Transform;
 
 import java.util.Arrays;
@@ -25,12 +26,19 @@ public enum FireEmblemEntities {
             ItemIdentity.class,
             Transform.class
     )),
-    UNIT(Arrays.asList(
+    FRIEND_UNIT(Arrays.asList(
             UnitStats.class,
             UnitIdentity.class,
             Inventory.class,
             Transform.class,
-            Controlled.class
+            Selectable.class
+    )),
+    ENEMY_UNIT(Arrays.asList(
+            UnitStats.class,
+            UnitIdentity.class,
+            Inventory.class,
+            Transform.class,
+            Networked.class
     )),
     ITEM(Arrays.asList(
             ItemIdentity.class,

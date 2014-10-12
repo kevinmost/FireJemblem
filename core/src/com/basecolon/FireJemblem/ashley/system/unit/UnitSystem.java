@@ -11,7 +11,7 @@ import com.basecolon.FireJemblem.ashley.entity.FireEmblemEntities;
  */
 public class UnitSystem extends IteratingSystem {
 
-    public static final Family unitFamily = FireEmblemEntities.UNIT.getFamilyOf();
+    public static final Family unitFamily = FireEmblemEntities.FRIEND_UNIT.getFamilyOf();
 
     public UnitSystem(Family family) {
         super(family);

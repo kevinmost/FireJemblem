@@ -4,8 +4,7 @@ import com.badlogic.ashley.core.Component;
 
 /**
  * @author mbs
- * @date 10/11/14
+ * @date 10/12/14
  */
-public class Controlled extends Component {
-    public boolean controlable;
+public class Selectable extends Component {
 }
