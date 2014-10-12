@@ -13,6 +13,7 @@ import com.basecolon.FireJemblem.ashley.component.world.Selectable;
 import com.basecolon.FireJemblem.ashley.component.world.Transform;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,38 +23,58 @@ import java.util.List;
  * @date 10/9/14
  */
 public enum FireEmblemEntities {
-    TILE(Arrays.asList(
+    TILE(
             ItemIdentity.class,
             Transform.class
-    )),
-    FRIEND_UNIT(Arrays.asList(
+    ),
+    UNIT(
             UnitStats.class,
             UnitIdentity.class,
             Inventory.class,
-            Transform.class,
+            Transform.class
+    ),
+    FRIEND_UNIT(
+            UNIT,
             Selectable.class
-    )),
-    ENEMY_UNIT(Arrays.asList(
-            UnitStats.class,
-            UnitIdentity.class,
-            Inventory.class,
-            Transform.class,
+    ),
+    ENEMY_UNIT(
+            UNIT,
             Networked.class
-    )),
-    ITEM(Arrays.asList(
+    ),
+    ITEM(
             ItemIdentity.class,
             ItemStats.class
-    ))
+    )
     ;
 
-    FireEmblemEntities(List<Class<? extends Component>> components) {
-        // We define our components in a List in our enum constructor, but then it is immediately turned into an array.
-        // We do this because we can't create a generic array in Java, so we create a generic List and then turn it into an array
-        // Of course, we need to add the following line to suppress compiler warnings
-        //noinspection unchecked
-        this.components = components.toArray(new Class[components.size()]);
+    /**
+     * Allows an entity to be defined as an enum consisting of components
+     * @param components The components to use to create this entity
+     */
+    @SafeVarargs
+    FireEmblemEntities(Class<? extends Component>... components) {
+        setComponents(components);
     }
+
+    /**
+     * Alternate constructor that allows you to define the fact that an entity should "inherit" off its parent entity
+     * Essentially takes all of the components of the inheritedEntity and adds all of the given components to it
+     * @param inheritedEntity The base entity
+     * @param components The components specific to this "child" entity
+     */
+    @SafeVarargs
+    FireEmblemEntities(FireEmblemEntities inheritedEntity, Class<? extends Component>... components) {
+        List<Class<? extends Component>> inheritedEntityAsList = Arrays.asList(inheritedEntity.getComponents());
+        Collections.addAll(inheritedEntityAsList, components);
+        
+        setComponents(components);
+    }
+
     private Class<? extends Component>[] components;
+
+    private void setComponents(Class<? extends Component>[] components) {
+        this.components = components;
+    }
 
     /**
      * Get all of the components that make up this enum element. Returns as an array because the {@link Family#getFor(Class[])} method takes varargs, not a List
