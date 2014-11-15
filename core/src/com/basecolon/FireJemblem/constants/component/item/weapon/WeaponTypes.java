@@ -11,7 +11,8 @@ public enum WeaponTypes {
     BOW("bow"),
     ANIMA("anima"),
     LIGHT("light"),
-    DARK("staff");
+    DARK("dark"),
+    STAFF("staff");
 
     WeaponTypes(String name) {
         this.name = name;

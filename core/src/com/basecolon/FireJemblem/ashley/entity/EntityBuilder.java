@@ -24,7 +24,7 @@ public abstract class EntityBuilder {
         return e;
     }
 
-    protected void add(Class<? extends Component> clazz, Component component) {
+    protected void put(Class<? extends Component> clazz, Component component) {
         components.put(clazz, component);
     }
 
@@ -49,6 +49,12 @@ public abstract class EntityBuilder {
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
     protected @interface Required {
+        Class<? extends Component>[] componentsSetByThisMethod();
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    protected @interface Optional {
         Class<? extends Component>[] componentsSetByThisMethod();
     }
 

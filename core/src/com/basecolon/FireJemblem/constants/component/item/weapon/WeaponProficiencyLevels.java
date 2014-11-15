@@ -6,18 +6,21 @@ package com.basecolon.FireJemblem.constants.component.item.weapon;
  */
 public enum WeaponProficiencyLevels {
     NO(0),
-    E(1),
-    D(2),
-    C(3),
-    B(4),
-    A(5),
-    S(6),
-    PRF(Integer.MAX_VALUE);
+    E(NO),
+    D(E),
+    C(D),
+    B(C),
+    A(B),
+    S(A),
+    PRF(S);
 
     WeaponProficiencyLevels(int rank) {
         this.rank = rank;
     }
 
+    WeaponProficiencyLevels(WeaponProficiencyLevels levelBefore) {
+        this.rank = levelBefore.getNumericRank() + 1;
+    }
     private int rank;
 
     public int getNumericRank() {
