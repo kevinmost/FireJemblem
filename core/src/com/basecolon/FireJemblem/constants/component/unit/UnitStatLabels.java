@@ -16,7 +16,7 @@ public enum UnitStatLabels {
     MOV,
     AID,
     AFFIN,
-    COND,
+    COND, // TODO is this really a condition?
     GENDER
     ;
 }
