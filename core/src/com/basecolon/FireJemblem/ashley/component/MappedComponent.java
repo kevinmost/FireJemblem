@@ -2,17 +2,20 @@ package com.basecolon.FireJemblem.ashley.component;
 
 import com.badlogic.ashley.core.Component;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public abstract class MappedComponent<K,V> extends Component {
-    Map<K,V> map = new HashMap<>();
+    protected Map<K,V> map;
+
+    public MappedComponent(Map<K,V> components) {
+        map = components;
+    }
 
     public V get(K key) {
         V v = map.get(key);
         if (v != null) return v;
-        return defaultReturnValue();
+        return defaultReturnValue(key);
     }
 
-    public abstract V defaultReturnValue();
+    public abstract V defaultReturnValue(K key);
 }

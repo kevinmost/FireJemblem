@@ -1,6 +1,8 @@
 package com.basecolon.FireJemblem.constants.component.unit;
 
 public enum UnitStatLabels {
+
+
     MAX_HP,
     CURRENT_HP,
 
