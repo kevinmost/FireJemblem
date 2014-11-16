@@ -52,13 +52,13 @@ public abstract class EntityBuilder {
         Class<? extends Component>[] componentsSetByThisMethod();
     }
 
-    @Retention(RetentionPolicy.RUNTIME)
+    @Retention(RetentionPolicy.SOURCE)
     @Target(ElementType.METHOD)
     protected @interface Optional {
         Class<? extends Component>[] componentsSetByThisMethod();
     }
 
-    class RequiredEntityComponentsNotSetException extends RuntimeException {
+    public class RequiredEntityComponentsNotSetException extends RuntimeException {
         RequiredEntityComponentsNotSetException(Class<? extends EntityBuilder> entityBeingBuilt, String requiredMethod) {
             super(String.format("When building an Entity with %s, you must invoke the %s method", entityBeingBuilt.getSimpleName(), requiredMethod));
         }

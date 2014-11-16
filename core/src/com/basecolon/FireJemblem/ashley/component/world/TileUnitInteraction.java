@@ -12,7 +12,7 @@ public class TileUnitInteraction extends Component {
     public int def;
     public int avoid;
     public int heal;
-    public Map<ClassTypes, Integer> moveCost = new HashMap<ClassTypes, Integer>();
+    public Map<ClassTypes, Integer> moveCost = new HashMap<>();
 
     public TileUnitInteraction(TileConstants constants) {
         this.def = constants.def;
