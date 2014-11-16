@@ -56,19 +56,6 @@ public class Item {
             this.crit = weapon.getCrit();
         }
 
-        public Weapon(Sprite sprite, String name, Integer currentDurability, Integer maxDurability, String infoText, WeaponTypes type, WeaponProficiencyLevels level, Integer minRange, Integer maxRange, Integer weight, Integer might, Integer hit, Integer crit) {
-            super(sprite, name, currentDurability, maxDurability, infoText);
-            this.type = type;
-            this.level = level;
-            this.minRange = minRange;
-            this.maxRange = maxRange;
-            this.weight = weight;
-            this.might = might;
-            this.hit = hit;
-            this.crit = crit;
-        }
-
-
         public WeaponTypes getType() {
             return type;
         }

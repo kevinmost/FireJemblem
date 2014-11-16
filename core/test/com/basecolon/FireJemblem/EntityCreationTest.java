@@ -3,10 +3,7 @@ package com.basecolon.FireJemblem;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.basecolon.FireJemblem.ashley.component.NameComponent;
-import com.basecolon.FireJemblem.ashley.component.unit.Inventory;
-import com.basecolon.FireJemblem.ashley.component.unit.UnitClass;
-import com.basecolon.FireJemblem.ashley.component.unit.UnitStats;
-import com.basecolon.FireJemblem.ashley.component.unit.UnitWeaponProficiency;
+import com.basecolon.FireJemblem.ashley.component.unit.*;
 import com.basecolon.FireJemblem.ashley.component.world.TileUnitInteraction;
 import com.basecolon.FireJemblem.ashley.entity.EntityBuilder;
 import com.basecolon.FireJemblem.ashley.entity.unit.UnitEntityBuilder;
@@ -15,8 +12,6 @@ import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficien
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
 import com.basecolon.FireJemblem.constants.component.item.weapon.sword.IronSword;
 import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
-import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
-import com.basecolon.FireJemblem.constants.component.world.TileConstants;
 import com.basecolon.FireJemblem.misc.items.Item;
 import org.junit.Test;
 
@@ -28,6 +23,9 @@ import java.util.Map;
 import static com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels.D;
 import static com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes.SWORD;
 import static com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels.*;
+import static com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes.*;
+import static com.basecolon.FireJemblem.constants.component.world.TileConstants.FOREST;
+import static com.basecolon.FireJemblem.constants.component.world.TileConstants.PLAIN;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 
@@ -40,23 +38,23 @@ public class EntityCreationTest {
 
     @Test
     public void testTiles() throws Exception {
-        Entity plain = new TileEntityBuilder().setTileType(TileConstants.PLAIN).build();
+        Entity plain = new TileEntityBuilder().setTileType(PLAIN).build();
 
-        Entity forest = new TileEntityBuilder().setTileType(TileConstants.FOREST).build();
+        Entity forest = new TileEntityBuilder().setTileType(FOREST).build();
 
         // Create a ComponentMapper for Tiles
         ComponentMapper<TileUnitInteraction> tileComponentMapper = ComponentMapper.getFor(TileUnitInteraction.class);
 
-        assertEquals(1, (int) tileComponentMapper.get(plain).moveCost.get(ClassTypes.MERCENARY));
-        assertEquals(1, (int) tileComponentMapper.get(plain).moveCost.get(ClassTypes.HERO));
-        assertEquals(2, (int) tileComponentMapper.get(forest).moveCost.get(ClassTypes.MERCENARY));
-        assertEquals(4, (int) tileComponentMapper.get(forest).moveCost.get(ClassTypes.HERO));
+        assertEquals(1, (int) tileComponentMapper.get(plain).moveCost.get(MERCENARY));
+        assertEquals(1, (int) tileComponentMapper.get(plain).moveCost.get(HERO));
+        assertEquals(2, (int) tileComponentMapper.get(forest).moveCost.get(MERCENARY));
+        assertEquals(4, (int) tileComponentMapper.get(forest).moveCost.get(HERO));
     }
 
     @Test
     public void testTileClone() throws Exception {
-        Entity a = new TileEntityBuilder().setTileType(TileConstants.PLAIN).build();
-        Entity b = new TileEntityBuilder().setTileType(TileConstants.PLAIN).build();
+        Entity a = new TileEntityBuilder().setTileType(PLAIN).build();
+        Entity b = new TileEntityBuilder().setTileType(PLAIN).build();
 
         ComponentMapper<TileUnitInteraction> tileComponentMapper = ComponentMapper.getFor(TileUnitInteraction.class);
 
@@ -89,8 +87,9 @@ public class EntityCreationTest {
         Entity lyn = new UnitEntityBuilder()
                 .setName("Lyn")
                 .setSprite(null)
+                .setPosition(0,0)
                 .setStats(stats)
-                .setClass(ClassTypes.LORD_LYN)
+                .setClass(LORD_LYN)
                 .setWeaponProficiency(proficiency)
                 .setInventory(Inventory.LimitedList.fromList(items))
                 .build();
@@ -100,10 +99,15 @@ public class EntityCreationTest {
         assertEquals(5, (int)ComponentMapper.getFor(UnitStats.class).get(lyn).get(MOVE));
         assertEquals(16, (int)ComponentMapper.getFor(UnitStats.class).get(lyn).get(CURRENT_HP));
         assertEquals("Iron Sword", ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).asWeapon().getName());
+
+        assertEquals(46, (int)ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).asWeapon().getCurrentDurability());
+        ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).asWeapon().decreaseDurability();
+        assertEquals(45, (int)ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).asWeapon().getCurrentDurability());
+
         assertEquals(5, (int)ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).asWeapon().getMight());
         assertEquals(1, ComponentMapper.getFor(Inventory.class).get(lyn).items.size());
-        assertEquals(ClassTypes.LORD_LYN, ComponentMapper.getFor(UnitClass.class).get(lyn).getUnitClass());
+        assertEquals(LORD_LYN, ComponentMapper.getFor(UnitClass.class).get(lyn).getUnitClass());
+        assertEquals(0, ComponentMapper.getFor(PositionComponent.class).get(lyn).x);
     }
-
 
 }

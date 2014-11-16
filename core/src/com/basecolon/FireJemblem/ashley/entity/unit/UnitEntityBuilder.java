@@ -3,10 +3,7 @@ package com.basecolon.FireJemblem.ashley.entity.unit;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.basecolon.FireJemblem.ashley.component.NameComponent;
 import com.basecolon.FireJemblem.ashley.component.SpriteComponent;
-import com.basecolon.FireJemblem.ashley.component.unit.Inventory;
-import com.basecolon.FireJemblem.ashley.component.unit.UnitClass;
-import com.basecolon.FireJemblem.ashley.component.unit.UnitStats;
-import com.basecolon.FireJemblem.ashley.component.unit.UnitWeaponProficiency;
+import com.basecolon.FireJemblem.ashley.component.unit.*;
 import com.basecolon.FireJemblem.ashley.entity.EntityBuilder;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
@@ -28,6 +25,11 @@ public class UnitEntityBuilder extends EntityBuilder {
 
     public UnitEntityBuilder setClass(ClassTypes unitClass) {
         put(UnitClass.class, new UnitClass(unitClass));
+        return this;
+    }
+
+    public UnitEntityBuilder setPosition(int x, int y) {
+        put(PositionComponent.class, new PositionComponent(x, y));
         return this;
     }
 
