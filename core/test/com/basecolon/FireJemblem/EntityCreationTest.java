@@ -38,23 +38,23 @@ public class EntityCreationTest {
 
     @Test
     public void testTiles() throws Exception {
-        Entity plain = new TileEntityBuilder().setTileType(PLAIN).build();
+        Entity plain = new TileEntityBuilder().setTileType(PLAIN).setSprite(null).build();
 
-        Entity forest = new TileEntityBuilder().setTileType(FOREST).build();
+        Entity forest = new TileEntityBuilder().setTileType(FOREST).setSprite(null).build();
 
         // Create a ComponentMapper for Tiles
         ComponentMapper<TileUnitInteraction> tileComponentMapper = ComponentMapper.getFor(TileUnitInteraction.class);
 
-        assertEquals(1, (int) tileComponentMapper.get(plain).moveCost.get(MERCENARY));
-        assertEquals(1, (int) tileComponentMapper.get(plain).moveCost.get(HERO));
-        assertEquals(2, (int) tileComponentMapper.get(forest).moveCost.get(MERCENARY));
-        assertEquals(4, (int) tileComponentMapper.get(forest).moveCost.get(HERO));
+        assertEquals(1, tileComponentMapper.get(plain).getMoveCost(HERO));
+        assertEquals(1, tileComponentMapper.get(plain).getMoveCost(PALADIN));
+        assertEquals(2, tileComponentMapper.get(forest).getMoveCost(HERO));
+        assertEquals(3, tileComponentMapper.get(forest).getMoveCost(PALADIN));
     }
 
     @Test
     public void testTileClone() throws Exception {
-        Entity a = new TileEntityBuilder().setTileType(PLAIN).build();
-        Entity b = new TileEntityBuilder().setTileType(PLAIN).build();
+        Entity a = new TileEntityBuilder().setTileType(PLAIN).setSprite(null).build();
+        Entity b = new TileEntityBuilder().setTileType(PLAIN).setSprite(null).build();
 
         ComponentMapper<TileUnitInteraction> tileComponentMapper = ComponentMapper.getFor(TileUnitInteraction.class);
 
@@ -91,21 +91,21 @@ public class EntityCreationTest {
                 .setStats(stats)
                 .setClass(LORD_LYN)
                 .setWeaponProficiency(proficiency)
-                .setInventory(Inventory.LimitedList.fromList(items))
+                .setInventory(items)
                 .build();
 
         assertEquals(D, ComponentMapper.getFor(UnitWeaponProficiency.class).get(lyn).get(SWORD));
         assertEquals("Lyn", ComponentMapper.getFor(NameComponent.class).get(lyn).getName());
         assertEquals(5, (int)ComponentMapper.getFor(UnitStats.class).get(lyn).get(MOVE));
         assertEquals(16, (int)ComponentMapper.getFor(UnitStats.class).get(lyn).get(CURRENT_HP));
-        assertEquals("Iron Sword", ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).asWeapon().getName());
+        assertEquals("Iron Sword", ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).asWeapon().getName());
 
-        assertEquals(46, (int)ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).asWeapon().getCurrentDurability());
-        ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).asWeapon().decreaseDurability();
-        assertEquals(45, (int)ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).asWeapon().getCurrentDurability());
+        assertEquals(46, (int)ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).asWeapon().getCurrentDurability());
+        ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).asWeapon().decreaseDurability();
+        assertEquals(45, (int)ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).asWeapon().getCurrentDurability());
 
-        assertEquals(5, (int)ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).asWeapon().getMight());
-        assertEquals(1, ComponentMapper.getFor(Inventory.class).get(lyn).items.size());
+        assertEquals(5, (int)ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).asWeapon().getMight());
+        assertEquals(1, ComponentMapper.getFor(Inventory.class).get(lyn).getItems().size());
         assertEquals(LORD_LYN, ComponentMapper.getFor(UnitClass.class).get(lyn).getUnitClass());
         assertEquals(0, ComponentMapper.getFor(PositionComponent.class).get(lyn).x);
     }

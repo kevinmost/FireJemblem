@@ -1,5 +1,6 @@
 package com.basecolon.FireJemblem.misc.items;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponConstant;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
@@ -18,7 +19,7 @@ public class Item {
     private final Integer maxDurability;
     private final String infoText;
 
-    public Item(Sprite sprite, String name, Integer currentDurability, Integer maxDurability, String infoText) {
+    protected Item(Sprite sprite, String name, Integer currentDurability, Integer maxDurability, String infoText) {
         this.sprite = sprite;
         this.name = name;
         this.currentDurability = currentDurability;
@@ -43,9 +44,11 @@ public class Item {
         private final Integer might;
         private final Integer hit;
         private final Integer crit;
+        private final WeaponConstant weapon;
 
         public Weapon(WeaponConstant weapon) {
             super(weapon.getSprite(), weapon.getName(), weapon.getMaxDurability(), weapon.getMaxDurability(), weapon.getInfoText());
+            this.weapon = weapon;
             this.type = weapon.getType();
             this.level = weapon.getLevel();
             this.minRange = weapon.getMinRange();
@@ -87,6 +90,11 @@ public class Item {
         public Integer getCrit() {
             return crit;
         }
+
+        public WeaponConstant getWeapon() {
+            return weapon;
+        }
+
     }
 
     public Integer getMaxDurability() {

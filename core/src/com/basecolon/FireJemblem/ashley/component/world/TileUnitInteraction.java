@@ -8,25 +8,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TileUnitInteraction extends Component {
-
+    // TODO: Functionality to place light runes on tiles would probably go here.
     public int def;
     public int avoid;
     public int heal;
-    public Map<ClassTypes, Integer> moveCost = new HashMap<>();
+    private Map<ClassTypes, Integer> specialMoveCost = new HashMap<>();
+    private int moveCost;
 
     public TileUnitInteraction(TileConstants constants) {
         this.def = constants.def;
         this.avoid = constants.avoid;
         this.heal = constants.heal;
+        this.moveCost = constants.moveCost;
+        this.specialMoveCost = constants.specialMoveCost;
+    }
 
-        for (ClassTypes aClass : ClassTypes.values()) {
-            int thisClassMoveCost;
-            if (constants.specialMoveCost.containsKey(aClass)) {
-                thisClassMoveCost = constants.specialMoveCost.get(aClass);
-            } else {
-                thisClassMoveCost = constants.moveCost;
-            }
-            moveCost.put(aClass, thisClassMoveCost);
-        }
+    public int getMoveCost(ClassTypes unitClass) {
+        Integer specialMoveCost = this.specialMoveCost.get(unitClass);
+        if (specialMoveCost == null) return this.moveCost;
+        return specialMoveCost;
     }
 }

@@ -6,43 +6,95 @@ import com.basecolon.FireJemblem.misc.items.Item;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Components aren't supposed to have any logic in them. However, Inventories always have the same rule regarding
+ * equipped weapons; the first equippable item in the character's inventory is always auto-equipped. So we are going
+ * to put a little bit of logic in here; at any point where the unit's inventory could possibly be modified,
+ * we are going to do a check on the inventory and set their first equippable weapon (if any) to their equipped one
+ */
 public class Inventory extends Component {
+    public static final int INVENTORY_MAX_SIZE = 5;
 
-    public List<Item> items = new LimitedList<>(5);
+    private List<Item> items = new ArrayList<>(INVENTORY_MAX_SIZE);
 
-    public Inventory(LimitedList<Item> items) {
-        this.items = items;
+    /**
+     * The index of the item in this inventory that is currently equipped
+     */
+    private Integer equippedItemIndex = -1;
+
+
+    public Inventory(List<Item> items) {
+        // If the list is larger than we're allowed to add, trim it
+        if (items.size() > INVENTORY_MAX_SIZE) {
+            items = items.subList(0, INVENTORY_MAX_SIZE);
+        }
+        this.items.addAll(items);
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public Integer getEquippedItemIndex() {
+        return equippedItemIndex;
+    }
+
+    public Item.Weapon getEquippedWeapon() {
+        return items.get(equippedItemIndex).asWeapon();
+    }
+
+    public boolean setEquippedWeapon(int slot) {
+        if (items.size() <= slot) {
+            return false;
+        }
+        this.equippedItemIndex = slot;
+        return true;
     }
 
     /**
-     * This class acts exactly like an ArrayList, but throws an exception if the initial capacity is exceeded for any reason
-     * It also only returns its initial capacity when "size" is reported
+     * Adds the given item to the inventory
+     * @return true if the inventory was changed as a result of invoking this method, false if not
      */
-    public static class LimitedList<T> extends ArrayList<T> {
+    public boolean addItem(Item item) {
+        //noinspection SimplifiableIfStatement
+        if (items.size() >= INVENTORY_MAX_SIZE) {
+            return false;
+        }
+        return items.add(item);
+    }
 
-        private final int maxSize;
+    public void addItems(Item... items) {
+        for (Item item : items) {
+            addItem(item);
+        }
+    }
 
-        private LimitedList(int initialCapacity) {
-            super(initialCapacity);
-            maxSize = initialCapacity;
+    public void addItems(List<Item> items) {
+        for (Item item : items) {
+            addItem(item);
+        }
+    }
+
+    /**
+     * Swap the item at {@param item1} with the item at {@param item2}
+     * @return true if the swap was successful, false if not
+     */
+    public boolean swapItems(int item1, int item2) {
+        if (items.size() < item1 || items.size() < item2) {
+            return false;
         }
 
-        @Override
-        public boolean add(T t) {
-            if (this.size() >= maxSize) {
-                throw new IllegalStateException("List is already at its maximum size of " + maxSize);
-            }
-            return super.add(t);
-        }
+        Item temp = items.set(item1, items.get(item2));
+        items.set(item2, temp);
+        return true;
+    }
 
-        public static <T> LimitedList<T> fromList(List<T> l) {
-            return fromList(l, 5);
-        }
-        private static <T> LimitedList<T> fromList(List<T> l, int maxSize) {
-            if (l.size() > maxSize) throw new IllegalStateException("You must specify a maxSize larger than the starting list");
-            LimitedList<T> ll = new LimitedList<>(maxSize);
-            ll.addAll(l);
-            return ll;
-        }
+    public boolean removeItem(int item) {
+        items.remove(item);
+        return true;
+    }
+
+    public boolean removeItem(Item item) {
+        return items.remove(item);
     }
 }

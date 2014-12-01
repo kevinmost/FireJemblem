@@ -1,11 +1,15 @@
 package com.basecolon.FireJemblem.constants.component.item.weapon.sword;
 
+import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.basecolon.FireJemblem.ashley.component.unit.UnitClass;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponConstant;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
+import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
 
-public class IronSword extends WeaponConstant {
+public class ManiKatti extends WeaponConstant {
     @Override
     public WeaponTypes getType() {
         return WeaponTypes.SWORD;
@@ -13,7 +17,7 @@ public class IronSword extends WeaponConstant {
 
     @Override
     public WeaponProficiencyLevels getLevel() {
-        return WeaponProficiencyLevels.E;
+        return WeaponProficiencyLevels.PRF;
     }
 
     @Override
@@ -28,22 +32,22 @@ public class IronSword extends WeaponConstant {
 
     @Override
     public Integer getWeight() {
-        return 5;
+        return 3;
     }
 
     @Override
     public Integer getMight() {
-        return 5;
+        return 8;
     }
 
     @Override
     public Integer getHit() {
-        return 90;
+        return 80;
     }
 
     @Override
     public Integer getCrit() {
-        return 0;
+        return 20;
     }
 
     @Override
@@ -53,16 +57,23 @@ public class IronSword extends WeaponConstant {
 
     @Override
     public String getName() {
-        return "Iron Sword";
+        return "Mani Katti";
     }
 
     @Override
     public Integer getMaxDurability() {
-        return 46;
+        return 45;
     }
 
     @Override
     public String getInfoText() {
-        return null;
+        return "Lyn only; Bonus damage to horseback and armored units";
+    }
+
+    @Override
+    public boolean canBeWieldedBy(Entity unit) {
+        ClassTypes unitClass = ComponentMapper.getFor(UnitClass.class).get(unit).getUnitClass();
+
+        return unitClass == ClassTypes.LORD_LYN || unitClass == ClassTypes.BLADE_LORD;
     }
 }

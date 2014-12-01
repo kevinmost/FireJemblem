@@ -1,14 +1,14 @@
-package com.basecolon.FireJemblem.constants.component.item.weapon.sword;
+package com.basecolon.FireJemblem.constants.component.item.weapon.axe;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponConstant;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
 
-public class IronSword extends WeaponConstant {
+public class HandAxe extends WeaponConstant {
     @Override
     public WeaponTypes getType() {
-        return WeaponTypes.SWORD;
+        return WeaponTypes.AXE;
     }
 
     @Override
@@ -23,22 +23,22 @@ public class IronSword extends WeaponConstant {
 
     @Override
     public Integer getMaxRange() {
-        return 1;
+        return 2;
     }
 
     @Override
     public Integer getWeight() {
-        return 5;
+        return 12;
     }
 
     @Override
     public Integer getMight() {
-        return 5;
+        return 7;
     }
 
     @Override
     public Integer getHit() {
-        return 90;
+        return 60;
     }
 
     @Override
@@ -53,16 +53,16 @@ public class IronSword extends WeaponConstant {
 
     @Override
     public String getName() {
-        return "Iron Sword";
+        return "Hand Axe";
     }
 
     @Override
     public Integer getMaxDurability() {
-        return 46;
+        return 20;
     }
 
     @Override
     public String getInfoText() {
-        return null;
+        return "";
     }
 }

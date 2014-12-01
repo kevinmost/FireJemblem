@@ -1,11 +1,15 @@
 package com.basecolon.FireJemblem.constants.component.item.weapon.sword;
 
+import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.basecolon.FireJemblem.ashley.component.unit.UnitClass;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponConstant;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
+import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
 
-public class IronSword extends WeaponConstant {
+public class WoDao extends WeaponConstant {
     @Override
     public WeaponTypes getType() {
         return WeaponTypes.SWORD;
@@ -13,7 +17,7 @@ public class IronSword extends WeaponConstant {
 
     @Override
     public WeaponProficiencyLevels getLevel() {
-        return WeaponProficiencyLevels.E;
+        return WeaponProficiencyLevels.D;
     }
 
     @Override
@@ -33,17 +37,17 @@ public class IronSword extends WeaponConstant {
 
     @Override
     public Integer getMight() {
-        return 5;
+        return 8;
     }
 
     @Override
     public Integer getHit() {
-        return 90;
+        return 75;
     }
 
     @Override
     public Integer getCrit() {
-        return 0;
+        return 35;
     }
 
     @Override
@@ -53,16 +57,30 @@ public class IronSword extends WeaponConstant {
 
     @Override
     public String getName() {
-        return "Iron Sword";
+        return "Wo Dao";
     }
 
     @Override
     public Integer getMaxDurability() {
-        return 46;
+        return 20;
     }
 
     @Override
     public String getInfoText() {
-        return null;
+        return "Only usable by Myrmidons, Swordmasters, and Blade Lords";
+    }
+
+    @Override
+    public boolean canBeWieldedBy(Entity unit) {
+        // First performs a guard-check to make sure that this unit is of the right class. If they are, processes normally.
+        ClassTypes unitClass = ComponentMapper.getFor(UnitClass.class).get(unit).getUnitClass();
+
+        //noinspection SimplifiableIfStatement
+        if (unitClass != ClassTypes.MYRMIDON && unitClass != ClassTypes.SWORDMASTER && unitClass != ClassTypes.BLADE_LORD) {
+            return false;
+        }
+
+        return super.canBeWieldedBy(unit);
+
     }
 }

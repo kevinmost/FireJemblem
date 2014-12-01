@@ -13,11 +13,4 @@ public class UnitClass extends Component {
     public ClassTypes getUnitClass() {
         return unitClass;
     }
-
-    public ClassTypes promote() {
-        ClassTypes promotion = unitClass.getPromotion();
-        if (promotion == null) return null;
-        unitClass = promotion;
-        return unitClass;
-    }
 }
