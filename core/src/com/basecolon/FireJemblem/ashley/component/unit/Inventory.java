@@ -2,6 +2,7 @@ package com.basecolon.FireJemblem.ashley.component.unit;
 
 import com.badlogic.ashley.core.Component;
 import com.basecolon.FireJemblem.misc.items.Item;
+import com.basecolon.FireJemblem.misc.items.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,8 @@ public class Inventory extends Component {
         return equippedItemIndex;
     }
 
-    public Item.Weapon getEquippedWeapon() {
-        return items.get(equippedItemIndex).asWeapon();
+    public Weapon getEquippedWeapon() {
+        return items.get(equippedItemIndex).as(Weapon.class);
     }
 
     public boolean setEquippedWeapon(int slot) {
@@ -61,18 +62,6 @@ public class Inventory extends Component {
             return false;
         }
         return items.add(item);
-    }
-
-    public void addItems(Item... items) {
-        for (Item item : items) {
-            addItem(item);
-        }
-    }
-
-    public void addItems(List<Item> items) {
-        for (Item item : items) {
-            addItem(item);
-        }
     }
 
     /**

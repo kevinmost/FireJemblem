@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class UnitWeaponProficiency extends MappedComponent<WeaponTypes, WeaponProficiencyLevels> {
     @Override
-    public WeaponProficiencyLevels defaultReturnValue(WeaponTypes weapon) {
+    protected WeaponProficiencyLevels defaultReturnValue(WeaponTypes weapon) {
         return WeaponProficiencyLevels.NO;
     }
 

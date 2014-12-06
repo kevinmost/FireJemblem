@@ -59,14 +59,7 @@ public enum TileConstants {
      * @param specialMoveCost The cost of a character to move onto this tile if there are special move costs for certain classes (eg, Forests require 2 move for most characters and 3 move for horseback characters)
      */
     TileConstants(String name, int def, int avoid, int heal, int moveCost, SpecialMoveCost specialMoveCost) {
-        this.name = name;
-        this.def = def;
-        this.avoid = avoid;
-        this.heal = heal;
-        if (moveCost == 0) throw new RuntimeException("You can't specify 0 as a move-cost for a tile, you probably meant to specify UNWALKABLE");
-        this.moveCost = moveCost;
-
-        this.specialMoveCost = new HashMap<>();
+        this(name, def, avoid, heal, moveCost);
         for (Map.Entry<ClassTypes.ClassTypeGroupings, Integer> groupingMoveCost : specialMoveCost.specialMoveCostPairs.entrySet()) {
             for (ClassTypes classMoveCost : groupingMoveCost.getKey().getClassesInType()) {
                 this.specialMoveCost.put(classMoveCost, groupingMoveCost.getValue());

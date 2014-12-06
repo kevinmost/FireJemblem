@@ -1,17 +1,13 @@
 package com.basecolon.FireJemblem.misc.items;
 
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponConstant;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
 
 /**
  * Just a giant POJO set from an enum where the actual data is defined.
  * The only mutable field in here is {@link #currentDurability}, and the only way that the client can change it
  * is by calling {@link #decreaseDurability()}, which decreases the value by 1
  */
-public class Item {
+public abstract class Item {
 
     private final Sprite sprite;
     private final String name;
@@ -27,75 +23,19 @@ public class Item {
         this.infoText = infoText;
     }
 
-    public Weapon asWeapon() {
-        try {
-            return (Weapon) this;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(this.getName() + " is not a weapon!");
+
+    /**
+     * Can be used, for example, to cast this item to a Weapon. Useful if you got an Item out of an Inventory and need
+     * to get Weapon-related fields off it
+     */
+    @SuppressWarnings("unchecked")
+    public <C extends Item> C as(Class<C> clazz) {
+        if (this.getClass().getName().equals(clazz.getName())) {
+            return (C) this;
         }
+        return null;
     }
 
-    public static class Weapon extends Item {
-        private final WeaponTypes type;
-        private final WeaponProficiencyLevels level;
-        private final Integer minRange;
-        private final Integer maxRange;
-        private final Integer weight;
-        private final Integer might;
-        private final Integer hit;
-        private final Integer crit;
-        private final WeaponConstant weapon;
-
-        public Weapon(WeaponConstant weapon) {
-            super(weapon.getSprite(), weapon.getName(), weapon.getMaxDurability(), weapon.getMaxDurability(), weapon.getInfoText());
-            this.weapon = weapon;
-            this.type = weapon.getType();
-            this.level = weapon.getLevel();
-            this.minRange = weapon.getMinRange();
-            this.maxRange = weapon.getMaxRange();
-            this.weight = weapon.getWeight();
-            this.might = weapon.getMight();
-            this.hit = weapon.getHit();
-            this.crit = weapon.getCrit();
-        }
-
-        public WeaponTypes getType() {
-            return type;
-        }
-
-        public WeaponProficiencyLevels getLevel() {
-            return level;
-        }
-
-        public Integer getMinRange() {
-            return minRange;
-        }
-
-        public Integer getMaxRange() {
-            return maxRange;
-        }
-
-        public Integer getWeight() {
-            return weight;
-        }
-
-        public Integer getMight() {
-            return might;
-        }
-
-        public Integer getHit() {
-            return hit;
-        }
-
-        public Integer getCrit() {
-            return crit;
-        }
-
-        public WeaponConstant getWeapon() {
-            return weapon;
-        }
-
-    }
 
     public Integer getMaxDurability() {
         return maxDurability;
@@ -116,6 +56,11 @@ public class Item {
     public String getInfoText() {
         return infoText;
     }
+
+    /**
+     * Called when an item is used. Reduces durability by 1
+     * @return The new durability of the item
+     */
     public int decreaseDurability() {
         currentDurability--;
         return currentDurability;

@@ -1,23 +1,34 @@
-package com.basecolon.FireJemblem.ashley.system;
+package com.basecolon.FireJemblem.misc.helpers;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Family;
 import com.basecolon.FireJemblem.ashley.entity.EntityBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SystemMapperHelpers {
+public class EntityHelpers {
+
+    private static Map mappers = new HashMap();
 
     public static <E extends EntityBuilder> Mappers mappersFor(E entity) {
-        return new Mappers(entity);
+        if (mappers.containsKey(entity)) {
+            return (Mappers) mappers.get(entity);
+        }
+        Mappers newMapper = new Mappers(entity);
+        mappers.put(entity, newMapper);
+        return newMapper;
     }
 
+    public static <E extends EntityBuilder>Family familyFor(E entity) {
+        return Family.all(entity.getRequiredComponents()).get();
+    }
 
     public static class Mappers {
         private Map<Class<? extends Component>, ComponentMapper<? extends Component>> mappers = new HashMap<>();
 
-        public <E extends EntityBuilder> Mappers(E entity) {
+        protected <E extends EntityBuilder> Mappers(E entity) {
             for (Class<Component> component : entity.getAllComponents()) {
                 mappers.put(component, ComponentMapper.getFor(component));
             }

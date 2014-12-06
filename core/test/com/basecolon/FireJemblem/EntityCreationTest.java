@@ -8,11 +8,12 @@ import com.basecolon.FireJemblem.ashley.component.world.TileUnitInteraction;
 import com.basecolon.FireJemblem.ashley.entity.EntityBuilder;
 import com.basecolon.FireJemblem.ashley.entity.unit.UnitEntityBuilder;
 import com.basecolon.FireJemblem.ashley.entity.world.TileEntityBuilder;
+import com.basecolon.FireJemblem.constants.component.item.weapon.PhysicalWeaponTemplate;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
-import com.basecolon.FireJemblem.constants.component.item.weapon.sword.IronSword;
 import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
 import com.basecolon.FireJemblem.misc.items.Item;
+import com.basecolon.FireJemblem.misc.items.Weapon;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -79,9 +80,9 @@ public class EntityCreationTest {
             put(SWORD, D);
         }};
 
-        List<Item> items = new ArrayList<Item>() {{
+List<Item> items = new ArrayList<Item>() {{
             // TODO
-            add(new Item.Weapon(new IronSword()));
+            add(new Weapon(PhysicalWeaponTemplate.IRON_SWORD));
         }};
 
         Entity lyn = new UnitEntityBuilder()
@@ -95,18 +96,18 @@ public class EntityCreationTest {
                 .build();
 
         assertEquals(D, ComponentMapper.getFor(UnitWeaponProficiency.class).get(lyn).get(SWORD));
-        assertEquals("Lyn", ComponentMapper.getFor(NameComponent.class).get(lyn).getName());
+        assertEquals("Lyn", ComponentMapper.getFor(NameComponent.class).get(lyn).name);
         assertEquals(5, (int)ComponentMapper.getFor(UnitStats.class).get(lyn).get(MOVE));
         assertEquals(16, (int)ComponentMapper.getFor(UnitStats.class).get(lyn).get(CURRENT_HP));
-        assertEquals("Iron Sword", ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).asWeapon().getName());
+        assertEquals("Iron Sword", ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).as(Weapon.class).getName());
 
-        assertEquals(46, (int)ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).asWeapon().getCurrentDurability());
-        ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).asWeapon().decreaseDurability();
-        assertEquals(45, (int)ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).asWeapon().getCurrentDurability());
+        assertEquals(46, (int)ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).as(Weapon.class).getCurrentDurability());
+        ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).as(Weapon.class).decreaseDurability();
+        assertEquals(45, (int)ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).as(Weapon.class).getCurrentDurability());
 
-        assertEquals(5, (int)ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).asWeapon().getMight());
+        assertEquals(5, (int)ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).as(Weapon.class).getMight());
         assertEquals(1, ComponentMapper.getFor(Inventory.class).get(lyn).getItems().size());
-        assertEquals(LORD_LYN, ComponentMapper.getFor(UnitClass.class).get(lyn).getUnitClass());
+        assertEquals(LORD_LYN, ComponentMapper.getFor(UnitClass.class).get(lyn).unitClass);
         assertEquals(0, ComponentMapper.getFor(PositionComponent.class).get(lyn).x);
     }
 

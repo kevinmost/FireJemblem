@@ -23,6 +23,7 @@ public class TileUnitInteraction extends Component {
         this.specialMoveCost = constants.specialMoveCost;
     }
 
+    // TODO: Remove me, not component-y enough
     public int getMoveCost(ClassTypes unitClass) {
         Integer specialMoveCost = this.specialMoveCost.get(unitClass);
         if (specialMoveCost == null) return this.moveCost;

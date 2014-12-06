@@ -17,5 +17,5 @@ public abstract class MappedComponent<K,V> extends Component {
         return defaultReturnValue(key);
     }
 
-    public abstract V defaultReturnValue(K key);
+    protected abstract V defaultReturnValue(K key);
 }

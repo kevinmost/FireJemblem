@@ -1,9 +1,8 @@
 package com.basecolon.FireJemblem.constants.component.unit.classes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
-import static com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes.ClassTypeGroupings.*;
 
 /**
  * NOTE: Notice that we put promoted classes first because then we can reference them in the pre-promote without running into forward reference problems
@@ -11,84 +10,79 @@ import static com.basecolon.FireJemblem.constants.component.unit.classes.ClassTy
  * @date 10/7/14
  */
 public enum ClassTypes {
-    BLADE_LORD("Blade Lord", FOOT),
-    LORD_LYN("Lord", FOOT, BLADE_LORD),
-    KNIGHT_LORD("Knight Lord", KNIGHTS_B),
-    LORD_ELIWOOD("Lord", FOOT, KNIGHT_LORD),
-    GREAT_LORD("Great Lord", ARMORS),
-    LORD_HECTOR("Lord", FOOT, GREAT_LORD),
+    BLADE_LORD("Blade Lord"),
+    LORD_LYN("Lord", BLADE_LORD),
+    KNIGHT_LORD("Knight Lord"),
+    LORD_ELIWOOD("Lord", KNIGHT_LORD),
+    GREAT_LORD("Great Lord"),
+    LORD_HECTOR("Lord", GREAT_LORD),
 
-    ARCHSAGE("Archsage", MAGES),
-    DARK_DRUID("Dark Druid", MAGES),
+    ARCHSAGE("Archsage"),
+    DARK_DRUID("Dark Druid"),
 
-    BARD("Bard", FOOT),
-    DANCER("Dancer", FOOT),
+    BARD("Bard"),
+    DANCER("Dancer"),
 
-    HERO("Hero", FOOT),
-    MERCENARY("Mercenary", FOOT, HERO),
+    HERO("Hero"),
+    MERCENARY("Mercenary", HERO),
 
-    SWORDMASTER("Swordmaster", FOOT),
-    MYRMIDON("Myrmidon", FOOT, SWORDMASTER),
+    SWORDMASTER("Swordmaster"),
+    MYRMIDON("Myrmidon", SWORDMASTER),
 
-    ASSASSIN("Assassin", FOOT),
-    THIEF("Thief", FOOT, ASSASSIN),
+    ASSASSIN("Assassin"),
+    THIEF("Thief", ASSASSIN),
 
-    GENERAL("General", ARMORS),
-    KNIGHT("Knight", ARMORS, GENERAL),
+    GENERAL("General"),
+    KNIGHT("Knight", GENERAL),
 
-    WARRIOR("Warrior", FIGHTERS),
-    FIGHTER("Fighter", FIGHTERS, WARRIOR),
+    WARRIOR("Warrior"),
+    FIGHTER("Fighter", WARRIOR),
 
-    BERSERKER("Berserker", PIRATES),
-    PIRATE("Pirate", PIRATES, BERSERKER),
+    BERSERKER("Berserker"),
+    PIRATE("Pirate", BERSERKER),
 
-    SNIPER("Sniper", FOOT),
-    ARCHER("Archer", FOOT, SNIPER),
+    SNIPER("Sniper"),
+    ARCHER("Archer", SNIPER),
 
-    NOMAD_TROOPER("Nomad Trooper", ClassTypeGroupings.NOMAD_TROOPER),
-    NOMAD("Nomad", ClassTypeGroupings.NOMAD, NOMAD_TROOPER),
+    NOMAD_TROOPER("Nomad Trooper"),
+    NOMAD("Nomad", NOMAD_TROOPER),
 
-    PALADIN("Paladin", KNIGHTS_B),
-    CAVALIER("Cavalier", KNIGHTS_A, PALADIN),
+    PALADIN("Paladin"),
+    CAVALIER("Cavalier", PALADIN),
 
-    FALCON_KNIGHT("Falcon Knight", FLIERS),
-    PEGASUS_KNIGHT("Pegasus Knight", FLIERS, FALCON_KNIGHT),
+    FALCON_KNIGHT("Falcon Knight"),
+    PEGASUS_KNIGHT("Pegasus Knight", FALCON_KNIGHT),
 
-    WYVERN_LORD("Wyvern Lord", FLIERS),
-    WYVERN_KNIGHT("Wyvern Knight", FLIERS, WYVERN_LORD),
+    WYVERN_LORD("Wyvern Lord"),
+    WYVERN_KNIGHT("Wyvern Knight", WYVERN_LORD),
 
-    BISHOP("Bishop", MAGES),
-    MONK("Monk", MAGES, BISHOP),
-    CLERIC("Cleric", MAGES, BISHOP),
+    BISHOP("Bishop"),
+    MONK("Monk", BISHOP),
+    CLERIC("Cleric", BISHOP),
 
-    VALKYRIE("Valkyrie", KNIGHTS_B),
-    TROUBADOUR("Troubadour", KNIGHTS_A, VALKYRIE),
+    VALKYRIE("Valkyrie"),
+    TROUBADOUR("Troubadour", VALKYRIE),
 
-    SAGE("Sage", MAGES),
-    MAGE("Mage", MAGES, SAGE),
+    SAGE("Sage"),
+    MAGE("Mage", SAGE),
 
-    DRUID("Druid", MAGES),
-    SHAMAN("Shaman", MAGES, DRUID),
+    DRUID("Druid"),
+    SHAMAN("Shaman", DRUID),
 
     // TODO: No enemy-only classes yet, no Transporter
     ;
 
     private final ClassTypes promotion;
     private final String readableName;
-    private final ClassTypeGroupings group;
 
-    ClassTypes(String readableName, ClassTypeGroupings group) {
+    ClassTypes(String readableName) {
         this.readableName = readableName;
         this.promotion = null;
-        this.group = group;
-        group.addClass(this);
     }
 
-    ClassTypes(String readableName, ClassTypeGroupings group, ClassTypes promotion) {
+    ClassTypes(String readableName, ClassTypes promotion) {
         this.readableName = readableName;
         this.promotion = promotion;
-        this.group = group;
-        group.addClass(this);
     }
 
     public ClassTypes getPromotion() {
@@ -98,7 +92,10 @@ public enum ClassTypes {
         return readableName;
     }
     public ClassTypeGroupings getGroup() {
-        return group;
+        return ClassTypeGroupings.groupOf(this);
+    }
+    public EffectiveDamageGroups getEffectiveDamage() {
+        return EffectiveDamageGroups.groupOf(this);
     }
 
     /**
@@ -110,9 +107,20 @@ public enum ClassTypes {
      * the closest guess possible. Luckily, most of the missing types were clearly FOOT units.
      * NOTE: Nomad and Nomad Trooper have their own groups.
      */
-public enum ClassTypeGroupings {
+    public enum ClassTypeGroupings {
 
-        FOOT, ARMORS, KNIGHTS_A, KNIGHTS_B, FIGHTERS, BANDITS, PIRATES, MAGES, FLIERS, NOMAD, NOMAD_TROOPER;
+        // TODO: Berserker is weird, it belongs to both bandits and pirates. Will this be an issue?
+        FOOT(LORD_LYN, LORD_ELIWOOD, LORD_HECTOR, BLADE_LORD, MYRMIDON, SWORDMASTER, MERCENARY, HERO, ARCHER, SNIPER, THIEF, ASSASSIN),
+        ARMORS(GREAT_LORD, KNIGHT, GENERAL),
+        KNIGHTS_A(CAVALIER, TROUBADOUR),
+        KNIGHTS_B(KNIGHT_LORD, PALADIN, VALKYRIE),
+        FIGHTERS(FIGHTER, WARRIOR),
+        BANDITS(BERSERKER),
+        PIRATES(PIRATE, BERSERKER),
+        MAGES(MAGE, SAGE, SHAMAN, DRUID, CLERIC, BISHOP),
+        FLIERS(PEGASUS_KNIGHT, FALCON_KNIGHT, WYVERN_KNIGHT, WYVERN_LORD),
+        NOMAD(ClassTypes.NOMAD),
+        NOMAD_TROOPER(ClassTypes.NOMAD_TROOPER);
 
         static {
             ClassTypes unused = ClassTypes.ARCHER; // This is just here so that the ClassTypes are instantiated and added to the grouping lists
@@ -120,12 +128,52 @@ public enum ClassTypeGroupings {
 
         private List<ClassTypes> classesInType = new ArrayList<>();
 
-        void addClass(ClassTypes aClass) {
-            classesInType.add(aClass);
+        ClassTypeGroupings(ClassTypes... classesInThisGroup) {
+            classesInType = Arrays.asList(classesInThisGroup);
+        }
+
+
+        public List<ClassTypes> getClassesInType() {
+            return classesInType;
+        }
+
+        public static ClassTypeGroupings groupOf(ClassTypes unitClass) {
+            for (ClassTypeGroupings classTypeGrouping : ClassTypeGroupings.values()) {
+                if (classTypeGrouping.classesInType.contains(unitClass)) {
+                    return classTypeGrouping;
+                }
+            }
+            return FOOT; // The default should be foot, I guess, but we should never hit this point anyway
+        }
+    }
+
+    public enum EffectiveDamageGroups {
+        NONE(), // Everything else
+        MOUNTED(KNIGHT_LORD, CAVALIER, PALADIN, TROUBADOUR, VALKYRIE, NOMAD, NOMAD_TROOPER),
+        ARMORED(GREAT_LORD, KNIGHT, GENERAL),
+        SWORD(MERCENARY, HERO, MYRMIDON, SWORDMASTER),
+        FLYING(PEGASUS_KNIGHT, FALCON_KNIGHT),
+        DRAGON
+        ;
+
+        private List<ClassTypes> classesInType = new ArrayList<>();
+
+        EffectiveDamageGroups(ClassTypes... classesInThisGroup) {
+            classesInType = Arrays.asList(classesInThisGroup);
         }
 
         public List<ClassTypes> getClassesInType() {
             return classesInType;
         }
+
+        public static EffectiveDamageGroups groupOf(ClassTypes unitClass) {
+            for (EffectiveDamageGroups effectiveDamageGroup : EffectiveDamageGroups.values()) {
+                if (effectiveDamageGroup.classesInType.contains(unitClass)) {
+                    return effectiveDamageGroup;
+                }
+            }
+            return NONE;
+        }
+
     }
 }

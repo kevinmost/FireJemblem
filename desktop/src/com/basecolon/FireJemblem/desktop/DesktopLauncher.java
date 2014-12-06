@@ -15,5 +15,7 @@ public class DesktopLauncher {
 
         new LwjglApplication(new FireJemblemGame(), config);
         // TODO: Nothing works yet
+
+
     }
 }

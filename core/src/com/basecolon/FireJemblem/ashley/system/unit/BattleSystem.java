@@ -1,71 +1,72 @@
 package com.basecolon.FireJemblem.ashley.system.unit;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
-import com.basecolon.FireJemblem.ashley.component.unit.Inventory;
-import com.basecolon.FireJemblem.ashley.component.unit.UnitStats;
+import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.utils.ImmutableArray;
+import com.basecolon.FireJemblem.ashley.component.unit.AttackingComponent;
+import com.basecolon.FireJemblem.ashley.component.unit.DefendingComponent;
+import com.basecolon.FireJemblem.ashley.entity.unit.UnitEntityBuilder;
+import com.basecolon.FireJemblem.misc.helpers.EntityHelpers;
 
 import java.util.Random;
+
+import static com.basecolon.FireJemblem.misc.helpers.EntityHelpers.Mappers;
 
 
 public class BattleSystem extends EntitySystem {
     private Engine engine;
 
     private static final Random rng = new Random(System.nanoTime());
-    private static final ComponentMapper<UnitStats> stats = ComponentMapper.getFor(UnitStats.class);
-    private static final ComponentMapper<Inventory> items = ComponentMapper.getFor(Inventory.class);
+    private static final Mappers unitComponents = EntityHelpers.mappersFor(new UnitEntityBuilder());
 
-    /**
-     * True if a battle needs to be processed in the next update iteration, false otherwise
-     */
-    private boolean queuedBattle;
     private Entity attackingEntity;
     private Entity defendingEntity;
 
-    public void battleBetween(Entity attackingEntity, Entity defendingEntity) {
-        this.attackingEntity = attackingEntity;
-        this.defendingEntity = defendingEntity;
-        this.queuedBattle = true;
-    }
-
-    @Override
-    public void addedToEngine(Engine engine) {
-        this.engine = engine;
-    }
-
     @Override
     public void update(float deltaTime) {
-        if (!queuedBattle) return;
+        if (refreshEntities()) {
+        }
 
-        queuedBattle = false;
-
-        new BattleSystemCalculations(attackingEntity, defendingEntity);
+        cleanUp();
     }
 
 
     /**
-     * The meat of the battle calculations will go on in here. This is going to end up as messy spaghetti-code,
-     * thanks to some strange weapons like the Runesword, Light Brand, Eclipse, etc. and will probably just look like
-     * a procedurally-written nightmare with a bunch of if-clauses. There might be a way to clean this up later.
-     * Some things haven't been implemented, such as supports and tactician bonuses, and may never be implemented.
+     * Gets the currently attacking and defending units. {@return true} if everything went okay and we have two units
+     * to process a battle event for.
      */
-    class BattleSystemCalculations {
-
-        private final Entity attackingEntity;
-        private final Entity defendingEntity;
-
-
-        public BattleSystemCalculations(Entity attackingEntity, Entity defendingEntity) {
-            this.attackingEntity = attackingEntity;
-            this.defendingEntity = defendingEntity;
+    @SuppressWarnings("unchecked")
+    private boolean refreshEntities() {
+        ImmutableArray<Entity> attackingEntities = engine.getEntitiesFor(Family.all(AttackingComponent.class).get());
+        ImmutableArray<Entity> defendingEntities = engine.getEntitiesFor(Family.all(DefendingComponent.class).get());
+        if (attackingEntities.size() != 1 || defendingEntities.size() != 1) {
+            // TODO: We have a problem if we hit this point, what should we do?
+            return false;
         }
 
-        public void performBattle() {
+        this.attackingEntity = attackingEntities.first();
+        this.defendingEntity = defendingEntities.first();
 
-        }
+        return true;
     }
 
+    /**
+     * Removes the marker-components from the attacking and defending entities, and then shuts down this system.
+     */
+    private void cleanUp() {
+        attackingEntity.remove(AttackingComponent.class);
+        defendingEntity.remove(DefendingComponent.class);
+        this.setProcessing(false);
+    }
+
+    public Entity getAttackingEntity() {
+        return attackingEntity;
+    }
+
+    public Entity getDefendingEntity() {
+        return defendingEntity;
+    }
 
 }

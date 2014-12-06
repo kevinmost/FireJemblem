@@ -2,13 +2,13 @@ package com.basecolon.FireJemblem.misc.helpers;
 
 import com.badlogic.ashley.core.Entity;
 import com.basecolon.FireJemblem.ashley.entity.unit.UnitEntityBuilder;
+import com.basecolon.FireJemblem.constants.component.item.weapon.PhysicalWeaponTemplate;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
-import com.basecolon.FireJemblem.constants.component.item.weapon.axe.HandAxe;
-import com.basecolon.FireJemblem.constants.component.item.weapon.sword.IronSword;
 import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
 import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
 import com.basecolon.FireJemblem.misc.items.Item;
+import com.basecolon.FireJemblem.misc.items.Weapon;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class GameLauncherHelpers {
         }};
 
         List<Item> items = new ArrayList<Item>() {{
-            add(new Item.Weapon(new IronSword()));
+            add(new Weapon(PhysicalWeaponTemplate.IRON_SWORD));
         }};
 
         return new UnitEntityBuilder()
@@ -69,7 +69,7 @@ public class GameLauncherHelpers {
         }};
 
         List<Item> items = new ArrayList<Item>() {{
-            add(new Item.Weapon(new HandAxe()));
+            add(new Weapon(PhysicalWeaponTemplate.HAND_AXE));// TODO: Put a Hand Axe here once we implement it
         }};
 
         return new UnitEntityBuilder()

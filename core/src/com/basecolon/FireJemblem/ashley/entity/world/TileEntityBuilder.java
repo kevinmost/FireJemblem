@@ -22,6 +22,7 @@ public class TileEntityBuilder extends EntityBuilder {
         return this;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <C extends Component> Class<C>[] getRequiredComponents() {
         List<Class<? extends Component>> requiredComponents = new ArrayList<Class<? extends Component>>() {{

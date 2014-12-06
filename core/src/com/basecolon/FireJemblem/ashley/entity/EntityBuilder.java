@@ -11,6 +11,11 @@ public abstract class EntityBuilder {
     private Map<Class<? extends Component>, Component> components = new HashMap<>();
 
 
+    /**
+     * Checks if your entity has been built properly (if all required elements were set). If it is,
+     * the entity is built up component-by-component. The entity is then added to the engine for you.
+     * @return The entity you just built, <i>after</i> it has been added to the engine
+     */
     public Entity build() {
         ensureAllRequiredElementsSet();
         Entity e = new Entity();
@@ -34,7 +39,7 @@ public abstract class EntityBuilder {
         }
     }
 
-    public abstract <C extends Component> Class<C>[] getRequiredComponents();
+    public abstract <C extends Component> Class[] getRequiredComponents();
     public abstract <C extends Component> Class<C>[] getAllComponents();
 
 
