@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -35,19 +36,21 @@ public class UnitManipulationTest {
         Entity lyn = GameLauncherHelpers.createLyn();
 
         Inventory lynsInventory = mappers.getMapperFor(Inventory.class).get(lyn);
+        List<Inventory.InventoryItem> lynsItems = lynsInventory.items;
 
-        lynsInventory.removeItem(0);
-        lynsInventory.addItem(new Weapon(PhysicalWeaponTemplate.WO_DAO));
+        lynsItems.clear();
 
-        assertEquals(1, lynsInventory.getItems().size());
-        assertEquals("Wo Dao", lynsInventory.getItems().get(0).getName());
+        lynsItems.add(new Inventory.InventoryItem(new Weapon(PhysicalWeaponTemplate.WO_DAO)));
 
-        lynsInventory.addItem(new Weapon(PhysicalWeaponTemplate.IRON_SWORD));
+        assertEquals(1, lynsItems.size());
+        assertEquals("Wo Dao", lynsItems.get(0).item.getName());
+
+        lynsItems.add(new Inventory.InventoryItem(new Weapon(PhysicalWeaponTemplate.IRON_SWORD)));
 
         FireJemblem.engine.update(FireJemblem.deltaTime);
 
-        assertEquals(2, lynsInventory.getItems().size());
-        assertEquals("Iron Sword", lynsInventory.getItems().get(1).getName());
+        assertEquals(2, lynsItems.size());
+        assertEquals("Iron Sword", lynsItems.get(1).item.getName());
 
         assertEquals("Iron Sword", lynsInventory.getEquippedWeapon().getName());
 
@@ -59,10 +62,12 @@ public class UnitManipulationTest {
         Entity lyn = GameLauncherHelpers.createLyn();
 
         Inventory lynsInventory = mappers.getMapperFor(Inventory.class).get(lyn);
-        lynsInventory.removeItem(0);
+        List<Inventory.InventoryItem> lynsItems = lynsInventory.items;
 
-        lynsInventory.addItem(new Weapon(PhysicalWeaponTemplate.MANI_KATTI));
-        lynsInventory.addItem(new Weapon(PhysicalWeaponTemplate.IRON_SWORD));
+        lynsItems.clear();
+
+        lynsItems.add(new Inventory.InventoryItem(new Weapon(PhysicalWeaponTemplate.MANI_KATTI)));
+        lynsItems.add(new Inventory.InventoryItem(new Weapon(PhysicalWeaponTemplate.IRON_SWORD)));
 
         FireJemblem.engine.update(FireJemblem.deltaTime);
 

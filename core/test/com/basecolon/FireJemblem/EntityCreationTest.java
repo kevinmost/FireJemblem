@@ -80,7 +80,7 @@ public class EntityCreationTest {
             put(SWORD, D);
         }};
 
-List<Item> items = new ArrayList<Item>() {{
+        List<Item> items = new ArrayList<Item>() {{
             // TODO
             add(new Weapon(PhysicalWeaponTemplate.IRON_SWORD));
         }};
@@ -99,14 +99,14 @@ List<Item> items = new ArrayList<Item>() {{
         assertEquals("Lyn", ComponentMapper.getFor(NameComponent.class).get(lyn).name);
         assertEquals(5, (int)ComponentMapper.getFor(UnitStats.class).get(lyn).get(MOVE));
         assertEquals(16, (int)ComponentMapper.getFor(UnitStats.class).get(lyn).get(CURRENT_HP));
-        assertEquals("Iron Sword", ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).as(Weapon.class).getName());
+        assertEquals("Iron Sword", ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).item.as(Weapon.class).getName());
 
-        assertEquals(46, (int)ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).as(Weapon.class).getCurrentDurability());
-        ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).as(Weapon.class).decreaseDurability();
-        assertEquals(45, (int)ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).as(Weapon.class).getCurrentDurability());
+        assertEquals(46, (int)ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).item.as(Weapon.class).getCurrentDurability());
+        ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).item.as(Weapon.class).decreaseDurability();
+        assertEquals(45, (int)ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).item.as(Weapon.class).getCurrentDurability());
 
-        assertEquals(5, (int)ComponentMapper.getFor(Inventory.class).get(lyn).getItems().get(0).as(Weapon.class).getMight());
-        assertEquals(1, ComponentMapper.getFor(Inventory.class).get(lyn).getItems().size());
+        assertEquals(5, (int)ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).item.as(Weapon.class).getMight());
+        assertEquals(1, ComponentMapper.getFor(Inventory.class).get(lyn).items.size());
         assertEquals(LORD_LYN, ComponentMapper.getFor(UnitClass.class).get(lyn).unitClass);
         assertEquals(0, ComponentMapper.getFor(PositionComponent.class).get(lyn).x);
     }

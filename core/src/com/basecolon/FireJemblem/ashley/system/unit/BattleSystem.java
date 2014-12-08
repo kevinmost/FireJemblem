@@ -27,6 +27,7 @@ public class BattleSystem extends EntitySystem {
     @Override
     public void update(float deltaTime) {
         if (refreshEntities()) {
+
         }
 
         cleanUp();

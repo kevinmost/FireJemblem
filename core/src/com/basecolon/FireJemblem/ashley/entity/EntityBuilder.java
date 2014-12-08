@@ -39,7 +39,7 @@ public abstract class EntityBuilder {
         }
     }
 
-    public abstract <C extends Component> Class[] getRequiredComponents();
+    public abstract <C extends Component> Class<C>[] getRequiredComponents();
     public abstract <C extends Component> Class<C>[] getAllComponents();
 
 

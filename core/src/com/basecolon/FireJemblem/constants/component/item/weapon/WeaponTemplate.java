@@ -12,14 +12,7 @@ public interface WeaponTemplate {
 
     public WeaponStats getStats();
 
-    /**
-     * @return Whether or not this weapon deals effective damage against {@param otherEntity}
-     * (ie, bows against a pegasus knight, Wyrmslayer against a wyvern...)
-     * If a weapon wants to implement this, it has to override this method and implement the logic itself
-     */
-    public default boolean isEffectiveAgainst(Entity otherEntity) {
-        return false;
-    }
+
 
 
     /**
@@ -66,7 +59,7 @@ public interface WeaponTemplate {
      * overridden for special weapons like Eclipse, Light Brand, etc
      * @return The value of the defense component
      */
-    public int calculateDefense(BattleSystem calculations);
+    int calculateDefense(BattleSystem calculations);
 
     /**
      * The default behavior is to check if the proficiency-level for the unit is at least the required level for this
@@ -80,5 +73,14 @@ public interface WeaponTemplate {
         WeaponProficiencyLevels unitProficiencyInThisWeaponType = unit.getComponent(UnitWeaponProficiency.class).get(thisWeaponType);
 
         return unitProficiencyInThisWeaponType.getNumericRank() >= this.getStats().level().getNumericRank();
+    }
+
+    /**
+     * @return Whether or not this weapon deals effective damage against {@param otherEntity}
+     * (ie, bows against a pegasus knight, Wyrmslayer against a wyvern...)
+     * If a weapon wants to implement this, it has to override this method and implement the logic itself
+     */
+    default boolean isEffectiveAgainst(Entity otherEntity) {
+        return false;
     }
 }

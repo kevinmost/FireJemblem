@@ -54,6 +54,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
         }
     },
 
+
     @WeaponStats(name = "Mani Katti", type = SWORD, level = PRF, durability = 45, minRange = 1, maxRange = 2,
             weight = 3, might = 8, hit = 80, crit = 20, effectiveAgainst = {ARMORED, MOUNTED}, spritePath = "",
             infotext = "Only Lyn may wield. Bonus damage to horseback and armored units.")

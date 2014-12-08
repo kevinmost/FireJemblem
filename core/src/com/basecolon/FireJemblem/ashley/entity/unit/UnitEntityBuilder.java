@@ -53,7 +53,7 @@ public class UnitEntityBuilder extends EntityBuilder {
         return this;
     }
     public UnitEntityBuilder setInventory() {
-        put(Inventory.class, new Inventory(new ArrayList<Item>()));
+        put(Inventory.class, new Inventory(new ArrayList<>()));
         return this;
     }
 
