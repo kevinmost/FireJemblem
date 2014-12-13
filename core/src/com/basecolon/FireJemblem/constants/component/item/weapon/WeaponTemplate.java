@@ -48,6 +48,15 @@ public interface WeaponTemplate {
         return calculateCrit(calculations) - calculateCritAvoid(calculations);
     }
 
+    /**
+     * Does nothing by default.
+     * Override this method for special weapons that need to perform an action on hit. For example, the poison sword
+     * should add a {@link com.basecolon.FireJemblem.ashley.component.unit.ConditionComponent} of Poison to the defender
+     */
+    public default void onHit(BattleSystem calculations) {
+
+    }
+
     default int calculateCrit(BattleSystem calculations) {
         int weaponCrit = calculations.getAttackingEntityWeapon().getCrit();
         int attackingSkill = calculations.getAttackingEntity().getComponent(UnitStats.class).get(UnitStatLabels.SKILL);

@@ -38,10 +38,8 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
             infotext = "Inflicts Poison upon contact")
     POISON_SWORD {
         @Override
-        public int getDamage(BattleSystem calculations) {
-            int toReturn = super.getDamage(calculations);
+        public void onHit(BattleSystem calculations) {
             calculations.getDefendingEntity().add(new ConditionComponent(ConditionComponent.Condition.POISON));
-            return toReturn;
         }
     },
 
