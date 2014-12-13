@@ -2,6 +2,7 @@ package com.basecolon.FireJemblem.constants.component.item.weapon;
 
 import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
 
+import java.io.Serializable;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

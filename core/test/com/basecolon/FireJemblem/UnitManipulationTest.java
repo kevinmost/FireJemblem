@@ -23,12 +23,11 @@ import static junit.framework.Assert.assertEquals;
 
 public class UnitManipulationTest {
     private EntityHelpers.Mappers mappers;
-    private EquippedItemSystem equippedItemSystem;
 
     @Before
     public void setup() {
         mappers = EntityHelpers.mappersFor(new UnitEntityBuilder());
-        equippedItemSystem = new EquippedItemSystem();
+        new EquippedItemSystem();
     }
 
     @Test
@@ -76,8 +75,7 @@ public class UnitManipulationTest {
 
     @Test
     public void prfUnequippable() {
-
-        HashMap<UnitStatLabels, Integer> stats = new HashMap<UnitStatLabels, Integer>();
+        HashMap<UnitStatLabels, Integer> stats = new HashMap<>();
 
         HashMap<WeaponTypes, WeaponProficiencyLevels> proficiency = new HashMap<>();
         proficiency.put(WeaponTypes.SWORD, WeaponProficiencyLevels.S);

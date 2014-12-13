@@ -1,8 +1,11 @@
 package com.basecolon.FireJemblem.constants.component.item.weapon;
 
 import com.badlogic.ashley.core.Entity;
+import com.basecolon.FireJemblem.ashley.component.unit.ConditionComponent;
 import com.basecolon.FireJemblem.ashley.component.unit.UnitClass;
+import com.basecolon.FireJemblem.ashley.component.unit.UnitStats;
 import com.basecolon.FireJemblem.ashley.system.unit.BattleSystem;
+import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
 import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
 
 import static com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels.D;
@@ -35,10 +38,9 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
             infotext = "Inflicts Poison upon contact")
     POISON_SWORD {
         @Override
-        public int onHit(BattleSystem calculations) {
-            int toReturn = super.onHit(calculations);
-            // TODO: Implement poison as a component so we can inflict it here upon the defender
-            calculations.getDefendingEntity();
+        public int getDamage(BattleSystem calculations) {
+            int toReturn = super.getDamage(calculations);
+            calculations.getDefendingEntity().add(new ConditionComponent(ConditionComponent.Condition.POISON));
             return toReturn;
         }
     },
@@ -47,10 +49,13 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
             weight = 5, might = 8, hit = 75, crit = 35, spritePath = "",
             infotext = "Only Myrmidons, Swordmasters, and Blade Lords may wield")
     WO_DAO {
+        /**
+         * Only for myrmidons, swordmasters, and blade-lords
+         */
         @Override
         public boolean canBeWieldedBy(Entity unit) {
             ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
-            return unitClass == MYRMIDON || unitClass == SWORDMASTER || unitClass == BLADE_LORD;
+            return (unitClass == MYRMIDON || unitClass == SWORDMASTER || unitClass == BLADE_LORD) && super.canBeWieldedBy(unit);
         }
     },
 
@@ -65,7 +70,6 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
             return unitClass == LORD_LYN || unitClass == BLADE_LORD;
         }
     },
-
     // *** SWORDS ***
 
 
@@ -76,7 +80,6 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
 
 
     // *** AXES ***
-
     @WeaponStats(name = "Hand Axe", type = AXE, level = E, durability = 20, minRange = 1, maxRange = 2,
             weight = 12, might = 7, hit = 60, crit = 0, spritePath = "")
     HAND_AXE,
@@ -85,6 +88,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     ;
 
 
+    @SuppressWarnings("GwtInconsistentSerializableClass")
     private WeaponStats stats;
 
     PhysicalWeaponTemplate() {
@@ -104,7 +108,6 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
 
     @Override
     public int calculateDefense(BattleSystem calculations) {
-        // TODO: Write me
-        return 0;
+        return calculations.getDefendingEntity().getComponent(UnitStats.class).get(UnitStatLabels.DEFENSE);
     }
 }

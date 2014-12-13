@@ -62,6 +62,11 @@ public class UnitEntityBuilder extends EntityBuilder {
         return this;
     }
 
+    public UnitEntityBuilder setCondition(ConditionComponent.Condition condition) {
+        put(ConditionComponent.class, new ConditionComponent(condition));
+        return this;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public <C extends Component> Class<C>[] getRequiredComponents() {
