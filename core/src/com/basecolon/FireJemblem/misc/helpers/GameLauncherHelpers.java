@@ -2,7 +2,7 @@ package com.basecolon.FireJemblem.misc.helpers;
 
 import com.badlogic.ashley.core.Entity;
 import com.basecolon.FireJemblem.ashley.entity.unit.UnitEntityBuilder;
-import com.basecolon.FireJemblem.constants.component.item.weapon.PhysicalWeaponTemplate;
+import com.basecolon.FireJemblem.constants.component.item.weapon.template.PhysicalWeaponTemplate;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
 import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
@@ -24,7 +24,6 @@ public class GameLauncherHelpers {
             put(WeaponTypes.SWORD, WeaponProficiencyLevels.D);
         }};
         Map<UnitStatLabels, Integer> stats = new HashMap<UnitStatLabels, Integer>() {{
-            put(MAX_HP, 16);
             put(STRENGTH, 4);
             put(SKILL, 7);
             put(SPEED, 9);
@@ -44,6 +43,7 @@ public class GameLauncherHelpers {
                 .setName("Lyn")
                 .setPosition(1, 1)
                 .setWeaponProficiency(proficiency)
+                .setHealth(16)
                 .setStats(stats)
                 .setInventory(items)
                 .setSprite(null)
@@ -53,7 +53,6 @@ public class GameLauncherHelpers {
 
     public static Entity createHector() {
         Map<UnitStatLabels, Integer> stats = new HashMap<UnitStatLabels, Integer>() {{
-            put(MAX_HP, 19);
             put(STRENGTH, 7);
             put(SKILL, 4);
             put(SPEED, 5);
@@ -78,6 +77,7 @@ public class GameLauncherHelpers {
                 .setName("Hector")
                 .setPosition(1, 2)
                 .setSprite(null)
+                .setHealth(19)
                 .setStats(stats)
                 .setWeaponProficiency(proficiency)
                 .build()

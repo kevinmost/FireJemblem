@@ -2,7 +2,7 @@ package com.basecolon.FireJemblem.misc.items;
 
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponStats;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTemplate;
+import com.basecolon.FireJemblem.constants.component.item.weapon.template.WeaponTemplate;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
 
 /**

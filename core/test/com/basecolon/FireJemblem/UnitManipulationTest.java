@@ -5,7 +5,7 @@ import com.basecolon.FireJemblem.ashley.component.unit.Inventory;
 import com.basecolon.FireJemblem.ashley.entity.unit.UnitEntityBuilder;
 import com.basecolon.FireJemblem.ashley.system.unit.EquippedItemSystem;
 import com.basecolon.FireJemblem.constants.FireJemblem;
-import com.basecolon.FireJemblem.constants.component.item.weapon.PhysicalWeaponTemplate;
+import com.basecolon.FireJemblem.constants.component.item.weapon.template.PhysicalWeaponTemplate;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
 import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
@@ -86,6 +86,7 @@ public class UnitManipulationTest {
                 .setName("Guy")
                 .setPosition(0, 0)
                 .setSprite(null)
+                .setHealth(15)
                 .setStats(stats)
                 .setWeaponProficiency(proficiency)
                 .build();

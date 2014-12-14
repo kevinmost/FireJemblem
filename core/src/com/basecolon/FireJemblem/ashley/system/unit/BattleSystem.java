@@ -20,7 +20,7 @@ import static com.basecolon.FireJemblem.misc.helpers.EntityHelpers.Mappers;
 public class BattleSystem extends EntitySystem {
     private Engine engine;
 
-    private static final Random rng = new Random(System.nanoTime());
+    private static final Random RNG = new Random(System.nanoTime());
     private static final Mappers unitComponents = EntityHelpers.mappersFor(new UnitEntityBuilder());
 
     private Entity attackingEntity;
@@ -99,14 +99,14 @@ public class BattleSystem extends EntitySystem {
      * Ex: Pass in the result of a calculation that determined that the user has a 74% hit-rate. If the RNG generates
      * between 0 and 73, this will return true. If the RNG generates 74 or higher, this will return false.ad
      * @param calculationResult The value to test against the RNG
-     * @param trueHit whether or not to use the "true hit" system (FE6+ use this when calculating hit %)
+     * @param useTrueHit whether or not to use the "true hit" system (FE6+ use this when calculating hit %)
      * @return true if success, false if not
      */
-    private static boolean rngSuccess(int calculationResult, boolean trueHit) {
-        int generated = rng.nextInt(100);
-        if (trueHit) {
+    public static boolean rngSuccess(int calculationResult, boolean useTrueHit) {
+        int generated = RNG.nextInt(100);
+        if (useTrueHit) {
             // "True hit" involves getting 2 random numbers and averaging them for a result
-            generated = (generated + rng.nextInt(100)) / 2;
+            generated = (generated + RNG.nextInt(100)) / 2;
         }
         return generated < calculationResult;
     }

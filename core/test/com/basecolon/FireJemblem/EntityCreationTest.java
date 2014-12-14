@@ -8,7 +8,7 @@ import com.basecolon.FireJemblem.ashley.component.world.TileUnitInteraction;
 import com.basecolon.FireJemblem.ashley.entity.EntityBuilder;
 import com.basecolon.FireJemblem.ashley.entity.unit.UnitEntityBuilder;
 import com.basecolon.FireJemblem.ashley.entity.world.TileEntityBuilder;
-import com.basecolon.FireJemblem.constants.component.item.weapon.PhysicalWeaponTemplate;
+import com.basecolon.FireJemblem.constants.component.item.weapon.template.PhysicalWeaponTemplate;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
 import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
 import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
@@ -66,7 +66,6 @@ public class EntityCreationTest {
     @Test
     public void testUnit() throws Exception {
         Map<UnitStatLabels, Integer> stats = new HashMap<UnitStatLabels, Integer>() {{
-            put(MAX_HP, 16);
             put(STRENGTH, 4);
             put(SKILL, 7);
             put(SPEED, 9);
@@ -89,6 +88,7 @@ public class EntityCreationTest {
                 .setName("Lyn")
                 .setSprite(null)
                 .setPosition(0,0)
+                .setHealth(16)
                 .setStats(stats)
                 .setClass(LORD_LYN)
                 .setWeaponProficiency(proficiency)
@@ -98,7 +98,7 @@ public class EntityCreationTest {
         assertEquals(D, ComponentMapper.getFor(UnitWeaponProficiency.class).get(lyn).get(SWORD));
         assertEquals("Lyn", ComponentMapper.getFor(NameComponent.class).get(lyn).name);
         assertEquals(5, (int)ComponentMapper.getFor(UnitStats.class).get(lyn).get(MOVE));
-        assertEquals(16, (int)ComponentMapper.getFor(UnitStats.class).get(lyn).get(CURRENT_HP));
+        assertEquals(16, lyn.getComponent(HealthComponent.class).getCurrent());
         assertEquals("Iron Sword", ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).item.as(Weapon.class).getName());
 
         assertEquals(46, (int)ComponentMapper.getFor(Inventory.class).get(lyn).items.get(0).item.as(Weapon.class).getCurrentDurability());

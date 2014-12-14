@@ -27,7 +27,7 @@ public abstract class EntityBuilder {
         return e;
     }
 
-    protected void put(Class<? extends Component> clazz, Component component) {
+    protected <C extends Component> void put(Class<C> clazz, C component) {
         components.put(clazz, component);
     }
 
@@ -39,13 +39,22 @@ public abstract class EntityBuilder {
         }
     }
 
+    /**
+     * All of the Components returned by this method must be set, or the builder will throw an exception
+     */
     public abstract <C extends Component> Class<C>[] getRequiredComponents();
+
+    /**
+     * All of the Components that can be set with this entity's builder, including both optional and required ones
+     */
     public abstract <C extends Component> Class<C>[] getAllComponents();
 
 
     public class RequiredEntityComponentsNotSetException extends RuntimeException {
         RequiredEntityComponentsNotSetException(Class<? extends EntityBuilder> entityBeingBuilt, String requiredMethod) {
             super(String.format("When building an Entity with %s, you must invoke the %s method", entityBeingBuilt.getSimpleName(), requiredMethod));
+        }
+        public RequiredEntityComponentsNotSetException() {
         }
     }
 }

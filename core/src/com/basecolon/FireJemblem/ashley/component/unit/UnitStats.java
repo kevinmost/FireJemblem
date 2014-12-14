@@ -8,7 +8,6 @@ import java.util.Map;
 public class UnitStats extends MappedComponent<UnitStatLabels, Integer> {
     @Override
     protected Integer defaultReturnValue(UnitStatLabels label) {
-        if (label == UnitStatLabels.CURRENT_HP) return get(UnitStatLabels.MAX_HP);
         if (label == UnitStatLabels.AID) return get(UnitStatLabels.CON) - 1;
         return 0;
     }

@@ -1,11 +1,6 @@
 package com.basecolon.FireJemblem.constants.component.unit;
 
 public enum UnitStatLabels {
-
-
-    MAX_HP,
-    CURRENT_HP,
-
     STRENGTH, // For magic-wielders, this is actually the "magic" stat, but they were one in the same in FE7 so we will follow that model
     SKILL,
     SPEED,

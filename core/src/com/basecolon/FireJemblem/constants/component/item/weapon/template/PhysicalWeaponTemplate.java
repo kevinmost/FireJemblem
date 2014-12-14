@@ -1,10 +1,11 @@
-package com.basecolon.FireJemblem.constants.component.item.weapon;
+package com.basecolon.FireJemblem.constants.component.item.weapon.template;
 
 import com.badlogic.ashley.core.Entity;
 import com.basecolon.FireJemblem.ashley.component.unit.ConditionComponent;
 import com.basecolon.FireJemblem.ashley.component.unit.UnitClass;
 import com.basecolon.FireJemblem.ashley.component.unit.UnitStats;
 import com.basecolon.FireJemblem.ashley.system.unit.BattleSystem;
+import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponStats;
 import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
 import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
 
@@ -37,6 +38,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     POISON_SWORD {
         @Override
         public void onHit(BattleSystem calculations) {
+            super.onHit(calculations);
             calculations.getDefendingEntity().add(new ConditionComponent(ConditionComponent.Condition.POISON));
         }
     },
@@ -46,7 +48,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     STEEL_SWORD,
 
     @WeaponStats(name = "Iron Blade", type = SWORD, level = D, durability = 35, minRange = 1, maxRange = 1,
-            weight = 12, might = 9, hit = 70, crit = 0, spritePath = "", infotext = "-")
+            weight = 12, might = 9, hit = 70, crit = 0, spritePath = "")
     IRON_BLADE,
 
     @WeaponStats(name = "Armorslayer", type = SWORD, level = D, durability = 18, minRange = 1, maxRange = 1,
@@ -74,11 +76,11 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     },
 
     @WeaponStats(name = "Steel Blade", type = SWORD, level = C, durability = 25, minRange = 1, maxRange = 1,
-            weight = 14, might = 11, hit = 65, crit = 0, spritePath = "", infotext = "-")
+            weight = 14, might = 11, hit = 65, crit = 0, spritePath = "")
     STEEL_BLADE,
 
     @WeaponStats(name = "Killing Edge", type = SWORD, level = C, durability = 20, minRange = 1, maxRange = 1,
-            weight = 7, might = 9, hit = 75, crit = 30, spritePath = "", infotext = "-")
+            weight = 7, might = 9, hit = 75, crit = 30, spritePath = "")
     KILLING_EDGE,
 
     @WeaponStats(name = "Wyrmslayer", type = SWORD, level = C, durability = 20, minRange = 1, maxRange = 1,
@@ -111,11 +113,11 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     WIND_SWORD,
 
     @WeaponStats(name = "Silver Sword", type = SWORD, level = B, durability = 20, minRange = 1, maxRange = 1,
-            weight = 8, might = 13, hit = 80, crit = 0, spritePath = "", infotext = "-")
+            weight = 8, might = 13, hit = 80, crit = 0, spritePath = "")
     SILVER_SWORD,
 
     @WeaponStats(name = "Silver Blade", type = SWORD, level = A, durability = 15, minRange = 1, maxRange = 1,
-            weight = 13, might = 14, hit = 60, crit = 0, spritePath = "", infotext = "-")
+            weight = 13, might = 14, hit = 60, crit = 0, spritePath = "")
     SILVER_BLADE,
 
     //TODO: Runesword's ability needs to be implemented
@@ -125,7 +127,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     RUNESWORD,
 
     @WeaponStats(name = "Regal Blade", type = SWORD, level = S, durability = 25, minRange = 1, maxRange = 1,
-            weight = 9, might = 20, hit = 85, crit = 0, spritePath = "", infotext = "-")
+            weight = 9, might = 20, hit = 85, crit = 0, spritePath = "")
     REGAL_BLADE,
 
     @WeaponStats(name = "Mani Katti", type = SWORD, level = PRF, durability = 45, minRange = 1, maxRange = 2,
@@ -146,7 +148,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
         @Override
         public boolean canBeWieldedBy(Entity unit) {
             ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
-            return unitClass == LORD_ELIWOOD;
+            return unitClass == LORD_ELIWOOD || unitClass == KNIGHT_LORD;
         }
     },
 
@@ -158,7 +160,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
         @Override
         public boolean canBeWieldedBy(Entity unit) {
             ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
-            return unitClass == LORD_ELIWOOD;
+            return unitClass == LORD_ELIWOOD || unitClass == KNIGHT_LORD;
         }
     },
 
@@ -170,7 +172,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
         @Override
         public boolean canBeWieldedBy(Entity unit) {
             ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
-            return unitClass == LORD_LYN;
+            return unitClass == LORD_LYN || unitClass == BLADE_LORD;
         }
     },
     // *** SWORDS ***
@@ -178,19 +180,19 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
 
     // *** LANCES ***
     @WeaponStats(name = "Iron Lance", type = LANCE, level = E, durability = 45, minRange = 1, maxRange = 1,
-            weight = 8, might = 7, hit = 80, crit = 0, spritePath = "", infotext = "-")
+            weight = 8, might = 7, hit = 80, crit = 0, spritePath = "")
     IRON_LANCE,
 
     @WeaponStats(name = "Slim Lance", type = LANCE, level = E, durability = 30, minRange = 1, maxRange = 1,
-            weight = 4, might = 4, hit = 85, crit = 5, spritePath = "", infotext = "-")
+            weight = 4, might = 4, hit = 85, crit = 5, spritePath = "")
     SLIM_LANCE,
 
     @WeaponStats(name = "Javelin", type = LANCE, level = E, durability = 20, minRange = 1, maxRange = 2,
-            weight = 11, might = 6, hit = 65, crit = 0, spritePath = "", infotext = "-")
+            weight = 11, might = 6, hit = 65, crit = 0, spritePath = "")
     JAVELIN,
 
     @WeaponStats(name = "Emblem Lance", type = LANCE, level = E, durability = 60, minRange = 1, maxRange = 1,
-            weight = 8, might = 7, hit = 80, crit = 0, spritePath = "", infotext = "-")
+            weight = 8, might = 7, hit = 80, crit = 0, spritePath = "")
     EMBLEM_LANCE,
 
     @WeaponStats(name = "Poison Lance", type = LANCE, level = E, durability = 40, minRange = 1, maxRange = 1,
@@ -205,7 +207,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     },
 
     @WeaponStats(name = "Steel Lance", type = LANCE, level = D, durability = 30, minRange = 1, maxRange = 1,
-            weight = 13, might = 10, hit = 70, crit = 0, spritePath = "", infotext = "-")
+            weight = 13, might = 10, hit = 70, crit = 0, spritePath = "")
     STEEL_LANCE,
 
     @WeaponStats(name = "Heavy Spear", type = LANCE, level = D, durability = 16, minRange = 1, maxRange = 1,
@@ -219,11 +221,11 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     HORSESLAYER,
 
     @WeaponStats(name = "Short Spear", type = LANCE, level = C, durability = 18, minRange = 1, maxRange = 2,
-            weight = 12, might = 9, hit = 60, crit = 0, spritePath = "", infotext = "-")
+            weight = 12, might = 9, hit = 60, crit = 0, spritePath = "")
     SHORT_SPEAR,
 
     @WeaponStats(name = "Killer Lance", type = LANCE, level = C, durability = 20, minRange = 1, maxRange = 1,
-            weight = 9, might = 10, hit = 70, crit = 30, spritePath = "", infotext = "-")
+            weight = 9, might = 10, hit = 70, crit = 30, spritePath = "")
     KILLER_LANCE,
 
     //TODO: Reaver ability needs to be implemented
@@ -237,7 +239,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     BRAVE_LANCE,
 
     @WeaponStats(name = "Spear", type = LANCE, level = B, durability = 15, minRange = 1, maxRange = 2,
-            weight = 10, might = 12, hit = 70, crit = 5, spritePath = "", infotext = "-")
+            weight = 10, might = 12, hit = 70, crit = 5, spritePath = "")
     SPEAR,
 
     //Will we even keep Vaida's spear? Probably not, but it doesn't hurt to have it
@@ -246,11 +248,11 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     SPEAR_VAIDAS,
 
     @WeaponStats(name = "Silver Lance", type = LANCE, level = A, durability = 20, minRange = 1, maxRange = 1,
-            weight = 10, might = 14, hit = 75, crit = 0, spritePath = "", infotext = "-")
+            weight = 10, might = 14, hit = 75, crit = 0, spritePath = "")
     SILVER_LANCE,
 
     @WeaponStats(name = "Rex Hasta", type = LANCE, level = S, durability = 25, minRange = 1, maxRange = 1,
-            weight = 11, might = 21, hit = 80, crit = 0, spritePath = "", infotext = "-")
+            weight = 11, might = 21, hit = 80, crit = 0, spritePath = "")
     REX_HASTA,
     // *** LANCES ***
 
@@ -258,19 +260,19 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
 
     // *** AXES ***
     @WeaponStats(name = "Hand Axe", type = AXE, level = E, durability = 20, minRange = 1, maxRange = 2,
-            weight = 12, might = 7, hit = 60, crit = 0, spritePath = "", infotext = "-")
+            weight = 12, might = 7, hit = 60, crit = 0, spritePath = "")
     HAND_AXE,
 
     @WeaponStats(name = "Iron Axe", type = AXE, level = E, durability = 45, minRange = 1, maxRange = 1,
-            weight = 10, might = 8, hit = 75, crit = 0, spritePath = "", infotext = "-")
+            weight = 10, might = 8, hit = 75, crit = 0, spritePath = "")
     IRON_AXE,
 
     @WeaponStats(name = "Emblem Axe", type = AXE, level = E, durability = 60, minRange = 1, maxRange = 1,
-            weight = 10, might = 8, hit = 75, crit = 0, spritePath = "", infotext = "-")
+            weight = 10, might = 8, hit = 75, crit = 0, spritePath = "")
     EMBLEM_AXE,
 
     @WeaponStats(name = "Steel Axe", type = AXE, level = E, durability = 30, minRange = 1, maxRange = 1,
-            weight = 15, might = 11, hit = 65, crit = 0, spritePath = "", infotext = "-")
+            weight = 15, might = 11, hit = 65, crit = 0, spritePath = "")
     STEEL_AXE,
 
     //TODO: Devil ability needs to be implemented, shouldn't be difficult
@@ -307,7 +309,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     DRAGON_AXE,
 
     @WeaponStats(name = "Killer Axe", type = AXE, level = C, durability = 20, minRange = 1, maxRange = 1,
-            weight = 11, might = 11, hit = 65, crit = 30, spritePath = "", infotext = "-")
+            weight = 11, might = 11, hit = 65, crit = 30, spritePath = "")
     KILLER_AXE,
 
     //TODO: Reaver ability needs to be implemented
@@ -329,15 +331,15 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     BRAVE_AXE,
 
     @WeaponStats(name = "Tomahawk", type = AXE, level = A, durability = 15, minRange = 1, maxRange = 2,
-            weight = 14, might = 13, hit = 65, crit = 0, spritePath = "", infotext = "-")
+            weight = 14, might = 13, hit = 65, crit = 0, spritePath = "")
     TOMAHAWK,
 
     @WeaponStats(name = "Silver Axe", type = AXE, level = A, durability = 20, minRange = 1, maxRange = 1,
-            weight = 12, might = 15, hit = 70, crit = 0, spritePath = "", infotext = "-")
+            weight = 12, might = 15, hit = 70, crit = 0, spritePath = "")
     SILVER_AXE,
 
     @WeaponStats(name = "Basilikos", type = AXE, level = S, durability = 25, minRange = 1, maxRange = 1,
-            weight = 13, might = 22, hit = 75, crit = 0, spritePath = "", infotext = "-")
+            weight = 13, might = 22, hit = 75, crit = 0, spritePath = "")
     BASILIKOS,
 
     @WeaponStats(name = "Wolf Beil", type = AXE, level = PRF, durability = 30, minRange = 1, maxRange = 1,
@@ -347,7 +349,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
         @Override
         public boolean canBeWieldedBy(Entity unit) {
             ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
-            return unitClass == LORD_HECTOR;
+            return unitClass == LORD_HECTOR || unitClass == GREAT_LORD;
         }
     },
 
@@ -359,7 +361,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
         @Override
         public boolean canBeWieldedBy(Entity unit) {
             ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
-            return unitClass == LORD_HECTOR;
+            return unitClass == LORD_HECTOR || unitClass == GREAT_LORD;
         }
     }
     // *** AXES ***

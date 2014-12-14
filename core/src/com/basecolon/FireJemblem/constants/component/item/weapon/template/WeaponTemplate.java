@@ -1,10 +1,14 @@
-package com.basecolon.FireJemblem.constants.component.item.weapon;
+package com.basecolon.FireJemblem.constants.component.item.weapon.template;
 
 import com.badlogic.ashley.core.Entity;
+import com.basecolon.FireJemblem.ashley.component.unit.HealthComponent;
 import com.basecolon.FireJemblem.ashley.component.unit.UnitClass;
 import com.basecolon.FireJemblem.ashley.component.unit.UnitStats;
 import com.basecolon.FireJemblem.ashley.component.unit.UnitWeaponProficiency;
 import com.basecolon.FireJemblem.ashley.system.unit.BattleSystem;
+import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
+import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponStats;
+import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
 import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
 import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
 
@@ -49,12 +53,17 @@ public interface WeaponTemplate {
     }
 
     /**
-     * Does nothing by default.
      * Override this method for special weapons that need to perform an action on hit. For example, the poison sword
      * should add a {@link com.basecolon.FireJemblem.ashley.component.unit.ConditionComponent} of Poison to the defender
+     * By default, this just decreases the defender's HP by the amount of damage dealt.
      */
     public default void onHit(BattleSystem calculations) {
-
+        int critCoefficient = 1;
+        // Check if a crit was landed. Note that crits do NOT use the true-hit system, even in games with true-hit.
+        if (BattleSystem.rngSuccess(getCritAccuracy(calculations), false)) {
+            critCoefficient = 3;
+        }
+        calculations.getDefendingEntity().getComponent(HealthComponent.class).decreaseBy(critCoefficient * getDamage(calculations));
     }
 
     default int calculateCrit(BattleSystem calculations) {
@@ -62,7 +71,7 @@ public interface WeaponTemplate {
         int attackingSkill = calculations.getAttackingEntity().getComponent(UnitStats.class).get(UnitStatLabels.SKILL);
 
         ClassTypes attackingClass = calculations.getAttackingEntity().getComponent(UnitClass.class).unitClass;
-        int critBonus = attackingClass == ClassTypes.SWORDMASTER || attackingClass == ClassTypes.BERSERKER ? 15 : 0;
+        int critBonus = ((attackingClass == ClassTypes.SWORDMASTER) || (attackingClass == ClassTypes.BERSERKER)) ? 15 : 0;
 
         int sRankBonus = 0;
         if (calculations.getAttackingEntity().getComponent(UnitWeaponProficiency.class).get(calculations.getAttackingEntityWeapon().getType()) == WeaponProficiencyLevels.S) {
@@ -116,19 +125,23 @@ public interface WeaponTemplate {
      */
     default int calculateAttack(BattleSystem calculations) {
         return calculateStr(calculations) +
-                ((calculateMight(calculations) + calculateWeaponTriangleDamageBonus(calculations)) * calculateEffectiveDamageCoefficient(calculations));
+                (calculateMight(calculations) + calculateWeaponTriangleDamageBonus(calculations)) * calculateEffectiveDamageCoefficient(calculations);
     }
 
     /**
      * Returns the defense component for this calculation. Meant to be called only in the {@link #getDamage} method, and
-     * overridden for special weapons like Eclipse, Light Brand, etc
+     * overridden for special weapons like Eclipse, Light Brand, etc, and for all magic weapons, which use resistance
+     * as their "defense" component instead of defense.
      * @return The value of the defense component
      */
-    int calculateDefense(BattleSystem calculations);
+    default int calculateDefense(BattleSystem calculations) {
+        return calculations.getDefendingEntity().getComponent(UnitStats.class).get(UnitStatLabels.DEFENSE);
+    }
 
 
     /**
-     * This can be overridden if we decide to implement Awakening's battle system in the future, for example.
+     * This can be overridden if we decide to implement Awakening's battle system in the future, for example, where all
+     * units have both a MAG and STR stat, and some units can use both magic and physical weapons.
      * @return By default, the attacker's strength.
      */
     default int calculateStr(BattleSystem calculations) {
@@ -164,7 +177,8 @@ public interface WeaponTemplate {
      * @return the coefficient to be used in the multiplication
      */
     default int calculateEffectiveDamageCoefficient(BattleSystem calculations) {
-        return isEffectiveAgainst(calculations.getDefendingEntity()) ? 2 : 1;
+        return calculations.getAttackingEntityWeapon().getWeapon().isEffectiveAgainst(calculations.getDefendingEntity())
+                ? 2 : 1;
     }
 
     /**
@@ -182,7 +196,21 @@ public interface WeaponTemplate {
         return 0;
     }
 
+    /**
+     * @return Whether or not this weapon deals effective damage against {@param otherEntity}
+     * (ie, bows against a pegasus knight, Wyrmslayer against a wyvern...)
+     * If a weapon wants to implement this, it has to override this method and implement the logic itself
+     */
+    default boolean isEffectiveAgainst(Entity otherEntity) {
+        ClassTypes defenderClass = otherEntity.getComponent(UnitClass.class).unitClass;
 
+        for (ClassTypes.EffectiveDamageGroups effectiveDamageGroup : this.getStats().effectiveAgainst()) {
+            if (effectiveDamageGroup.getClassesInType().contains(defenderClass)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * The default behavior is to check if the proficiency-level for the unit is at least the required level for this
@@ -198,12 +226,5 @@ public interface WeaponTemplate {
         return unitProficiencyInThisWeaponType.getNumericRank() >= this.getStats().level().getNumericRank();
     }
 
-    /**
-     * @return Whether or not this weapon deals effective damage against {@param otherEntity}
-     * (ie, bows against a pegasus knight, Wyrmslayer against a wyvern...)
-     * If a weapon wants to implement this, it has to override this method and implement the logic itself
-     */
-    default boolean isEffectiveAgainst(Entity otherEntity) {
-        return false;
-    }
+
 }

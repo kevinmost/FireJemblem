@@ -19,6 +19,11 @@ import java.util.Map;
 
 public class UnitEntityBuilder extends EntityBuilder {
 
+    public UnitEntityBuilder setHealth(int max) {
+        put(HealthComponent.class, new HealthComponent(max, max));
+        return this;
+    }
+
     public UnitEntityBuilder setStats(Map<UnitStatLabels, Integer> stats) {
         put(UnitStats.class, new UnitStats(stats));
         return this;
@@ -71,6 +76,7 @@ public class UnitEntityBuilder extends EntityBuilder {
     @Override
     public <C extends Component> Class<C>[] getRequiredComponents() {
         List<Class<? extends Component>> requiredComponents = new ArrayList<Class<? extends Component>>() {{
+            add(HealthComponent.class);
             add(UnitStats.class);
             add(UnitClass.class);
             add(PositionComponent.class);
@@ -84,6 +90,9 @@ public class UnitEntityBuilder extends EntityBuilder {
 
     @Override
     public <C extends Component> Class<C>[] getAllComponents() {
-        return getRequiredComponents();
+        List<Class<? extends Component>> allComponents = new ArrayList<Class<? extends Component>>(Arrays.asList(getRequiredComponents())) {{
+            add(ConditionComponent.class);
+        }};
+        return allComponents.toArray(new Class[allComponents.size()]);
     }
 }
