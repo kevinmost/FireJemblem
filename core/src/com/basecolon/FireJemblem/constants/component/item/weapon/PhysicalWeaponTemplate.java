@@ -8,14 +8,11 @@ import com.basecolon.FireJemblem.ashley.system.unit.BattleSystem;
 import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
 import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
 
-import static com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels.D;
-import static com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels.E;
-import static com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels.PRF;
-import static com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes.AXE;
-import static com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes.SWORD;
+import static com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels.*;
+import static com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes.*;
 import static com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes.*;
-import static com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes.EffectiveDamageGroups.ARMORED;
-import static com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes.EffectiveDamageGroups.MOUNTED;
+import static com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes.EffectiveDamageGroups.*;
+
 
 // TODO: Implement all the weapons and put them in a readable order
 public enum PhysicalWeaponTemplate implements WeaponTemplate {
@@ -28,6 +25,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     @WeaponStats(name = "Slim Sword", type = SWORD, level = E, durability = 30, minRange = 1, maxRange = 2,
             weight = 5, might = 5, hit = 90, crit = 0, spritePath = "")
     SLIM_SWORD,
+
 
     @WeaponStats(name = "Emblem Blade", type = SWORD, level = E, durability = 60, minRange = 1, maxRange = 1,
             weight = 5, might = 5, hit = 90, crit = 0, spritePath = "")
@@ -45,6 +43,24 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
         }
     },
 
+    @WeaponStats(name = "Steel Sword", type = SWORD, level = D, durability = 30, minRange = 1, maxRange = 1,
+            weight = 10, might = 8, hit = 75, crit = 0, spritePath = "")
+    STEEL_SWORD,
+
+    @WeaponStats(name = "Iron Blade", type = SWORD, level = D, durability = 35, minRange = 1, maxRange = 1,
+            weight = 12, might = 9, hit = 70, crit = 0, spritePath = "", infotext = "-")
+    IRON_BLADE,
+
+    @WeaponStats(name = "Armorslayer", type = SWORD, level = D, durability = 18, minRange = 1, maxRange = 1,
+            weight = 11, might = 8, hit = 80, crit = 0, effectiveAgainst = {ARMORED}, spritePath = "",
+            infotext = "Effective vs. Armored units.")
+    ARMORSLAYER,
+
+    @WeaponStats(name = "Longsword", type = SWORD, level = D, durability = 18, minRange = 1, maxRange = 1,
+            weight = 11, might = 6, hit = 85, crit = 0, effectiveAgainst = {MOUNTED}, spritePath = "",
+            infotext = "Effective vs. Horseback units.")
+    LONGSWORD,
+
     @WeaponStats(name = "Wo Dao", type = SWORD, level = D, durability = 20, minRange = 1, maxRange = 2,
             weight = 5, might = 8, hit = 75, crit = 35, spritePath = "",
             infotext = "Only Myrmidons, Swordmasters, and Blade Lords may wield")
@@ -59,6 +75,60 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
         }
     },
 
+    @WeaponStats(name = "Steel Blade", type = SWORD, level = C, durability = 25, minRange = 1, maxRange = 1,
+            weight = 14, might = 11, hit = 65, crit = 0, spritePath = "", infotext = "-")
+    STEEL_BLADE,
+
+    @WeaponStats(name = "Killing Edge", type = SWORD, level = C, durability = 20, minRange = 1, maxRange = 1,
+            weight = 7, might = 9, hit = 75, crit = 30, spritePath = "", infotext = "-")
+    KILLING_EDGE,
+
+    @WeaponStats(name = "Wyrmslayer", type = SWORD, level = C, durability = 20, minRange = 1, maxRange = 1,
+            weight = 5, might = 7, hit = 75, crit = 0, effectiveAgainst = {DRAGON}, spritePath = "",
+            infotext = "Effective vs. Dragon units.")
+    WYRMSLAYER,
+
+    //TODO: Light Brand's effect needs to be implemented
+    @WeaponStats(name = "Light Brand", type = SWORD, level = C, durability = 25, minRange = 1, maxRange = 2,
+            weight = 9, might = 9, hit = 70, crit = 0, spritePath = "",
+            infotext = "Targets Resistance. Inflicts magic-based damage at ranged.")
+    LIGHT_BRAND,
+
+    //TODO: Reaver ability needs to be implemented
+    @WeaponStats(name = "Lancereaver", type = SWORD, level = C, durability = 15, minRange = 1, maxRange = 1,
+            weight = 9, might = 9, hit = 75, crit = 5, spritePath = "",
+            infotext = "Strong vs. Lances. Weak vs. Axes.")
+    LANCEREAVER,
+
+    //TODO: Brave ability needs to be implemented
+    @WeaponStats(name = "Brave Sword", type = SWORD, level = B, durability = 30, minRange = 1, maxRange = 1,
+            weight = 12, might = 9, hit = 75, crit = 0, spritePath = "",
+            infotext = "Allows user to strike twice in one attack.")
+    BRAVE_SWORD,
+
+    //TODO: Wind Sword's effect needs to be implemented
+    @WeaponStats(name = "Wind Sword", type = SWORD, level = B, durability = 40, minRange = 1, maxRange = 2,
+            weight = 9, might = 9, hit = 70, crit = 0, spritePath = "",
+            infotext = "Targets Resistance. Inflicts Wind magic damage. Effective vs. flying units.")
+    WIND_SWORD,
+
+    @WeaponStats(name = "Silver Sword", type = SWORD, level = B, durability = 20, minRange = 1, maxRange = 1,
+            weight = 8, might = 13, hit = 80, crit = 0, spritePath = "", infotext = "-")
+    SILVER_SWORD,
+
+    @WeaponStats(name = "Silver Blade", type = SWORD, level = A, durability = 15, minRange = 1, maxRange = 1,
+            weight = 13, might = 14, hit = 60, crit = 0, spritePath = "", infotext = "-")
+    SILVER_BLADE,
+
+    //TODO: Runesword's ability needs to be implemented
+    @WeaponStats(name = "Runesword", type = SWORD, level = A, durability = 15, minRange = 1, maxRange = 2,
+            weight = 11, might = 12, hit = 65, crit = 0, spritePath = "",
+            infotext = "Targets Resistance. Inflicts Dark magic damage. Restores HP to user equal to damage dealt.")
+    RUNESWORD,
+
+    @WeaponStats(name = "Regal Blade", type = SWORD, level = S, durability = 25, minRange = 1, maxRange = 1,
+            weight = 9, might = 20, hit = 85, crit = 0, spritePath = "", infotext = "-")
+    REGAL_BLADE,
 
     @WeaponStats(name = "Mani Katti", type = SWORD, level = PRF, durability = 45, minRange = 1, maxRange = 2,
             weight = 3, might = 8, hit = 80, crit = 20, effectiveAgainst = {ARMORED, MOUNTED}, spritePath = "",
@@ -70,20 +140,230 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
             return unitClass == LORD_LYN || unitClass == BLADE_LORD;
         }
     },
+
+    @WeaponStats(name = "Rapier", type = SWORD, level = PRF, durability = 40, minRange = 1, maxRange = 1,
+            weight = 5, might = 7, hit = 95, crit = 10, effectiveAgainst = {ARMORED, MOUNTED}, spritePath = "",
+            infotext = "Eliwood only. Effective vs. Armored/Mounted units.")
+    RAPIER {
+        @Override
+        public boolean canBeWieldedBy(Entity unit) {
+            ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
+            return unitClass == LORD_ELIWOOD;
+        }
+    },
+
+    //TODO: Implement stat increase
+    @WeaponStats(name = "Durandal", type = SWORD, level = PRF, durability = 20, minRange = 1, maxRange = 1,
+            weight = 16, might = 17, hit = 90, crit = 0, effectiveAgainst = {DRAGON}, spritePath = "",
+            infotext = "Eliwood only. Strength +5. Effective vs. Dragon units.")
+    DURANDAL {
+        @Override
+        public boolean canBeWieldedBy(Entity unit) {
+            ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
+            return unitClass == LORD_ELIWOOD;
+        }
+    },
+
+    //TODO: Implement stat increase
+    @WeaponStats(name = "Sol Katti", type = SWORD, level = PRF, durability = 30, minRange = 1, maxRange = 1,
+            weight = 14, might = 12, hit = 95, crit = 25, effectiveAgainst = {DRAGON}, spritePath = "",
+            infotext = "Lyn only. Resistance +5. Effective vs. Dragon units.")
+    SOL_KATTI {
+        @Override
+        public boolean canBeWieldedBy(Entity unit) {
+            ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
+            return unitClass == LORD_LYN;
+        }
+    },
     // *** SWORDS ***
 
 
     // *** LANCES ***
+    @WeaponStats(name = "Iron Lance", type = LANCE, level = E, durability = 45, minRange = 1, maxRange = 1,
+            weight = 8, might = 7, hit = 80, crit = 0, spritePath = "", infotext = "-")
+    IRON_LANCE,
 
+    @WeaponStats(name = "Slim Lance", type = LANCE, level = E, durability = 30, minRange = 1, maxRange = 1,
+            weight = 4, might = 4, hit = 85, crit = 5, spritePath = "", infotext = "-")
+    SLIM_LANCE,
+
+    @WeaponStats(name = "Javelin", type = LANCE, level = E, durability = 20, minRange = 1, maxRange = 2,
+            weight = 11, might = 6, hit = 65, crit = 0, spritePath = "", infotext = "-")
+    JAVELIN,
+
+    @WeaponStats(name = "Emblem Lance", type = LANCE, level = E, durability = 60, minRange = 1, maxRange = 1,
+            weight = 8, might = 7, hit = 80, crit = 0, spritePath = "", infotext = "-")
+    EMBLEM_LANCE,
+
+    @WeaponStats(name = "Poison Lance", type = LANCE, level = E, durability = 40, minRange = 1, maxRange = 1,
+            weight = 8, might = 4, hit = 60, crit = 0, spritePath = "", infotext = "Inflicts Poison upon contact.")
+    POISON_LANCE {
+        @Override
+        public int getDamage(BattleSystem calculations) {
+            int toReturn = super.getDamage(calculations);
+            calculations.getDefendingEntity().add(new ConditionComponent(ConditionComponent.Condition.POISON));
+            return toReturn;
+        }
+    },
+
+    @WeaponStats(name = "Steel Lance", type = LANCE, level = D, durability = 30, minRange = 1, maxRange = 1,
+            weight = 13, might = 10, hit = 70, crit = 0, spritePath = "", infotext = "-")
+    STEEL_LANCE,
+
+    @WeaponStats(name = "Heavy Spear", type = LANCE, level = D, durability = 16, minRange = 1, maxRange = 1,
+            weight = 14, might = 9, hit = 70, crit = 0, effectiveAgainst = {ARMORED}, spritePath = "",
+            infotext = "Effective vs. Armored units.")
+    HEAVY_SPEAR,
+
+    @WeaponStats(name = "Horseslayer", type = LANCE, level = D, durability = 16, minRange = 1, maxRange = 1,
+            weight = 13, might = 7, hit = 70, crit = 0, effectiveAgainst = {MOUNTED}, spritePath = "",
+            infotext = "Effective vs. Horseback units.")
+    HORSESLAYER,
+
+    @WeaponStats(name = "Short Spear", type = LANCE, level = C, durability = 18, minRange = 1, maxRange = 2,
+            weight = 12, might = 9, hit = 60, crit = 0, spritePath = "", infotext = "-")
+    SHORT_SPEAR,
+
+    @WeaponStats(name = "Killer Lance", type = LANCE, level = C, durability = 20, minRange = 1, maxRange = 1,
+            weight = 9, might = 10, hit = 70, crit = 30, spritePath = "", infotext = "-")
+    KILLER_LANCE,
+
+    //TODO: Reaver ability needs to be implemented
+    @WeaponStats(name = "Axereaver", type = LANCE, level = C, durability = 15, minRange = 1, maxRange = 1,
+            weight = 11, might = 10, hit = 70, crit = 5, spritePath = "", infotext = "Strong vs. Axes. Weak vs. Swords.")
+    AXEREAVER,
+
+    //TODO: Brave ability needs to be implemented
+    @WeaponStats(name = "Brave Lance", type = LANCE, level = B, durability = 30, minRange = 1, maxRange = 1,
+            weight = 14, might = 10, hit = 70, crit = 0, spritePath = "", infotext = "Allows user to strike twice in one attack.")
+    BRAVE_LANCE,
+
+    @WeaponStats(name = "Spear", type = LANCE, level = B, durability = 15, minRange = 1, maxRange = 2,
+            weight = 10, might = 12, hit = 70, crit = 5, spritePath = "", infotext = "-")
+    SPEAR,
+
+    //Will we even keep Vaida's spear? Probably not, but it doesn't hurt to have it
+    @WeaponStats(name = "Spear (Vaida's)", type = LANCE, level = B, durability = 15, minRange = 1, maxRange = 2,
+            weight = 10, might = 12, hit = 70, crit = 0, spritePath = "", infotext = "Max HP +17, Strength +5, Skill +4, Speed +9, Defense +4, Resistance +14.")
+    SPEAR_VAIDAS,
+
+    @WeaponStats(name = "Silver Lance", type = LANCE, level = A, durability = 20, minRange = 1, maxRange = 1,
+            weight = 10, might = 14, hit = 75, crit = 0, spritePath = "", infotext = "-")
+    SILVER_LANCE,
+
+    @WeaponStats(name = "Rex Hasta", type = LANCE, level = S, durability = 25, minRange = 1, maxRange = 1,
+            weight = 11, might = 21, hit = 80, crit = 0, spritePath = "", infotext = "-")
+    REX_HASTA,
     // *** LANCES ***
 
 
 
     // *** AXES ***
     @WeaponStats(name = "Hand Axe", type = AXE, level = E, durability = 20, minRange = 1, maxRange = 2,
-            weight = 12, might = 7, hit = 60, crit = 0, spritePath = "")
+            weight = 12, might = 7, hit = 60, crit = 0, spritePath = "", infotext = "-")
     HAND_AXE,
 
+    @WeaponStats(name = "Iron Axe", type = AXE, level = E, durability = 45, minRange = 1, maxRange = 1,
+            weight = 10, might = 8, hit = 75, crit = 0, spritePath = "", infotext = "-")
+    IRON_AXE,
+
+    @WeaponStats(name = "Emblem Axe", type = AXE, level = E, durability = 60, minRange = 1, maxRange = 1,
+            weight = 10, might = 8, hit = 75, crit = 0, spritePath = "", infotext = "-")
+    EMBLEM_AXE,
+
+    @WeaponStats(name = "Steel Axe", type = AXE, level = E, durability = 30, minRange = 1, maxRange = 1,
+            weight = 15, might = 11, hit = 65, crit = 0, spritePath = "", infotext = "-")
+    STEEL_AXE,
+
+    //TODO: Devil ability needs to be implemented, shouldn't be difficult
+    @WeaponStats(name = "Devil Axe", type = AXE, level = E, durability = 20, minRange = 1, maxRange = 1,
+            weight = 18, might = 18, hit = 55, crit = 0, spritePath = "",
+            infotext = "May inflict damage to the user instead when attacking.")
+    DEVIL_AXE,
+
+    @WeaponStats(name = "Poison Axe", type = AXE, level = D, durability = 40, minRange = 1, maxRange = 1,
+            weight = 10, might = 4, hit = 60, crit = 0, spritePath = "",
+            infotext = "Inflicts Poison upon contact.")
+    POISON_AXE {
+        @Override
+        public int getDamage(BattleSystem calculations) {
+            int toReturn = super.getDamage(calculations);
+            calculations.getDefendingEntity().add(new ConditionComponent(ConditionComponent.Condition.POISON));
+            return toReturn;
+        }
+    },
+
+    @WeaponStats(name = "Halberd", type = AXE, level = D, durability = 18, minRange = 1, maxRange = 1,
+            weight = 15, might = 10, hit = 60, crit = 0, effectiveAgainst = {MOUNTED}, spritePath = "",
+            infotext = "Effective vs. Horseback units.")
+    HALBERD,
+
+    @WeaponStats(name = "Hammer", type = AXE, level = D, durability = 20, minRange = 1, maxRange = 1,
+            weight = 15, might = 10, hit = 55, crit = 0, effectiveAgainst = {ARMORED}, spritePath = "",
+            infotext = "Effective vs. Armored units.")
+    HAMMER,
+
+    @WeaponStats(name = "Dragon Axe", type = AXE, level = C, durability = 40, minRange = 1, maxRange = 1,
+            weight = 11, might = 10, hit = 60, crit = 0, spritePath = "",
+            infotext = "Effective vs. Dragon units.")
+    DRAGON_AXE,
+
+    @WeaponStats(name = "Killer Axe", type = AXE, level = C, durability = 20, minRange = 1, maxRange = 1,
+            weight = 11, might = 11, hit = 65, crit = 30, spritePath = "", infotext = "-")
+    KILLER_AXE,
+
+    //TODO: Reaver ability needs to be implemented
+    @WeaponStats(name = "Swordreaver", type = AXE, level = C, durability = 15, minRange = 1, maxRange = 1,
+            weight = 13, might = 11, hit = 65, crit = 5, spritePath = "",
+            infotext = "Strong vs. Swords. Weak vs. Lances.")
+    SWORDREAVER,
+
+    //TODO: Reaver ability needs to be implemented
+    @WeaponStats(name = "Swordslayer", type = AXE, level = C, durability = 20, minRange = 1, maxRange = 1,
+            weight = 13, might = 11, hit = 80, crit = 5, effectiveAgainst = {SWORDS}, spritePath = "",
+            infotext = "Strong vs. Swords. Weak vs Lances. Effective vs. Mercenaries/Heroes/Myrmidons/Swordmasters/Blade Lords.")
+    SWORDSLAYER,
+
+    //TODO: Brave ability needs to be implemented
+    @WeaponStats(name = "Brave Axe", type = AXE, level = B, durability = 30, minRange = 1, maxRange = 1,
+            weight = 16, might = 10, hit = 65, crit = 0, spritePath = "",
+            infotext = "Allows user to strike twice in one attack.")
+    BRAVE_AXE,
+
+    @WeaponStats(name = "Tomahawk", type = AXE, level = A, durability = 15, minRange = 1, maxRange = 2,
+            weight = 14, might = 13, hit = 65, crit = 0, spritePath = "", infotext = "-")
+    TOMAHAWK,
+
+    @WeaponStats(name = "Silver Axe", type = AXE, level = A, durability = 20, minRange = 1, maxRange = 1,
+            weight = 12, might = 15, hit = 70, crit = 0, spritePath = "", infotext = "-")
+    SILVER_AXE,
+
+    @WeaponStats(name = "Basilikos", type = AXE, level = S, durability = 25, minRange = 1, maxRange = 1,
+            weight = 13, might = 22, hit = 75, crit = 0, spritePath = "", infotext = "-")
+    BASILIKOS,
+
+    @WeaponStats(name = "Wolf Beil", type = AXE, level = PRF, durability = 30, minRange = 1, maxRange = 1,
+            weight = 10, might = 10, hit = 75, crit = 5, effectiveAgainst = {ARMORED, MOUNTED}, spritePath = "",
+            infotext = "Hector only. Effective vs. Armored/Horseback units.")
+    WOLF_BEIL {
+        @Override
+        public boolean canBeWieldedBy(Entity unit) {
+            ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
+            return unitClass == LORD_HECTOR;
+        }
+    },
+
+    //TODO: Add points to defense?
+    @WeaponStats(name = "Armads", type = AXE, level = PRF, durability = 25, minRange = 1, maxRange = 1,
+            weight = 18, might = 18, hit = 85, crit = 0, effectiveAgainst = {DRAGON}, spritePath = "",
+            infotext = "Hector only. Defense +5. Effective vs. Dragon units.")
+    ARMADS {
+        @Override
+        public boolean canBeWieldedBy(Entity unit) {
+            ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
+            return unitClass == LORD_HECTOR;
+        }
+    }
     // *** AXES ***
     ;
 
