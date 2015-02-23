@@ -9,6 +9,7 @@ import com.basecolon.firejemblem.misc.battle.BattleRole;
 import com.basecolon.firejemblem.misc.battle.precalculations.BaseCalculationStage;
 import com.basecolon.firejemblem.misc.battle.precalculations.BaseCalculationStageDecorator;
 import com.basecolon.firejemblem.misc.battle.precalculations.CalculateCritChance;
+import com.basecolon.firejemblem.misc.battle.precalculations.CalculateMight;
 import com.basecolon.firejemblem.misc.battle.precalculations_results.BattleCalculator;
 import com.basecolon.firejemblem.misc.battle.precalculations_results.BattleStats;
 import com.basecolon.firejemblem.misc.helpers.EntityHelpers;
@@ -30,10 +31,17 @@ public class BattleSystemTest {
     public void calculations() {
         Entity lyn = GameLauncherHelpers.createLyn();
         final DecoratorComponent lynDecorators = lyn.getComponent(DecoratorComponent.class);
-        final IncreaseCritBy15 decorator = new IncreaseCritBy15();
-        lynDecorators.decorators.add(decorator);
+        lynDecorators.decorators.add(new IncreaseCritBy15());
+        lynDecorators.decorators.add(new IncreaseCritBy15());
+        lynDecorators.decorators.add(new IncreaseMightBy2());
+
 
         Entity hector = GameLauncherHelpers.createHector();
+        final DecoratorComponent hectorDecorators = hector.getComponent(DecoratorComponent.class);
+        hectorDecorators.decorators.add(new IncreaseCritBy15());
+        hectorDecorators.decorators.add(new IncreaseMightBy2());
+
+
         FireJemblem.updateEngine();
         BattleCalculator calculator = new BattleCalculator(lyn, hector);
         BattleStats stats = calculator.getStats();
@@ -54,6 +62,25 @@ public class BattleSystemTest {
             final Integer mod;
             if (role == decoratorOwner) {
                 mod = 15;
+            } else {
+                mod = 0;
+            }
+            return calculationToBeDecorated.getResult().forRole(role) + mod;
+        }
+    }
+
+    static class IncreaseMightBy2 extends BaseCalculationStageDecorator<Integer> {
+
+        @Override
+        public Class<? extends BaseCalculationStage<Integer>> getCalculationToBeDecorated() {
+            return CalculateMight.class;
+        }
+
+        @Override
+        protected Integer calculate(final BattleRole role) {
+            final Integer mod;
+            if (role == decoratorOwner) {
+                mod = 2;
             } else {
                 mod = 0;
             }

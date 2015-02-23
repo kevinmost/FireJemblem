@@ -27,17 +27,5 @@ public abstract class BaseCalculationStageDecorator<RESULT_TYPE>
 
     public abstract Class<? extends BaseCalculationStage<RESULT_TYPE>> getCalculationToBeDecorated();
 
-    /**
-     * Unwraps this decorator (and all nested decorators) all the way down to the undecorated
-     * component at its core
-     */
-    public BaseCalculationStage<RESULT_TYPE> unwrap() {
-        BaseCalculationStage<RESULT_TYPE> innermostCalculationStage = this.calculationToBeDecorated;
-        while (innermostCalculationStage instanceof BaseCalculationStageDecorator) {
-            innermostCalculationStage =
-                    ((BaseCalculationStageDecorator<RESULT_TYPE>) innermostCalculationStage)
-                            .calculationToBeDecorated;
-        }
-        return innermostCalculationStage;
-    }
+
 }

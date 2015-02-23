@@ -44,6 +44,20 @@ public abstract class BaseCalculationStage<T> {
         return result;
     }
 
+    /**
+     * Unwraps this decorator (and all nested decorators) all the way down to the undecorated
+     * component at its core
+     */
+    public BaseCalculationStage<T> unwrap() {
+        BaseCalculationStage<T> innermostCalculationStage = this;
+        while (innermostCalculationStage instanceof BaseCalculationStageDecorator) {
+            innermostCalculationStage =
+                    ((BaseCalculationStageDecorator<T>) innermostCalculationStage)
+                            .calculationToBeDecorated;
+        }
+        return innermostCalculationStage;
+    }
+
     public class BattleStageResult {
         private final T attacker;
         private final T defender;

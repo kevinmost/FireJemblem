@@ -28,18 +28,20 @@ public class BattleCalculator {
 
             BaseCalculationStage baseCalculationStage;
             try {
-                final Constructor stageConstructor = ClassReflection.getDeclaredConstructor(stage, BattleData.class);
+                final Constructor stageConstructor =
+                        ClassReflection.getDeclaredConstructor(stage, BattleData.class);
                 baseCalculationStage = (BaseCalculationStage) stageConstructor.newInstance(data);
             } catch (ReflectionException e) {
                 e.printStackTrace();
                 return null;
             }
 
-            for (BattleRole battleRole : new BattleRole[]{BattleRole.ATTACKER, BattleRole.DEFENDER}) {
+            for (BattleRole battleRole : new BattleRole[] { BattleRole.ATTACKER,
+                    BattleRole.DEFENDER }) {
                 List<BaseCalculationStageDecorator<?>> decorators = data.get(battleRole).decorators;
                 for (BaseCalculationStageDecorator<?> decorator : decorators) {
-                    if (decorator.getCalculationToBeDecorated().getCanonicalName()
-                                 .equals(baseCalculationStage.getClass().getCanonicalName())) {
+                    if (decorator.getCalculationToBeDecorated().getCanonicalName().equals(
+                            baseCalculationStage.unwrap().getClass().getCanonicalName())) {
                         //noinspection unchecked
                         decorator.setData(baseCalculationStage);
                         decorator.setDecoratorOwner(battleRole);
