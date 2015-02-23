@@ -1,9 +1,9 @@
-package com.basecolon.FireJemblem.client;
+package com.basecolon.firejemblem.client;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.basecolon.FireJemblem.FireJemblemGame;
+import com.basecolon.firejemblem.FireJemblemGame;
 
 public class HtmlLauncher extends GwtApplication {
 

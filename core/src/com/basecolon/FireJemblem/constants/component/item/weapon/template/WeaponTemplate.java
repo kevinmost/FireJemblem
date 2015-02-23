@@ -1,16 +1,17 @@
-package com.basecolon.FireJemblem.constants.component.item.weapon.template;
+package com.basecolon.firejemblem.constants.component.item.weapon.template;
 
 import com.badlogic.ashley.core.Entity;
-import com.basecolon.FireJemblem.ashley.component.unit.HealthComponent;
-import com.basecolon.FireJemblem.ashley.component.unit.UnitClass;
-import com.basecolon.FireJemblem.ashley.component.unit.UnitStats;
-import com.basecolon.FireJemblem.ashley.component.unit.UnitWeaponProficiency;
-import com.basecolon.FireJemblem.ashley.system.unit.BattleSystem;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponStats;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
-import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
-import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
+import com.basecolon.firejemblem.ashley.component.HealthComponent;
+import com.basecolon.firejemblem.ashley.component.unit.UnitClassComponent;
+import com.basecolon.firejemblem.ashley.component.unit.UnitStatsComponent;
+import com.basecolon.firejemblem.ashley.component.unit.UnitStatsModComponent;
+import com.basecolon.firejemblem.ashley.component.unit.UnitWeaponProficiency;
+import com.basecolon.firejemblem.ashley.system.unit.BattleSystem;
+import com.basecolon.firejemblem.constants.component.item.weapon.WeaponProficiencyLevels;
+import com.basecolon.firejemblem.constants.component.item.weapon.WeaponStats;
+import com.basecolon.firejemblem.constants.component.item.weapon.WeaponTypes;
+import com.basecolon.firejemblem.constants.component.unit.UnitStatLabels;
+import com.basecolon.firejemblem.constants.component.unit.classes.ClassTypes;
 
 /**
  * Contains a method to get a weapon's stats, whether a given unit can wield it, and also all of the battle-calculation
@@ -27,7 +28,7 @@ public interface WeaponTemplate {
     public WeaponStats getStats();
 
     /**
-     * Can be called by the {@link com.basecolon.FireJemblem.ashley.system.unit.BattleSystem} to take care of
+     * Can be called by the {@link com.basecolon.firejemblem.ashley.system.unit.BattleSystem} to take care of
      * calculations for it. Will perform all modifications upon the BattleSystem that is passed in as a parameter.
      * Will be overridden by, for example, Eclipse, which always halves the defender's HP on hit.
      * @return Number of damage dealt by this hit
@@ -53,8 +54,19 @@ public interface WeaponTemplate {
     }
 
     /**
+     * Rolls for crit and returns damage with 3x multiplier applied if needed
+     * @return
+     */
+    public default int getDamageAfterCritApplied(BattleSystem calculations) {
+        if (BattleSystem.rngSuccess(getCritAccuracy(calculations), false)) {
+            return 3 * getDamage(calculations);
+        }
+        return getDamage(calculations);
+    }
+
+    /**
      * Override this method for special weapons that need to perform an action on hit. For example, the poison sword
-     * should add a {@link com.basecolon.FireJemblem.ashley.component.unit.ConditionComponent} of Poison to the defender
+     * should add a {@link com.basecolon.firejemblem.ashley.component.unit.ConditionComponent} of Poison to the defender
      * By default, this just decreases the defender's HP by the amount of damage dealt.
      */
     public default void onHit(BattleSystem calculations) {
@@ -68,9 +80,9 @@ public interface WeaponTemplate {
 
     default int calculateCrit(BattleSystem calculations) {
         int weaponCrit = calculations.getAttackingEntityWeapon().getCrit();
-        int attackingSkill = calculations.getAttackingEntity().getComponent(UnitStats.class).get(UnitStatLabels.SKILL);
+        int attackingSkill = calculations.getAttackingEntity().getComponent(UnitStatsComponent.class).get(UnitStatLabels.SKILL);
 
-        ClassTypes attackingClass = calculations.getAttackingEntity().getComponent(UnitClass.class).unitClass;
+        ClassTypes attackingClass = calculations.getAttackingEntity().getComponent(UnitClassComponent.class).unitClass;
         int critBonus = ((attackingClass == ClassTypes.SWORDMASTER) || (attackingClass == ClassTypes.BERSERKER)) ? 15 : 0;
 
         int sRankBonus = 0;
@@ -82,7 +94,7 @@ public interface WeaponTemplate {
     }
 
     default int calculateCritAvoid(BattleSystem calculations) {
-        return calculations.getDefendingEntity().getComponent(UnitStats.class).get(UnitStatLabels.LUCK);
+        return calculations.getDefendingEntity().getComponent(UnitStatsComponent.class).get(UnitStatLabels.LUCK);
     }
 
     /**
@@ -94,7 +106,7 @@ public interface WeaponTemplate {
     default int calculateAccuracy(BattleSystem calculations) {
         int weaponHit = calculations.getAttackingEntityWeapon().getHit();
 
-        UnitStats attackerStats = calculations.getAttackingEntity().getComponent(UnitStats.class);
+        UnitStatsComponent attackerStats = calculations.getAttackingEntity().getComponent(UnitStatsComponent.class);
 
         int sRankBonus = 0;
         if (calculations.getAttackingEntity().getComponent(UnitWeaponProficiency.class).get(calculations.getAttackingEntityWeapon().getType()) == WeaponProficiencyLevels.S) {
@@ -106,7 +118,7 @@ public interface WeaponTemplate {
     }
 
     default int calculateAvoid(BattleSystem calculations) {
-        UnitStats defenderStats = calculations.getDefendingEntity().getComponent(UnitStats.class);
+        UnitStatsComponent defenderStats = calculations.getDefendingEntity().getComponent(UnitStatsComponent.class);
 
         int weaponPenalty = Math.max(0, calculations.getDefendingEntityWeapon().getWeight() - defenderStats.get(UnitStatLabels.CON));
 
@@ -135,7 +147,7 @@ public interface WeaponTemplate {
      * @return The value of the defense component
      */
     default int calculateDefense(BattleSystem calculations) {
-        return calculations.getDefendingEntity().getComponent(UnitStats.class).get(UnitStatLabels.DEFENSE);
+        return calculations.getDefendingEntity().getComponent(UnitStatsComponent.class).get(UnitStatLabels.DEFENSE);
     }
 
 
@@ -145,7 +157,7 @@ public interface WeaponTemplate {
      * @return By default, the attacker's strength.
      */
     default int calculateStr(BattleSystem calculations) {
-        return calculations.getAttackingEntity().getComponent(UnitStats.class).get(UnitStatLabels.STRENGTH);
+        return calculations.getAttackingEntity().getComponent(UnitStatsComponent.class).get(UnitStatLabels.STRENGTH);
     }
 
     /**
@@ -177,7 +189,7 @@ public interface WeaponTemplate {
      * @return the coefficient to be used in the multiplication
      */
     default int calculateEffectiveDamageCoefficient(BattleSystem calculations) {
-        return calculations.getAttackingEntityWeapon().getWeapon().isEffectiveAgainst(calculations.getDefendingEntity())
+        return calculations.getAttackingEntityWeapon().getWeapon().isEffectiveAgainst(calculations.getDefendingEntity().getComponent(UnitClassComponent.class).unitClass)
                 ? 2 : 1;
     }
 
@@ -201,8 +213,7 @@ public interface WeaponTemplate {
      * (ie, bows against a pegasus knight, Wyrmslayer against a wyvern...)
      * If a weapon wants to implement this, it has to override this method and implement the logic itself
      */
-    default boolean isEffectiveAgainst(Entity otherEntity) {
-        ClassTypes defenderClass = otherEntity.getComponent(UnitClass.class).unitClass;
+    default boolean isEffectiveAgainst(ClassTypes defenderClass) {
 
         for (ClassTypes.EffectiveDamageGroups effectiveDamageGroup : this.getStats().effectiveAgainst()) {
             if (effectiveDamageGroup.getClassesInType().contains(defenderClass)) {
@@ -211,6 +222,8 @@ public interface WeaponTemplate {
         }
         return false;
     }
+
+
 
     /**
      * The default behavior is to check if the proficiency-level for the unit is at least the required level for this
@@ -226,5 +239,12 @@ public interface WeaponTemplate {
         return unitProficiencyInThisWeaponType.getNumericRank() >= this.getStats().level().getNumericRank();
     }
 
-
+    /**
+     * If a weapon wants to give a unit stat-mods (such as Sol Katti giving Lyn +5 Resistance), it should override
+     * this method and return a mod
+     * @return The modifier that this weapon should give when it is equipped
+     */
+    public default UnitStatsModComponent statModsOnEquip() {
+        return new UnitStatsModComponent();
+    }
 }

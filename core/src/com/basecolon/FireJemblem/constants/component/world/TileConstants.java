@@ -1,12 +1,12 @@
-package com.basecolon.FireJemblem.constants.component.world;
+package com.basecolon.firejemblem.constants.component.world;
 
-import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
+import com.basecolon.firejemblem.constants.component.unit.classes.ClassTypes;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes.ClassTypeGroupings.*;
-import static com.basecolon.FireJemblem.constants.component.world.TileConstants.SpecialValue.UNWALKABLE;
+import static com.basecolon.firejemblem.constants.component.unit.classes.ClassTypes.ClassTypeGroupings.*;
+import static com.basecolon.firejemblem.constants.component.world.TileConstants.SpecialValue.UNWALKABLE;
 
 // TODO: There is a lot of logic missing, such as +5 RES when standing on a throne, and how to ensure that Fliers don't get stat buffs from tiles (maybe handle this in an EntitySystem?)
 public enum TileConstants {

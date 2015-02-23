@@ -1,4 +1,4 @@
-package com.basecolon.FireJemblem.ashley.component.unit;
+package com.basecolon.firejemblem.ashley.component.unit;
 
 import com.badlogic.ashley.core.Component;
 

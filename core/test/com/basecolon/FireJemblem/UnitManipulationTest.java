@@ -1,18 +1,19 @@
-package com.basecolon.FireJemblem;
+package com.basecolon.firejemblem;
 
 import com.badlogic.ashley.core.Entity;
-import com.basecolon.FireJemblem.ashley.component.unit.Inventory;
-import com.basecolon.FireJemblem.ashley.entity.unit.UnitEntityBuilder;
-import com.basecolon.FireJemblem.ashley.system.unit.EquippedItemSystem;
-import com.basecolon.FireJemblem.constants.FireJemblem;
-import com.basecolon.FireJemblem.constants.component.item.weapon.template.PhysicalWeaponTemplate;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
-import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
-import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
-import com.basecolon.FireJemblem.misc.helpers.EntityHelpers;
-import com.basecolon.FireJemblem.misc.helpers.GameLauncherHelpers;
-import com.basecolon.FireJemblem.misc.items.Weapon;
+import com.basecolon.firejemblem.ashley.component.unit.DecoratorComponent;
+import com.basecolon.firejemblem.ashley.component.unit.InventoryComponent;
+import com.basecolon.firejemblem.ashley.entity.unit.UnitEntityBuilder;
+import com.basecolon.firejemblem.ashley.system.unit.EquippedItemSystem;
+import com.basecolon.firejemblem.constants.FireJemblem;
+import com.basecolon.firejemblem.constants.component.item.weapon.template.PhysicalWeaponTemplate;
+import com.basecolon.firejemblem.constants.component.item.weapon.WeaponProficiencyLevels;
+import com.basecolon.firejemblem.constants.component.item.weapon.WeaponTypes;
+import com.basecolon.firejemblem.constants.component.unit.UnitStatLabels;
+import com.basecolon.firejemblem.constants.component.unit.classes.ClassTypes;
+import com.basecolon.firejemblem.misc.helpers.EntityHelpers;
+import com.basecolon.firejemblem.misc.helpers.GameLauncherHelpers;
+import com.basecolon.firejemblem.misc.items.Weapon;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,28 +24,29 @@ import static junit.framework.Assert.assertEquals;
 
 public class UnitManipulationTest {
     private EntityHelpers.Mappers mappers;
+    private EquippedItemSystem equippedItemSystem;
 
     @Before
     public void setup() {
         mappers = EntityHelpers.mappersFor(new UnitEntityBuilder());
-        new EquippedItemSystem();
+        equippedItemSystem = new EquippedItemSystem();
     }
 
     @Test
     public void equipItem() {
         Entity lyn = GameLauncherHelpers.createLyn();
 
-        Inventory lynsInventory = mappers.getMapperFor(Inventory.class).get(lyn);
-        List<Inventory.InventoryItem> lynsItems = lynsInventory.items;
+        InventoryComponent lynsInventory = mappers.getMapperFor(InventoryComponent.class).get(lyn);
+        List<InventoryComponent.InventoryItem> lynsItems = lynsInventory.items;
 
         lynsItems.clear();
 
-        lynsItems.add(new Inventory.InventoryItem(new Weapon(PhysicalWeaponTemplate.WO_DAO)));
+        lynsItems.add(new InventoryComponent.InventoryItem(new Weapon(PhysicalWeaponTemplate.WO_DAO)));
 
         assertEquals(1, lynsItems.size());
         assertEquals("Wo Dao", lynsItems.get(0).item.getName());
 
-        lynsItems.add(new Inventory.InventoryItem(new Weapon(PhysicalWeaponTemplate.IRON_SWORD)));
+        lynsItems.add(new InventoryComponent.InventoryItem(new Weapon(PhysicalWeaponTemplate.IRON_SWORD)));
 
         FireJemblem.engine.update(FireJemblem.deltaTime);
 
@@ -60,13 +62,13 @@ public class UnitManipulationTest {
     public void prfEquip() {
         Entity lyn = GameLauncherHelpers.createLyn();
 
-        Inventory lynsInventory = mappers.getMapperFor(Inventory.class).get(lyn);
-        List<Inventory.InventoryItem> lynsItems = lynsInventory.items;
+        InventoryComponent lynsInventory = mappers.getMapperFor(InventoryComponent.class).get(lyn);
+        List<InventoryComponent.InventoryItem> lynsItems = lynsInventory.items;
 
         lynsItems.clear();
 
-        lynsItems.add(new Inventory.InventoryItem(new Weapon(PhysicalWeaponTemplate.MANI_KATTI)));
-        lynsItems.add(new Inventory.InventoryItem(new Weapon(PhysicalWeaponTemplate.IRON_SWORD)));
+        lynsItems.add(new InventoryComponent.InventoryItem(new Weapon(PhysicalWeaponTemplate.MANI_KATTI)));
+        lynsItems.add(new InventoryComponent.InventoryItem(new Weapon(PhysicalWeaponTemplate.IRON_SWORD)));
 
         FireJemblem.engine.update(FireJemblem.deltaTime);
 
@@ -89,9 +91,10 @@ public class UnitManipulationTest {
                 .setHealth(15)
                 .setStats(stats)
                 .setWeaponProficiency(proficiency)
+                .setDecoratorComponent(new DecoratorComponent())
                 .build();
 
-        Inventory swordmasterInventory = mappers.getMapperFor(Inventory.class).get(swordmaster);
+        InventoryComponent swordmasterInventory = mappers.getMapperFor(InventoryComponent.class).get(swordmaster);
 
         FireJemblem.engine.update(FireJemblem.deltaTime);
 

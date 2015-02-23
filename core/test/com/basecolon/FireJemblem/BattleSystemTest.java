@@ -1,16 +1,63 @@
-package com.basecolon.FireJemblem;
+package com.basecolon.firejemblem;
 
-import com.basecolon.FireJemblem.constants.component.item.weapon.template.PhysicalWeaponTemplate;
-import com.basecolon.FireJemblem.constants.component.item.weapon.template.WeaponTemplate;
-import com.basecolon.FireJemblem.misc.items.Weapon;
+import com.badlogic.ashley.core.Entity;
+import com.basecolon.firejemblem.ashley.component.unit.DecoratorComponent;
+import com.basecolon.firejemblem.ashley.entity.unit.UnitEntityBuilder;
+import com.basecolon.firejemblem.ashley.system.unit.EquippedItemSystem;
+import com.basecolon.firejemblem.constants.FireJemblem;
+import com.basecolon.firejemblem.misc.battle.BattleRole;
+import com.basecolon.firejemblem.misc.battle.precalculations.BaseCalculationStage;
+import com.basecolon.firejemblem.misc.battle.precalculations.BaseCalculationStageDecorator;
+import com.basecolon.firejemblem.misc.battle.precalculations.CalculateCritChance;
+import com.basecolon.firejemblem.misc.battle.precalculations_results.BattleCalculator;
+import com.basecolon.firejemblem.misc.battle.precalculations_results.BattleStats;
+import com.basecolon.firejemblem.misc.helpers.EntityHelpers;
+import com.basecolon.firejemblem.misc.helpers.GameLauncherHelpers;
+import org.junit.Before;
 import org.junit.Test;
 
 public class BattleSystemTest {
-    // TODO: Write me
+    private EntityHelpers.Mappers mappers;
+    private EquippedItemSystem equippedItemSystem;
+
+    @Before
+    public void setup() {
+        mappers = EntityHelpers.mappersFor(new UnitEntityBuilder());
+        equippedItemSystem = new EquippedItemSystem();
+    }
 
     @Test
     public void calculations() {
-        Weapon someWeapon = new Weapon(PhysicalWeaponTemplate.IRON_SWORD);
+        Entity lyn = GameLauncherHelpers.createLyn();
+        final DecoratorComponent lynDecorators = lyn.getComponent(DecoratorComponent.class);
+        final IncreaseCritBy15 decorator = new IncreaseCritBy15();
+        lynDecorators.decorators.add(decorator);
 
+        Entity hector = GameLauncherHelpers.createHector();
+        FireJemblem.updateEngine();
+        BattleCalculator calculator = new BattleCalculator(lyn, hector);
+        BattleStats stats = calculator.getStats();
+        System.out.println(stats);
+    }
+
+    /**
+     * A test-decorator that will increase the crit of whoever it is applied to by 15.
+     */
+    static class IncreaseCritBy15 extends BaseCalculationStageDecorator<Integer> {
+        @Override
+        public Class<? extends BaseCalculationStage<Integer>> getCalculationToBeDecorated() {
+            return CalculateCritChance.class;
+        }
+
+        @Override
+        protected Integer calculate(final BattleRole role) {
+            final Integer mod;
+            if (role == decoratorOwner) {
+                mod = 15;
+            } else {
+                mod = 0;
+            }
+            return calculationToBeDecorated.getResult().forRole(role) + mod;
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.basecolon.FireJemblem.ashley.component.world;
+package com.basecolon.firejemblem.ashley.component.world;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
@@ -8,23 +8,23 @@ import com.badlogic.gdx.math.Vector3;
  * @author kevinmost
  * @date 10/8/14
  */
-public class Transform extends Component {
+public class TransformComponent extends Component {
     private Vector3 pos = new Vector3();
     private Vector2 scale = new Vector2(1.0f, 1.0f);
     private float rotation = 0.0f;
 
-    public Transform(Vector3 pos, Vector2 scale, float rotation) {
+    public TransformComponent(Vector3 pos, Vector2 scale, float rotation) {
         this.pos = pos;
         this.scale = scale;
         this.rotation = rotation;
     }
 
-    public Transform(Vector3 pos, Vector2 scale) {
+    public TransformComponent(Vector3 pos, Vector2 scale) {
         this.pos = pos;
         this.scale = scale;
     }
 
-    public Transform(Vector3 pos) {
+    public TransformComponent(Vector3 pos) {
         this.pos = pos;
     }
 

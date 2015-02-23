@@ -1,11 +1,11 @@
-package com.basecolon.FireJemblem.ashley.entity.world;
+package com.basecolon.firejemblem.ashley.entity.world;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.basecolon.FireJemblem.ashley.component.SpriteComponent;
-import com.basecolon.FireJemblem.ashley.component.world.TileUnitInteraction;
-import com.basecolon.FireJemblem.ashley.entity.EntityBuilder;
-import com.basecolon.FireJemblem.constants.component.world.TileConstants;
+import com.basecolon.firejemblem.ashley.component.SpriteComponent;
+import com.basecolon.firejemblem.ashley.component.world.TileStatsComponent;
+import com.basecolon.firejemblem.ashley.entity.EntityBuilder;
+import com.basecolon.firejemblem.constants.component.world.TileConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 public class TileEntityBuilder extends EntityBuilder {
 
     public TileEntityBuilder setTileType(TileConstants constants) {
-        put(TileUnitInteraction.class, new TileUnitInteraction(constants));
+        put(TileStatsComponent.class, new TileStatsComponent(constants));
         return this;
     }
 
@@ -26,7 +26,7 @@ public class TileEntityBuilder extends EntityBuilder {
     @Override
     public <C extends Component> Class<C>[] getRequiredComponents() {
         List<Class<? extends Component>> requiredComponents = new ArrayList<Class<? extends Component>>() {{
-            add(TileUnitInteraction.class);
+            add(TileStatsComponent.class);
             add(SpriteComponent.class);
         }};
         return requiredComponents.toArray(new Class[requiredComponents.size()]);

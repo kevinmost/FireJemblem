@@ -1,4 +1,4 @@
-package com.basecolon.FireJemblem.constants.component.unit;
+package com.basecolon.firejemblem.constants.component.unit;
 
 /**
  * @author kevinmost

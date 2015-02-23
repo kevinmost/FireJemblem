@@ -1,6 +1,5 @@
-package com.basecolon.FireJemblem;
+package com.basecolon.firejemblem;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -8,10 +7,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.basecolon.FireJemblem.ashley.component.unit.HealthComponent;
-import com.basecolon.FireJemblem.ashley.component.unit.UnitStats;
-import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
-import com.basecolon.FireJemblem.misc.helpers.GameLauncherHelpers;
+import com.basecolon.firejemblem.ashley.component.HealthComponent;
+import com.basecolon.firejemblem.misc.helpers.GameLauncherHelpers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

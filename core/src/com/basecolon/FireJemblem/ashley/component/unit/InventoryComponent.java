@@ -1,8 +1,8 @@
-package com.basecolon.FireJemblem.ashley.component.unit;
+package com.basecolon.firejemblem.ashley.component.unit;
 
 import com.badlogic.ashley.core.Component;
-import com.basecolon.FireJemblem.misc.items.Item;
-import com.basecolon.FireJemblem.misc.items.Weapon;
+import com.basecolon.firejemblem.misc.items.Item;
+import com.basecolon.firejemblem.misc.items.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  * to put a little bit of logic in here; at any point where the unit's inventory could possibly be modified,
  * we are going to do a check on the inventory and set their first equippable weapon (if any) to their equipped one
  */
-public class Inventory extends Component {
+public class InventoryComponent extends Component {
     public static final int INVENTORY_MAX_SIZE = 5;
 
     public List<InventoryItem> items = new ArrayList<>(INVENTORY_MAX_SIZE);
@@ -36,7 +36,7 @@ public class Inventory extends Component {
         }
     }
 
-    public Inventory(List<Item> items) {
+    public InventoryComponent(List<Item> items) {
         // If the list is larger than we're allowed to add, trim it
         if (items.size() > INVENTORY_MAX_SIZE) {
             items = items.subList(0, INVENTORY_MAX_SIZE);
@@ -48,6 +48,9 @@ public class Inventory extends Component {
     }
 
     public Weapon getEquippedWeapon() {
+        if (equippedItemIndex < 0) {
+            return null;
+        }
         return items.get(equippedItemIndex).item.as(Weapon.class);
     }
 }

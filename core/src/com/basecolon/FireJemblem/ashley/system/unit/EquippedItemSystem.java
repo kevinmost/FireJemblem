@@ -1,13 +1,14 @@
-package com.basecolon.FireJemblem.ashley.system.unit;
+package com.basecolon.firejemblem.ashley.system.unit;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.basecolon.FireJemblem.ashley.component.unit.Inventory;
-import com.basecolon.FireJemblem.ashley.entity.unit.UnitEntityBuilder;
-import com.basecolon.FireJemblem.constants.FireJemblem;
-import com.basecolon.FireJemblem.misc.helpers.FamilyHelpers;
-import com.basecolon.FireJemblem.misc.items.Item;
-import com.basecolon.FireJemblem.misc.items.Weapon;
+import com.basecolon.firejemblem.ashley.component.unit.InventoryComponent;
+import com.basecolon.firejemblem.ashley.entity.unit.UnitEntityBuilder;
+import com.basecolon.firejemblem.constants.FireJemblem;
+import com.basecolon.firejemblem.constants.component.item.weapon.template.WeaponTemplate;
+import com.basecolon.firejemblem.misc.helpers.FamilyHelpers;
+import com.basecolon.firejemblem.misc.items.Item;
+import com.basecolon.firejemblem.misc.items.Weapon;
 
 import java.util.List;
 
@@ -26,21 +27,20 @@ public class EquippedItemSystem extends IteratingSystem {
 
 
     private void setEquippedItem(Entity user) {
-        Inventory userInventory = user.getComponent(Inventory.class);
-        List<Inventory.InventoryItem> userItems = userInventory.items;
+        InventoryComponent userInventory = user.getComponent(InventoryComponent.class);
+        List<InventoryComponent.InventoryItem> userItems = userInventory.items;
+
+        int indexToAssign = -1;
         for (int i = 0; i < userItems.size(); i++) {
             Item item = userItems.get(i).item;
             if (item instanceof Weapon) {
-                if (canUserWield(user, item.as(Weapon.class))) {
-                    userInventory.equippedItemIndex = i;
+                WeaponTemplate weapon = item.as(Weapon.class).getWeapon();
+                if (weapon.canBeWieldedBy(user)) {
+                    indexToAssign = i;
                     break;
                 }
             }
         }
+        userInventory.equippedItemIndex = indexToAssign;
     }
-
-    private boolean canUserWield(Entity user, Weapon weapon) {
-        return weapon.getWeapon().canBeWieldedBy(user);
-    }
-
 }

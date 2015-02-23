@@ -1,9 +1,9 @@
-package com.basecolon.FireJemblem.misc.helpers;
+package com.basecolon.firejemblem.misc.helpers;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Family;
-import com.basecolon.FireJemblem.ashley.entity.EntityBuilder;
+import com.basecolon.firejemblem.ashley.entity.EntityBuilder;
 
 import java.util.HashMap;
 import java.util.Map;

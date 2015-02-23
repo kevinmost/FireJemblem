@@ -1,18 +1,22 @@
-package com.basecolon.FireJemblem.constants.component.item.weapon.template;
+package com.basecolon.firejemblem.constants.component.item.weapon.template;
 
 import com.badlogic.ashley.core.Entity;
-import com.basecolon.FireJemblem.ashley.component.unit.ConditionComponent;
-import com.basecolon.FireJemblem.ashley.component.unit.UnitClass;
-import com.basecolon.FireJemblem.ashley.component.unit.UnitStats;
-import com.basecolon.FireJemblem.ashley.system.unit.BattleSystem;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponStats;
-import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
-import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.basecolon.firejemblem.ashley.component.HealthComponent;
+import com.basecolon.firejemblem.ashley.component.unit.ConditionComponent;
+import com.basecolon.firejemblem.ashley.component.unit.UnitClassComponent;
+import com.basecolon.firejemblem.ashley.component.unit.UnitStatsComponent;
+import com.basecolon.firejemblem.ashley.component.unit.UnitStatsModComponent;
+import com.basecolon.firejemblem.ashley.system.unit.BattleSystem;
+import com.basecolon.firejemblem.constants.component.item.weapon.WeaponStats;
+import com.basecolon.firejemblem.constants.component.unit.UnitStatLabels;
+import com.basecolon.firejemblem.constants.component.unit.classes.ClassTypes;
+import javafx.util.Pair;
 
-import static com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels.*;
-import static com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes.*;
-import static com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes.*;
-import static com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes.EffectiveDamageGroups.*;
+import static com.basecolon.firejemblem.constants.component.item.weapon.WeaponProficiencyLevels.*;
+import static com.basecolon.firejemblem.constants.component.item.weapon.WeaponTypes.*;
+import static com.basecolon.firejemblem.constants.component.unit.classes.ClassTypes.*;
+import static com.basecolon.firejemblem.constants.component.unit.classes.ClassTypes.EffectiveDamageGroups.*;
 
 
 // TODO: Implement all the weapons and put them in a readable order
@@ -70,7 +74,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
          */
         @Override
         public boolean canBeWieldedBy(Entity unit) {
-            ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
+            ClassTypes unitClass = unit.getComponent(UnitClassComponent.class).unitClass;
             return (unitClass == MYRMIDON || unitClass == SWORDMASTER || unitClass == BLADE_LORD) && super.canBeWieldedBy(unit);
         }
     },
@@ -92,7 +96,41 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     @WeaponStats(name = "Light Brand", type = SWORD, level = C, durability = 25, minRange = 1, maxRange = 2,
             weight = 9, might = 9, hit = 70, crit = 0, spritePath = "",
             infotext = "Targets Resistance. Inflicts magic-based damage at ranged.")
-    LIGHT_BRAND,
+    LIGHT_BRAND {
+        @Override
+        public int calculateWeaponTriangleDamageBonus(BattleSystem calculations) {
+            if (calculations.getDistanceBetween() == 1) {
+                return super.calculateWeaponTriangleDamageBonus(calculations);
+            }
+            switch (LIGHT
+                    .advantageAgainst(calculations.getDefendingEntityWeapon().getType())) {
+                case ADVANTAGE:
+                    return 1;
+                case DISADVANTAGE:
+                    return -1;
+                default:
+                    return 0;
+            }
+        }
+        @Override
+        public int calculateStr(BattleSystem calculations) {
+            if (calculations.getDistanceBetween() == 1) {
+                return super.calculateStr(calculations);
+            }
+            return super.calculateStr(calculations) / 2;
+        }
+        @Override
+        public int calculateDefense(BattleSystem calculations) {
+            return calculations.getDefendingEntity().getComponent(UnitStatsComponent.class).get(UnitStatLabels.RESISTANCE);
+        }
+        @Override
+        public int getCritAccuracy(BattleSystem calculations) {
+            if (calculations.getDistanceBetween() == 1) {
+                return 0;
+            }
+            return super.getCritAccuracy(calculations);
+        }
+    },
 
     //TODO: Reaver ability needs to be implemented
     @WeaponStats(name = "Lancereaver", type = SWORD, level = C, durability = 15, minRange = 1, maxRange = 1,
@@ -106,11 +144,45 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
             infotext = "Allows user to strike twice in one attack.")
     BRAVE_SWORD,
 
-    //TODO: Wind Sword's effect needs to be implemented
+    // TODO: Testing
     @WeaponStats(name = "Wind Sword", type = SWORD, level = B, durability = 40, minRange = 1, maxRange = 2,
             weight = 9, might = 9, hit = 70, crit = 0, spritePath = "",
             infotext = "Targets Resistance. Inflicts Wind magic damage. Effective vs. flying units.")
-    WIND_SWORD,
+    WIND_SWORD {
+        @Override
+        public int calculateWeaponTriangleDamageBonus(BattleSystem calculations) {
+            if (calculations.getDistanceBetween() == 1) {
+                return super.calculateWeaponTriangleDamageBonus(calculations);
+            }
+            switch (ANIMA
+                    .advantageAgainst(calculations.getDefendingEntityWeapon().getType())) {
+                case ADVANTAGE:
+                    return 1;
+                case DISADVANTAGE:
+                    return -1;
+                default:
+                    return 0;
+            }
+        }
+        @Override
+        public int calculateStr(BattleSystem calculations) {
+            if (calculations.getDistanceBetween() == 1) {
+                return super.calculateStr(calculations);
+            }
+            return super.calculateStr(calculations) / 2;
+        }
+        @Override
+        public int calculateDefense(BattleSystem calculations) {
+            return calculations.getDefendingEntity().getComponent(UnitStatsComponent.class).get(UnitStatLabels.RESISTANCE);
+        }
+        @Override
+        public int getCritAccuracy(BattleSystem calculations) {
+            if (calculations.getDistanceBetween() == 1) {
+                return 0;
+            }
+            return super.getCritAccuracy(calculations);
+        }
+    },
 
     @WeaponStats(name = "Silver Sword", type = SWORD, level = B, durability = 20, minRange = 1, maxRange = 1,
             weight = 8, might = 13, hit = 80, crit = 0, spritePath = "")
@@ -120,11 +192,43 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
             weight = 13, might = 14, hit = 60, crit = 0, spritePath = "")
     SILVER_BLADE,
 
-    //TODO: Runesword's ability needs to be implemented
+    // TODO: Testing
     @WeaponStats(name = "Runesword", type = SWORD, level = A, durability = 15, minRange = 1, maxRange = 2,
             weight = 11, might = 12, hit = 65, crit = 0, spritePath = "",
             infotext = "Targets Resistance. Inflicts Dark magic damage. Restores HP to user equal to damage dealt.")
-    RUNESWORD,
+    RUNESWORD {
+        @Override
+        public int calculateWeaponTriangleDamageBonus(BattleSystem calculations) {
+            switch (DARK
+                    .advantageAgainst(calculations.getDefendingEntityWeapon().getType())) {
+                case ADVANTAGE:
+                    return 1;
+                case DISADVANTAGE:
+                    return -1;
+                default:
+                    return 0;
+            }
+        }
+        @Override
+        public int calculateStr(BattleSystem calculations) {
+            return super.calculateStr(calculations) / 2;
+        }
+        @Override
+        public int calculateDefense(BattleSystem calculations) {
+            return calculations.getDefendingEntity().getComponent(UnitStatsComponent.class).get(UnitStatLabels.RESISTANCE);
+        }
+        @Override
+        public int getCritAccuracy(BattleSystem calculations) {
+            return 0;
+        }
+
+        @Override
+        public void onHit(BattleSystem calculations) {
+            super.onHit(calculations);
+            calculations.getAttackingEntity().getComponent(HealthComponent.class).increaseBy(0);
+            // TODO: Implement
+        }
+    },
 
     @WeaponStats(name = "Regal Blade", type = SWORD, level = S, durability = 25, minRange = 1, maxRange = 1,
             weight = 9, might = 20, hit = 85, crit = 0, spritePath = "")
@@ -136,7 +240,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     MANI_KATTI {
         @Override
         public boolean canBeWieldedBy(Entity unit) {
-            ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
+            ClassTypes unitClass = unit.getComponent(UnitClassComponent.class).unitClass;
             return unitClass == LORD_LYN || unitClass == BLADE_LORD;
         }
     },
@@ -147,7 +251,7 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     RAPIER {
         @Override
         public boolean canBeWieldedBy(Entity unit) {
-            ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
+            ClassTypes unitClass = unit.getComponent(UnitClassComponent.class).unitClass;
             return unitClass == LORD_ELIWOOD || unitClass == KNIGHT_LORD;
         }
     },
@@ -159,20 +263,27 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     DURANDAL {
         @Override
         public boolean canBeWieldedBy(Entity unit) {
-            ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
+            ClassTypes unitClass = unit.getComponent(UnitClassComponent.class).unitClass;
             return unitClass == LORD_ELIWOOD || unitClass == KNIGHT_LORD;
+        }
+        @Override
+        public UnitStatsModComponent statModsOnEquip() {
+            return new UnitStatsModComponent(new Pair<>(UnitStatLabels.STRENGTH, 5));
         }
     },
 
-    //TODO: Implement stat increase
     @WeaponStats(name = "Sol Katti", type = SWORD, level = PRF, durability = 30, minRange = 1, maxRange = 1,
             weight = 14, might = 12, hit = 95, crit = 25, effectiveAgainst = {DRAGON}, spritePath = "",
             infotext = "Lyn only. Resistance +5. Effective vs. Dragon units.")
     SOL_KATTI {
         @Override
         public boolean canBeWieldedBy(Entity unit) {
-            ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
+            ClassTypes unitClass = unit.getComponent(UnitClassComponent.class).unitClass;
             return unitClass == LORD_LYN || unitClass == BLADE_LORD;
+        }
+        @Override
+        public UnitStatsModComponent statModsOnEquip() {
+            return new UnitStatsModComponent(new Pair<>(UnitStatLabels.RESISTANCE, 5));
         }
     },
     // *** SWORDS ***
@@ -199,10 +310,9 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
             weight = 8, might = 4, hit = 60, crit = 0, spritePath = "", infotext = "Inflicts Poison upon contact.")
     POISON_LANCE {
         @Override
-        public int getDamage(BattleSystem calculations) {
-            int toReturn = super.getDamage(calculations);
+        public void onHit(BattleSystem calculations) {
+            super.onHit(calculations);
             calculations.getDefendingEntity().add(new ConditionComponent(ConditionComponent.Condition.POISON));
-            return toReturn;
         }
     },
 
@@ -228,10 +338,18 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
             weight = 9, might = 10, hit = 70, crit = 30, spritePath = "")
     KILLER_LANCE,
 
-    //TODO: Reaver ability needs to be implemented
     @WeaponStats(name = "Axereaver", type = LANCE, level = C, durability = 15, minRange = 1, maxRange = 1,
             weight = 11, might = 10, hit = 70, crit = 5, spritePath = "", infotext = "Strong vs. Axes. Weak vs. Swords.")
-    AXEREAVER,
+    AXEREAVER {
+        @Override
+        public int calculateWeaponTriangleDamageBonus(BattleSystem calculations) {
+            return -2 * super.calculateWeaponTriangleDamageBonus(calculations);
+        }
+        @Override
+        public int calculateWeaponTriangleAccuracyBonus(BattleSystem calculations) {
+            return -2 * super.calculateWeaponTriangleAccuracyBonus(calculations);
+        }
+    },
 
     //TODO: Brave ability needs to be implemented
     @WeaponStats(name = "Brave Lance", type = LANCE, level = B, durability = 30, minRange = 1, maxRange = 1,
@@ -241,11 +359,6 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     @WeaponStats(name = "Spear", type = LANCE, level = B, durability = 15, minRange = 1, maxRange = 2,
             weight = 10, might = 12, hit = 70, crit = 5, spritePath = "")
     SPEAR,
-
-    //Will we even keep Vaida's spear? Probably not, but it doesn't hurt to have it
-    @WeaponStats(name = "Spear (Vaida's)", type = LANCE, level = B, durability = 15, minRange = 1, maxRange = 2,
-            weight = 10, might = 12, hit = 70, crit = 0, spritePath = "", infotext = "Max HP +17, Strength +5, Skill +4, Speed +9, Defense +4, Resistance +14.")
-    SPEAR_VAIDAS,
 
     @WeaponStats(name = "Silver Lance", type = LANCE, level = A, durability = 20, minRange = 1, maxRange = 1,
             weight = 10, might = 14, hit = 75, crit = 0, spritePath = "")
@@ -279,17 +392,17 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     @WeaponStats(name = "Devil Axe", type = AXE, level = E, durability = 20, minRange = 1, maxRange = 1,
             weight = 18, might = 18, hit = 55, crit = 0, spritePath = "",
             infotext = "May inflict damage to the user instead when attacking.")
-    DEVIL_AXE,
+    DEVIL_AXE {
+    },
 
     @WeaponStats(name = "Poison Axe", type = AXE, level = D, durability = 40, minRange = 1, maxRange = 1,
             weight = 10, might = 4, hit = 60, crit = 0, spritePath = "",
             infotext = "Inflicts Poison upon contact.")
     POISON_AXE {
         @Override
-        public int getDamage(BattleSystem calculations) {
-            int toReturn = super.getDamage(calculations);
+        public void onHit(BattleSystem calculations) {
+            super.onHit(calculations);
             calculations.getDefendingEntity().add(new ConditionComponent(ConditionComponent.Condition.POISON));
-            return toReturn;
         }
     },
 
@@ -316,13 +429,31 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     @WeaponStats(name = "Swordreaver", type = AXE, level = C, durability = 15, minRange = 1, maxRange = 1,
             weight = 13, might = 11, hit = 65, crit = 5, spritePath = "",
             infotext = "Strong vs. Swords. Weak vs. Lances.")
-    SWORDREAVER,
+    SWORDREAVER {
+        @Override
+        public int calculateWeaponTriangleDamageBonus(BattleSystem calculations) {
+            return -2 * super.calculateWeaponTriangleDamageBonus(calculations);
+        }
+        @Override
+        public int calculateWeaponTriangleAccuracyBonus(BattleSystem calculations) {
+            return -2 * super.calculateWeaponTriangleAccuracyBonus(calculations);
+        }
+    },
 
     //TODO: Reaver ability needs to be implemented
     @WeaponStats(name = "Swordslayer", type = AXE, level = C, durability = 20, minRange = 1, maxRange = 1,
             weight = 13, might = 11, hit = 80, crit = 5, effectiveAgainst = {SWORDS}, spritePath = "",
             infotext = "Strong vs. Swords. Weak vs Lances. Effective vs. Mercenaries/Heroes/Myrmidons/Swordmasters/Blade Lords.")
-    SWORDSLAYER,
+    SWORDSLAYER {
+        @Override
+        public int calculateWeaponTriangleDamageBonus(BattleSystem calculations) {
+            return -2 * super.calculateWeaponTriangleDamageBonus(calculations);
+        }
+        @Override
+        public int calculateWeaponTriangleAccuracyBonus(BattleSystem calculations) {
+            return -2 * super.calculateWeaponTriangleAccuracyBonus(calculations);
+        }
+    },
 
     //TODO: Brave ability needs to be implemented
     @WeaponStats(name = "Brave Axe", type = AXE, level = B, durability = 30, minRange = 1, maxRange = 1,
@@ -348,27 +479,35 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
     WOLF_BEIL {
         @Override
         public boolean canBeWieldedBy(Entity unit) {
-            ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
+            ClassTypes unitClass = unit.getComponent(UnitClassComponent.class).unitClass;
             return unitClass == LORD_HECTOR || unitClass == GREAT_LORD;
         }
     },
 
-    //TODO: Add points to defense?
     @WeaponStats(name = "Armads", type = AXE, level = PRF, durability = 25, minRange = 1, maxRange = 1,
             weight = 18, might = 18, hit = 85, crit = 0, effectiveAgainst = {DRAGON}, spritePath = "",
             infotext = "Hector only. Defense +5. Effective vs. Dragon units.")
     ARMADS {
         @Override
         public boolean canBeWieldedBy(Entity unit) {
-            ClassTypes unitClass = unit.getComponent(UnitClass.class).unitClass;
+            ClassTypes unitClass = unit.getComponent(UnitClassComponent.class).unitClass;
             return unitClass == LORD_HECTOR || unitClass == GREAT_LORD;
+        }
+
+        // TODO: Test this and all other stat mods
+        @Override
+        public UnitStatsModComponent statModsOnEquip() {
+            return new UnitStatsModComponent(new Pair<>(UnitStatLabels.DEFENSE, 5));
         }
     }
     // *** AXES ***
+
+
+
+    // TODO: Implement bows and ballistae
     ;
 
 
-    @SuppressWarnings("GwtInconsistentSerializableClass")
     private WeaponStats stats;
 
     PhysicalWeaponTemplate() {
@@ -388,6 +527,6 @@ public enum PhysicalWeaponTemplate implements WeaponTemplate {
 
     @Override
     public int calculateDefense(BattleSystem calculations) {
-        return calculations.getDefendingEntity().getComponent(UnitStats.class).get(UnitStatLabels.DEFENSE);
+        return calculations.getDefendingEntity().getComponent(UnitStatsComponent.class).get(UnitStatLabels.DEFENSE);
     }
 }

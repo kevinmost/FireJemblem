@@ -1,8 +1,8 @@
-package com.basecolon.FireJemblem.ashley.component.unit;
+package com.basecolon.firejemblem.ashley.component.unit;
 
-import com.basecolon.FireJemblem.ashley.component.MappedComponent;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
+import com.basecolon.firejemblem.ashley.component.MappedComponent;
+import com.basecolon.firejemblem.constants.component.item.weapon.WeaponProficiencyLevels;
+import com.basecolon.firejemblem.constants.component.item.weapon.WeaponTypes;
 
 import java.util.Map;
 

@@ -1,9 +1,9 @@
-package com.basecolon.FireJemblem.desktop;
+package com.basecolon.firejemblem.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.basecolon.FireJemblem.FireJemblemGame;
-import com.basecolon.FireJemblem.constants.FireJemblem;
+import com.basecolon.firejemblem.FireJemblemGame;
+import com.basecolon.firejemblem.constants.FireJemblem;
 
 public class DesktopLauncher {
     public static void main(String[] arg) {

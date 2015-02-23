@@ -1,4 +1,4 @@
-package com.basecolon.FireJemblem.constants.component.unit.classes;
+package com.basecolon.firejemblem.constants.component.unit.classes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,8 +6,6 @@ import java.util.List;
 
 /**
  * NOTE: Notice that we put promoted classes first because then we can reference them in the pre-promote without running into forward reference problems
- * @author kevinmost
- * @date 10/7/14
  */
 public enum ClassTypes {
     BLADE_LORD("Blade Lord"),
@@ -54,7 +52,7 @@ public enum ClassTypes {
     PEGASUS_KNIGHT("Pegasus Knight", FALCON_KNIGHT),
 
     WYVERN_LORD("Wyvern Lord"),
-    WYVERN_KNIGHT("Wyvern Knight", WYVERN_LORD),
+    WYVERN_RIDER("Wyvern Knight", WYVERN_LORD),
 
     BISHOP("Bishop"),
     MONK("Monk", BISHOP),
@@ -118,7 +116,7 @@ public enum ClassTypes {
         BANDITS(BERSERKER),
         PIRATES(PIRATE, BERSERKER),
         MAGES(MAGE, SAGE, SHAMAN, DRUID, CLERIC, BISHOP),
-        FLIERS(PEGASUS_KNIGHT, FALCON_KNIGHT, WYVERN_KNIGHT, WYVERN_LORD),
+        FLIERS(PEGASUS_KNIGHT, FALCON_KNIGHT, WYVERN_RIDER, WYVERN_LORD),
         NOMAD(ClassTypes.NOMAD),
         NOMAD_TROOPER(ClassTypes.NOMAD_TROOPER);
 
@@ -153,7 +151,7 @@ public enum ClassTypes {
         ARMORED(GREAT_LORD, KNIGHT, GENERAL),
         SWORDS(MERCENARY, HERO, MYRMIDON, SWORDMASTER, BLADE_LORD),
         FLYING(PEGASUS_KNIGHT, FALCON_KNIGHT),
-        DRAGON
+        DRAGON(WYVERN_RIDER, WYVERN_LORD)
         ;
 
         private List<ClassTypes> classesInType = new ArrayList<>();

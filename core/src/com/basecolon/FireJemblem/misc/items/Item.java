@@ -1,4 +1,4 @@
-package com.basecolon.FireJemblem.misc.items;
+package com.basecolon.firejemblem.misc.items;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -30,10 +30,11 @@ public abstract class Item {
      */
     @SuppressWarnings("unchecked")
     public <C extends Item> C as(Class<C> clazz) {
-        if (this.getClass().getName().equals(clazz.getName())) {
+        if (clazz.isInstance(this)) {
             return (C) this;
         }
-        return null;
+        throw new ClassCastException("Tried to cast object of instance " + this.getClass().getSimpleName() +
+                " to " + clazz.getClass().getSimpleName());
     }
 
 

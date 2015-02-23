@@ -1,4 +1,4 @@
-package com.basecolon.FireJemblem.constants.component.item;
+package com.basecolon.firejemblem.constants.component.item;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 

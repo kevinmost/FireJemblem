@@ -1,21 +1,22 @@
-package com.basecolon.FireJemblem.misc.helpers;
+package com.basecolon.firejemblem.misc.helpers;
 
 import com.badlogic.ashley.core.Entity;
-import com.basecolon.FireJemblem.ashley.entity.unit.UnitEntityBuilder;
-import com.basecolon.FireJemblem.constants.component.item.weapon.template.PhysicalWeaponTemplate;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
-import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
-import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
-import com.basecolon.FireJemblem.misc.items.Item;
-import com.basecolon.FireJemblem.misc.items.Weapon;
+import com.basecolon.firejemblem.ashley.component.unit.DecoratorComponent;
+import com.basecolon.firejemblem.ashley.entity.unit.UnitEntityBuilder;
+import com.basecolon.firejemblem.constants.component.item.weapon.template.PhysicalWeaponTemplate;
+import com.basecolon.firejemblem.constants.component.item.weapon.WeaponProficiencyLevels;
+import com.basecolon.firejemblem.constants.component.item.weapon.WeaponTypes;
+import com.basecolon.firejemblem.constants.component.unit.UnitStatLabels;
+import com.basecolon.firejemblem.constants.component.unit.classes.ClassTypes;
+import com.basecolon.firejemblem.misc.items.Item;
+import com.basecolon.firejemblem.misc.items.Weapon;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels.*;
+import static com.basecolon.firejemblem.constants.component.unit.UnitStatLabels.*;
 
 public class GameLauncherHelpers {
     // TODO: These are just methods to aid testing, we need something more robust later to make "modular" characters
@@ -47,6 +48,7 @@ public class GameLauncherHelpers {
                 .setStats(stats)
                 .setInventory(items)
                 .setSprite(null)
+                .setDecoratorComponent(new DecoratorComponent())
                 .build()
                 ;
     }
@@ -80,6 +82,7 @@ public class GameLauncherHelpers {
                 .setHealth(19)
                 .setStats(stats)
                 .setWeaponProficiency(proficiency)
+                .setDecoratorComponent(new DecoratorComponent())
                 .build()
                 ;
     }

@@ -1,9 +1,9 @@
-package com.basecolon.FireJemblem.misc.items;
+package com.basecolon.firejemblem.misc.items;
 
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponStats;
-import com.basecolon.FireJemblem.constants.component.item.weapon.template.WeaponTemplate;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
+import com.basecolon.firejemblem.constants.component.item.weapon.WeaponProficiencyLevels;
+import com.basecolon.firejemblem.constants.component.item.weapon.WeaponStats;
+import com.basecolon.firejemblem.constants.component.item.weapon.template.WeaponTemplate;
+import com.basecolon.firejemblem.constants.component.item.weapon.WeaponTypes;
 
 /**
  * A Weapon that will be used throughout the game. Unlike WeaponTemplates, Weapons are actually interacted with as

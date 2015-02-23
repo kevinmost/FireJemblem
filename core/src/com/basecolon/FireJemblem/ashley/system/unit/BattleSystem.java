@@ -1,20 +1,21 @@
-package com.basecolon.FireJemblem.ashley.system.unit;
+package com.basecolon.firejemblem.ashley.system.unit;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.basecolon.FireJemblem.ashley.component.unit.AttackingComponent;
-import com.basecolon.FireJemblem.ashley.component.unit.DefendingComponent;
-import com.basecolon.FireJemblem.ashley.component.unit.Inventory;
-import com.basecolon.FireJemblem.ashley.entity.unit.UnitEntityBuilder;
-import com.basecolon.FireJemblem.misc.helpers.EntityHelpers;
-import com.basecolon.FireJemblem.misc.items.Weapon;
+import com.basecolon.firejemblem.ashley.component.PositionComponent;
+import com.basecolon.firejemblem.ashley.component.unit.AttackingComponent;
+import com.basecolon.firejemblem.ashley.component.unit.DefendingComponent;
+import com.basecolon.firejemblem.ashley.component.unit.InventoryComponent;
+import com.basecolon.firejemblem.ashley.entity.unit.UnitEntityBuilder;
+import com.basecolon.firejemblem.misc.helpers.EntityHelpers;
+import com.basecolon.firejemblem.misc.items.Weapon;
 
 import java.util.Random;
 
-import static com.basecolon.FireJemblem.misc.helpers.EntityHelpers.Mappers;
+import static com.basecolon.firejemblem.misc.helpers.EntityHelpers.Mappers;
 
 
 public class BattleSystem extends EntitySystem {
@@ -28,6 +29,7 @@ public class BattleSystem extends EntitySystem {
     private Weapon attackingEntityWeapon;
     private Weapon defendingEntityWeapon;
     private int attackSpeed;
+    private int distanceBetween;
 
     @Override
     public void update(float deltaTime) {
@@ -59,8 +61,13 @@ public class BattleSystem extends EntitySystem {
         attackingEntity = attackingEntities.first();
         defendingEntity = defendingEntities.first();
 
-        attackingEntityWeapon = attackingEntity.getComponent(Inventory.class).getEquippedWeapon();
-        defendingEntityWeapon = defendingEntity.getComponent(Inventory.class).getEquippedWeapon();
+        attackingEntityWeapon = attackingEntity.getComponent(InventoryComponent.class).getEquippedWeapon();
+        defendingEntityWeapon = defendingEntity.getComponent(InventoryComponent.class).getEquippedWeapon();
+
+        PositionComponent attackingPosition = attackingEntity.getComponent(PositionComponent.class);
+        PositionComponent defendingPosition = defendingEntity.getComponent(PositionComponent.class);
+        distanceBetween = Math.abs(attackingPosition.x - defendingPosition.x) +
+                Math.abs(attackingPosition.y - defendingPosition.y);
 
         return true;
     }
@@ -92,6 +99,10 @@ public class BattleSystem extends EntitySystem {
 
     public int getAttackSpeed() {
         return attackSpeed;
+    }
+
+    public int getDistanceBetween() {
+        return distanceBetween;
     }
 
     /**

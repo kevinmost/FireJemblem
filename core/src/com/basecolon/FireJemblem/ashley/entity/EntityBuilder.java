@@ -1,8 +1,8 @@
-package com.basecolon.FireJemblem.ashley.entity;
+package com.basecolon.firejemblem.ashley.entity;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
-import com.basecolon.FireJemblem.constants.FireJemblem;
+import com.basecolon.firejemblem.constants.FireJemblem;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,11 +19,8 @@ public abstract class EntityBuilder {
     public Entity build() {
         ensureAllRequiredElementsSet();
         Entity e = new Entity();
-        for (Component component : components.values()) {
-            e.add(component);
-        }
+        components.values().forEach(e::add);
         FireJemblem.engine.addEntity(e);
-        components.clear();
         return e;
     }
 
@@ -34,7 +31,7 @@ public abstract class EntityBuilder {
     private void ensureAllRequiredElementsSet() {
         for (Class requiredComponent : getRequiredComponents()) {
             if (!components.containsKey(requiredComponent)) {
-                throw new RequiredEntityComponentsNotSetException(this.getClass(), "set"+requiredComponent.getSimpleName());
+                throw new RequiredEntityComponentsNotSetException();
             }
         }
     }
@@ -51,10 +48,8 @@ public abstract class EntityBuilder {
 
 
     public class RequiredEntityComponentsNotSetException extends RuntimeException {
-        RequiredEntityComponentsNotSetException(Class<? extends EntityBuilder> entityBeingBuilt, String requiredMethod) {
-            super(String.format("When building an Entity with %s, you must invoke the %s method", entityBeingBuilt.getSimpleName(), requiredMethod));
-        }
         public RequiredEntityComponentsNotSetException() {
+            super("All components marked as required not set!");
         }
     }
 }

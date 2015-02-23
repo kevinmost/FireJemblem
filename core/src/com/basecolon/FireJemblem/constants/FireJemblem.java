@@ -1,4 +1,4 @@
-package com.basecolon.FireJemblem.constants;
+package com.basecolon.firejemblem.constants;
 
 import com.badlogic.ashley.core.Engine;
 
@@ -12,4 +12,11 @@ public class FireJemblem {
     public static final String TITLE = "Fire Jemblem";
     public static final Engine engine = new Engine();
     public static final float deltaTime = 1/60;
+
+    public static void updateEngine() {
+        updateEngine(deltaTime);
+    }
+    public static void updateEngine(float time) {
+        engine.update(time);
+    }
 }

@@ -6,7 +6,9 @@
     <inherits name='com.badlogic.ashley_gwt'/>
 
     <inherits name='FireJemblemGame'/>
-    <entry-point class='com.basecolon.FireJemblem.client.HtmlLauncher'/>
+    <entry-point class='com.basecolon.firejemblem.client.HtmlLauncher'/>
 
     <set-configuration-property name="gdx.assetpath" value="../core/assets"/>
+
+
 </module>

@@ -1,16 +1,18 @@
-package com.basecolon.FireJemblem.ashley.entity.unit;
+package com.basecolon.firejemblem.ashley.entity.unit;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.basecolon.FireJemblem.ashley.component.NameComponent;
-import com.basecolon.FireJemblem.ashley.component.SpriteComponent;
-import com.basecolon.FireJemblem.ashley.component.unit.*;
-import com.basecolon.FireJemblem.ashley.entity.EntityBuilder;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponProficiencyLevels;
-import com.basecolon.FireJemblem.constants.component.item.weapon.WeaponTypes;
-import com.basecolon.FireJemblem.constants.component.unit.UnitStatLabels;
-import com.basecolon.FireJemblem.constants.component.unit.classes.ClassTypes;
-import com.basecolon.FireJemblem.misc.items.Item;
+import com.basecolon.firejemblem.ashley.component.HealthComponent;
+import com.basecolon.firejemblem.ashley.component.NameComponent;
+import com.basecolon.firejemblem.ashley.component.PositionComponent;
+import com.basecolon.firejemblem.ashley.component.SpriteComponent;
+import com.basecolon.firejemblem.ashley.component.unit.*;
+import com.basecolon.firejemblem.ashley.entity.EntityBuilder;
+import com.basecolon.firejemblem.constants.component.item.weapon.WeaponProficiencyLevels;
+import com.basecolon.firejemblem.constants.component.item.weapon.WeaponTypes;
+import com.basecolon.firejemblem.constants.component.unit.UnitStatLabels;
+import com.basecolon.firejemblem.constants.component.unit.classes.ClassTypes;
+import com.basecolon.firejemblem.misc.items.Item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,12 +27,12 @@ public class UnitEntityBuilder extends EntityBuilder {
     }
 
     public UnitEntityBuilder setStats(Map<UnitStatLabels, Integer> stats) {
-        put(UnitStats.class, new UnitStats(stats));
+        put(UnitStatsComponent.class, new UnitStatsComponent(stats));
         return this;
     }
 
     public UnitEntityBuilder setClass(ClassTypes unitClass) {
-        put(UnitClass.class, new UnitClass(unitClass));
+        put(UnitClassComponent.class, new UnitClassComponent(unitClass));
         return this;
     }
 
@@ -50,15 +52,15 @@ public class UnitEntityBuilder extends EntityBuilder {
     }
 
     public UnitEntityBuilder setInventory(List<Item> list) {
-        put(Inventory.class, new Inventory(list));
+        put(InventoryComponent.class, new InventoryComponent(list));
         return this;
     }
     public UnitEntityBuilder setInventory(Item... list) {
-        put(Inventory.class, new Inventory(Arrays.asList(list)));
+        put(InventoryComponent.class, new InventoryComponent(Arrays.asList(list)));
         return this;
     }
     public UnitEntityBuilder setInventory() {
-        put(Inventory.class, new Inventory(new ArrayList<>()));
+        put(InventoryComponent.class, new InventoryComponent(new ArrayList<>()));
         return this;
     }
 
@@ -72,18 +74,25 @@ public class UnitEntityBuilder extends EntityBuilder {
         return this;
     }
 
+    public UnitEntityBuilder setDecoratorComponent(DecoratorComponent component) {
+        put(DecoratorComponent.class, component);
+        return this;
+    }
+
+
     @SuppressWarnings("unchecked")
     @Override
     public <C extends Component> Class<C>[] getRequiredComponents() {
         List<Class<? extends Component>> requiredComponents = new ArrayList<Class<? extends Component>>() {{
             add(HealthComponent.class);
-            add(UnitStats.class);
-            add(UnitClass.class);
+            add(UnitStatsComponent.class);
+            add(UnitClassComponent.class);
             add(PositionComponent.class);
             add(NameComponent.class);
             add(SpriteComponent.class);
-            add(Inventory.class);
+            add(InventoryComponent.class);
             add(UnitWeaponProficiency.class);
+            add(DecoratorComponent.class);
         }};
         return requiredComponents.toArray(new Class[requiredComponents.size()]);
     }
@@ -93,6 +102,7 @@ public class UnitEntityBuilder extends EntityBuilder {
         List<Class<? extends Component>> allComponents = new ArrayList<Class<? extends Component>>(Arrays.asList(getRequiredComponents())) {{
             add(ConditionComponent.class);
         }};
+
         return allComponents.toArray(new Class[allComponents.size()]);
     }
 }

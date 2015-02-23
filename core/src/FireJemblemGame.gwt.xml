@@ -3,4 +3,7 @@
         "http://google-web-toolkit.googlecode.com/svn/trunk/distro-source/core/src/gwt-module.dtd">
 <module>
     <source path="com/basecolon/FireJemblem"/>
+
+    <extend-configuration-property name="gdx.reflect.include" value="com.basecolon.firejemblem.misc.battle.precalculations" />
+
 </module>

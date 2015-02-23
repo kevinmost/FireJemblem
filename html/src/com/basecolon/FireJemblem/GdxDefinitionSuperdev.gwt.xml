@@ -6,7 +6,7 @@
     <inherits name='com.badlogic.ashley_gwt'/>
 
     <inherits name='FireJemblemGame'/>
-    <entry-point class='com.basecolon.FireJemblem.client.HtmlLauncher'/>
+    <entry-point class='com.basecolon.firejemblem.client.HtmlLauncher'/>
 
     <add-linker name="xsiframe"/>
     <set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
