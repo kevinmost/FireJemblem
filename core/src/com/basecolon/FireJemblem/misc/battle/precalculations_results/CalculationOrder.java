@@ -8,6 +8,7 @@ import com.basecolon.firejemblem.misc.battle.precalculations.*;
  * and will throw an NPE if done out-of-order.
  */
 public enum CalculationOrder {
+    CONTINUED_ATTACK(CalculateContinuedAttack.class),
     DISTANCE_BETWEEN(CalculateDistanceBetween.class),
     ATTACK_SPEED(CalculateAttackSpeed.class),
     REPEATED_ATTACK(CalculateRepeatedAttack.class),

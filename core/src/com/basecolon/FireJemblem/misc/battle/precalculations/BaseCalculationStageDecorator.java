@@ -13,7 +13,9 @@ public abstract class BaseCalculationStageDecorator<RESULT_TYPE>
      * use all of the setter methods exposed on this class to instantiate it properly before
      * performing any calculations using this or an NPE will result.
      */
-    public BaseCalculationStageDecorator() {}
+    public BaseCalculationStageDecorator() {
+        super(null);
+    }
 
     public void setData(
             BaseCalculationStage<RESULT_TYPE> calculationToBeDecorated) {

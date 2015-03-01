@@ -29,6 +29,7 @@ public class BattleSystemTest {
 
     @Test
     public void calculations() {
+
         Entity lyn = GameLauncherHelpers.createLyn();
         final DecoratorComponent lynDecorators = lyn.getComponent(DecoratorComponent.class);
         lynDecorators.decorators.add(new IncreaseCritBy15());

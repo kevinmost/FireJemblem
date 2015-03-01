@@ -10,6 +10,7 @@ public class BattleStats {
 
     public final BaseCalculationStage<Integer>.BattleStageResult distanceBetween;
     public final BaseCalculationStage<Boolean>.BattleStageResult repeatedAttack;
+    public final BaseCalculationStage<Integer>.BattleStageResult continuedAttack;
     public final BaseCalculationStage<CalculateWeaponAdvantage.WeaponTriangleBonuses>.BattleStageResult
             triangleAdvantage;
     public final BaseCalculationStage<Integer>.BattleStageResult hit;
@@ -19,6 +20,7 @@ public class BattleStats {
     public BattleStats(BattleData data) {
         distanceBetween = data.getResultOfPreviousStage(CalculateDistanceBetween.class);
         repeatedAttack = data.getResultOfPreviousStage(CalculateRepeatedAttack.class);
+        continuedAttack = data.getResultOfPreviousStage(CalculateContinuedAttack.class);
         triangleAdvantage = data.getResultOfPreviousStage(CalculateWeaponAdvantage.class);
         hit = data.getResultOfPreviousStage(CalculateHitRate.class);
         might = data.getResultOfPreviousStage(CalculateMight.class);
@@ -27,14 +29,8 @@ public class BattleStats {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ATTACKER:\n")
-          .append(fieldsToStringFor(BattleRole.ATTACKER))
-          .append("\n\n")
-          .append("DEFENDER:\n")
-          .append(fieldsToStringFor(BattleRole.DEFENDER))
-          .append("\n\n");
-        return sb.toString();
+        return "ATTACKER:\n" + fieldsToStringFor(BattleRole.ATTACKER) + "\n\n" + "DEFENDER:\n"
+                + fieldsToStringFor(BattleRole.DEFENDER) + "\n\n";
     }
 
     private String fieldsToStringFor(BattleRole role) {

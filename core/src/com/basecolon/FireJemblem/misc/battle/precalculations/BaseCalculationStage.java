@@ -24,13 +24,6 @@ public abstract class BaseCalculationStage<T> {
         this.data = data;
     }
 
-    /**
-     * WARNING: When using this constructor, {@code calculationToBeDecorated} is not set. You must
-     * use the setter method
-     * exposed on this class to set it before performing any calculations using this or an NPE will
-     * result.
-     */
-    public BaseCalculationStage() {}
 
     protected abstract T calculate(BattleRole role);
 
