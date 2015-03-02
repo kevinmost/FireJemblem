@@ -2,13 +2,7 @@ package com.basecolon.firejemblem.misc.items;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-/**
- * Just a giant POJO set from an enum where the actual data is defined.
- * The only mutable field in here is {@link #currentDurability}, and the only way that the client can change it
- * is by calling {@link #decreaseDurability()}, which decreases the value by 1
- */
 public abstract class Item {
-
     private final Sprite sprite;
     private final String name;
     private Integer currentDurability;
@@ -21,20 +15,6 @@ public abstract class Item {
         this.currentDurability = currentDurability;
         this.maxDurability = maxDurability;
         this.infoText = infoText;
-    }
-
-
-    /**
-     * Can be used, for example, to cast this item to a Weapon. Useful if you got an Item out of an Inventory and need
-     * to get Weapon-related fields off it
-     */
-    @SuppressWarnings("unchecked")
-    public <C extends Item> C as(Class<C> clazz) {
-        if (clazz.isInstance(this)) {
-            return (C) this;
-        }
-        throw new ClassCastException("Tried to cast object of instance " + this.getClass().getSimpleName() +
-                " to " + clazz.getClass().getSimpleName());
     }
 
 

@@ -17,8 +17,7 @@ public abstract class BaseCalculationStageDecorator<RESULT_TYPE>
         super(null);
     }
 
-    public void setData(
-            BaseCalculationStage<RESULT_TYPE> calculationToBeDecorated) {
+    public void setData(BaseCalculationStage<RESULT_TYPE> calculationToBeDecorated) {
         super.data = calculationToBeDecorated.data;
         this.calculationToBeDecorated = calculationToBeDecorated;
     }

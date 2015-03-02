@@ -50,7 +50,7 @@ public class BattleData {
          */
         final Class<? extends BaseCalculationStage> stageClass;
         if (stage instanceof BaseCalculationStageDecorator) {
-            stageClass = ((BaseCalculationStageDecorator) stage).unwrap().getClass();
+            stageClass = stage.unwrap().getClass();
         } else {
             stageClass = stage.getClass();
         }

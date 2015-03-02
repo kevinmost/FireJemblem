@@ -6,7 +6,7 @@ import com.basecolon.firejemblem.ashley.component.unit.InventoryComponent;
 import com.basecolon.firejemblem.ashley.entity.unit.UnitEntityBuilder;
 import com.basecolon.firejemblem.constants.FireJemblem;
 import com.basecolon.firejemblem.constants.component.item.weapon.template.WeaponTemplate;
-import com.basecolon.firejemblem.misc.helpers.FamilyHelpers;
+import com.basecolon.firejemblem.misc.helpers.EntityHelpers;
 import com.basecolon.firejemblem.misc.items.Item;
 import com.basecolon.firejemblem.misc.items.Weapon;
 
@@ -16,7 +16,7 @@ public class EquippedItemSystem extends IteratingSystem {
 
 
     public EquippedItemSystem() {
-        super(FamilyHelpers.getFamilyOf(UnitEntityBuilder.class));
+        super(EntityHelpers.familyFor(new UnitEntityBuilder()));
         FireJemblem.engine.addSystem(this);
     }
 

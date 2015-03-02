@@ -17,11 +17,12 @@ public class EntityHelpers {
             return (Mappers) mappers.get(entity);
         }
         Mappers newMapper = new Mappers(entity);
+        //noinspection unchecked
         mappers.put(entity, newMapper);
         return newMapper;
     }
 
-    public static <E extends EntityBuilder>Family familyFor(E entity) {
+    public static <E extends EntityBuilder> Family familyFor(E entity) {
         return Family.all(entity.getRequiredComponents()).get();
     }
 
